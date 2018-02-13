@@ -47,9 +47,7 @@ class psthemecusto extends Module
 
         // Controllers
         $this->controller_name = 'AdminPsThemeCusto';
-        $ps_url = Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true);
-        $ps_url .= __PS_BASE_URI__;
-        $this->front_controller = $ps_url.'admin-dev/index.php?controller='.$this->controller_name;
+        $this->front_controller =  'index.php?controller='.$this->controller_name.'&token='.Tools::getAdminTokenLite($this->controller_name);
         // bootstrap -> always set to true
         $this->bootstrap = true;
 
@@ -62,7 +60,7 @@ class psthemecusto extends Module
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
 
         // Settings paths
-        $this->js_path = $this->_path.'views/js/';
+        $this->js_path  = $this->_path.'views/js/';
         $this->css_path = $this->_path.'views/css/';
         $this->img_path = $this->_path.'views/img/';
         $this->docs_path = $this->_path.'docs/';
@@ -165,6 +163,12 @@ class psthemecusto extends Module
         return ($return);
     }
 
+    /**
+     * set JS and CSS media
+     *
+     * @param none
+     * @return none
+     */
     public function setMedia()
     {
         Media::addJsDef(array(
@@ -176,5 +180,41 @@ class psthemecusto extends Module
         );
         $this->context->controller->addJS($js);
     }
+
+    /**
+    * check if the employee has the right to use this admin controller
+    * @return bool
+    */
+    public function hasEditRight()
+    {
+        $result = Profile::getProfileAccess(
+            (int)Context::getContext()->cookie->profile,
+            (int)Tab::getIdFromClassName($this->controller_name)
+        );
+        return (bool)$result['edit'];
+    }
+
+    /**
+     * Clone a theme and modify the config to set the parent theme
+     *
+     * @param none
+     * @return bool
+     */
+    public function createChildTheme()
+    {
+        global $kernel;
+
+        if (!$this->hasEditRight()) {
+            return $this->l("You do not have permission to edit this.");
+        }
+
+        $exporter = $kernel->getContainer()->get('prestashop.core.addon.theme.exporter');
+        $path = $exporter->export($this->context->shop->theme);
+        $aPath = array_reverse(explode("/", $path));
+        $sThemeZipPath = "/themes/".$aPath[0];
+
+        return $sThemeZipPath;
+    }
+
 
 }

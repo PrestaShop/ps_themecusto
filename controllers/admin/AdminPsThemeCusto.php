@@ -46,12 +46,7 @@ class AdminPsThemeCustoController extends ModuleAdminController
 
     public function ajaxProcessDownloadChildTheme()
     {
-        $status = Tools::getValue('download_child');
-        return true;
-        // if (Configuration::updateValue('PPS_ACTIVE', $status)) {
-        //     die(true);
-        // }
-        // die(false);
+        die($this->module->createChildTheme());   
     }
 
 }
