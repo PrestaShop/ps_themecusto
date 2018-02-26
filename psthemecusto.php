@@ -31,45 +31,31 @@ if (!defined('_PS_VERSION_')) {
 
 class psthemecusto extends Module
 {
-    protected $front_controller = null;
 
     public function __construct()
     {
         // Settings
         $this->name = 'psthemecusto';
-        $this->tab = '';
         $this->version = '0.0.1';
         $this->author = 'PrestaShop';
-        $this->need_instance = 0;
 
         $this->module_key = '7c707e5791af499b0fb5983803599bb3';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
-
-        // Controllers
         $this->controller_name = 'AdminPsThemeCusto';
         $this->front_controller =  'index.php?controller='.$this->controller_name.'&token='.Tools::getAdminTokenLite($this->controller_name);
-        // bootstrap -> always set to true
         $this->bootstrap = true;
-
         parent::__construct();
-
-        $this->output = '';
-
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Configure and Customize your theme !');
+        // $this->template_dir = _PS_MODULE_DIR_.$this->name.'/views/templates/admin/';
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
 
         // Settings paths
         $this->js_path  = $this->_path.'views/js/';
         $this->css_path = $this->_path.'views/css/';
         $this->img_path = $this->_path.'views/img/';
-        $this->docs_path = $this->_path.'docs/';
         $this->logo_path = $this->_path.'logo.png';
         $this->module_path = $this->_path;
-
-        // Confirm uninstall
-        $this->confirmUninstall = $this->l('Are you sure you want to uninstall this module?');
-        $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
     }
 
     /**
@@ -80,9 +66,6 @@ class psthemecusto extends Module
      */
     public function install()
     {
-        // some stuff
-        //Configuration::updateValue('OLAF', 'LET IT GO');
-
         // register hook used by the module
         if (parent::install() &&
             $this->installTab() &&
@@ -102,13 +85,9 @@ class psthemecusto extends Module
      */
     public function uninstall()
     {
-        // some stuff
-        // Configuration::deleteByName('OLAF');
-
         // unregister hook
         if (parent::uninstall() &&
-            $this->uninstallTab() &&
-            $this->unregisterHook('header')) {
+            $this->uninstallTab()) {
             return true;
         } else {
             $this->_errors[] = $this->l('There was an error during the desinstallation. Please contact us through Addons website');
@@ -177,8 +156,13 @@ class psthemecusto extends Module
         ));
         $js = array(
             $this->js_path.'back.js',
+            $this->js_path.'dropzone.js',
+        );
+        $css = array( 
+            $this->css_path.'back.css',
         );
         $this->context->controller->addJS($js);
+        $this->context->controller->addCSS($css);
     }
 
     /**
@@ -193,28 +177,5 @@ class psthemecusto extends Module
         );
         return (bool)$result['edit'];
     }
-
-    /**
-     * Clone a theme and modify the config to set the parent theme
-     *
-     * @param none
-     * @return bool
-     */
-    public function createChildTheme()
-    {
-        global $kernel;
-
-        if (!$this->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
-        }
-
-        $exporter = $kernel->getContainer()->get('prestashop.core.addon.theme.exporter');
-        $path = $exporter->export($this->context->shop->theme);
-        $aPath = array_reverse(explode("/", $path));
-        $sThemeZipPath = "/themes/".$aPath[0];
-
-        return $sThemeZipPath;
-    }
-
 
 }

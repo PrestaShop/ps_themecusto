@@ -26,67 +26,49 @@
 * to avoid any conflicts with others containers.
 */
 
-/* Vue js modal */
-.addons-ps-modal-mask {
-    position: fixed;
-    z-index: 9998;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .5);
-    display: table;
-    transition: opacity .3s ease;
-}
 
-.addons-ps-modal-wrapper {
+#upload-child-modal {
+    font-family: Open Sans, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #363A41;
+}
+#upload-child-modal .module-modal-title {
+    display: inline-block;
+    padding-left: 1em;
     display: table-cell;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
-.addons-ps-modal-container {
-    width: 300px;
-    margin: 0px auto;
-    padding: 20px 30px;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-    transition: all .3s ease;
-    font-family: Helvetica, Arial, sans-serif;
+#upload-child-modal .modal-title {
+    color: #363A41;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.5;
 }
 
-.addons-ps-modal-header h3 {
-    margin-top: 0;
-    color: #42b983;
+form#importDropzone {
+    border: 2px dashed #6c868e;
 }
-
-.addons-ps-modal-body {
-    margin: 20px 0;
+.dropzone {
+    min-height: 150px;
+    border: 2px solid rgba(0,0,0,0.3);
+    background: white;
+    padding: 20px 20px;
 }
-
-.addons-ps-modal-default-button {
-    float: right;
+.dropzone.dz-clickable * {
+    cursor: default;
 }
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-.addons-ps-modal-enter {
-    opacity: 0;
+.module-import-start-icon {
+    font-size: 70px;
+    color: #CECCCC;
 }
-
-.addons-ps-modal-leave-active {
-    opacity: 0;
+.module-import-start {
+    text-align: center;
 }
-
-.addons-ps-modal-enter .addons-ps-modal-container,
-.addons-ps-modal-leave-active .addons-ps-modal-container {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+.module-import-start-footer-text {
+    font-size: smaller;
+    font-style: italic;
+    color: #CECCCC;
 }

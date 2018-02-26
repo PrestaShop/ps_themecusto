@@ -43,4 +43,60 @@ $(document).ready(function() {
         });
     });
 
+    $('body').on('click', '.module-import-start-select-manual', function(event, manual_select) {
+        $('.dz-hidden-input').trigger( "click" );
+    });
+   
+    $('.dz-hidden-input').on('change', function(){
+        var isUploadStarted = false;
+        Dropzone.options.importDropzone = {
+            acceptedFiles: '.zip',
+            maxFiles: 1,
+            maxFilesize: 10, // File size in Mb
+            dictDefaultMessage: '',
+            hiddenInputContainer: '#importDropzone', 
+            addedfile: function() {
+                // State that we start module upload
+                isUploadStarted = true;
+                $('.module-import-start').hide(0);
+                dropzone.css('border', 'none');
+                $('.module-import-processing').fadeIn();
+            },
+            processing: function () {
+                // Leave it empty since we don't require anything while processing upload
+            },
+            error: function (file, message) {
+                $('.module-import-processing').finish().fadeOut(function() {
+                    $('.module-import-failure-details').html(message);
+                    $('.module-import-failure').fadeIn();
+                });
+            },
+            complete: function (file) {
+                if (file.status !== 'error') {
+                    var responseObject = jQuery.parseJSON(file.xhr.response);
+                    if (typeof responseObject.is_configurable === 'undefined') responseObject.is_configurable = null;
+                    if (typeof responseObject.module_name === 'undefined') responseObject.module_name = null;
+
+                    $('.module-import-processing').finish().fadeOut(function() {
+                        if (responseObject.status === true) {
+                            if (responseObject.is_configurable === true) {
+                                var configureLink = self.baseAdminDir + 'module/manage/action/configure/' + responseObject.module_name + window.location.search;
+                                $('.module-import-success-configure').attr('href', configureLink);
+                                $('.module-import-success-configure').show();
+                            }
+                            $('.module-import-success').fadeIn();
+                        } else {
+                            $('.module-import-failure-details').html(responseObject.msg);
+                            $('.module-import-failure').fadeIn();
+                        }
+                    });
+                }
+                // State that we have finish the process to unlock some actions
+                isUploadStarted = false;
+            }
+        }
+
+    });
+
 });
+
