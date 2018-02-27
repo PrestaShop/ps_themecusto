@@ -156,7 +156,7 @@ class psthemecusto extends Module
         ));
         $js = array(
             $this->js_path.'back.js',
-            $this->js_path.'dropzone.js',
+            $this->js_path.'dropzone.min.js',
         );
         $css = array( 
             $this->css_path.'back.css',
