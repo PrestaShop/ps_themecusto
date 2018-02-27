@@ -26,7 +26,6 @@
 
 use PrestaShop\PrestaShop\Core\Addon\Theme\ThemeManagerBuilder;
 
-
 class AdminPsThemeCustoController extends ModuleAdminController
 {
     public function __construct()
@@ -51,14 +50,32 @@ class AdminPsThemeCustoController extends ModuleAdminController
 
     public function ajaxProcessDownloadChildTheme()
     {
-        die($this->module->createChildTheme());   
+        die(self::createChildTheme());   
     }
 
+    /**
+     * AJAX getting a file attachment and will upload the file, install it, check if there's modules in it ...
+     *
+     * @param none
+     * @return string
+     */
     public function ajaxProcessUploadChildTheme()
     {
         $aChildThemeReturned = Tools::fileAttachment('file');
         self::processUploadFileChild( $aChildThemeReturned, _PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
-        self::postProcessInstall(_PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
+        $sFolderPath = self::postProcessInstall(_PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
+
+        if ($sFolderPath === false) {
+            die('no good format ZIP');
+        } else {
+            $bChildThemeHasModules = self::checkChildThemeHasModules($sFolderPath);
+            if( $bChildThemeHasModules ) {
+                $test = self::deleteChildTheme($sFolderPath);
+                die('Child theme deleted !!!');
+            } else {
+                die('Child theme installed !!!');
+            }
+        }
     }
 
     /**
@@ -149,25 +166,83 @@ class AdminPsThemeCustoController extends ModuleAdminController
         return $dest;
     }
 
+    /**
+     * We install the child theme and we return the folder child theme's name
+     *
+     * @param string
+     * @return string
+     */
     public function postProcessInstall($dest)
     {
         if (!$this->module->hasEditRight()) {
             return $this->l("You do not have permission to edit this.");
         }
 
-        $this->theme_manager->install($dest);
-        @unlink($dest);
-        $aFolderScan = @scandir(_PS_ALL_THEMES_DIR_);
-        // var_dump($aFolderScan);
-        foreach ($aFolderScan as $key => $sObject) {
-            $sDirThemeFolder = _PS_ALL_THEMES_DIR_.$sObject;
-            if (is_dir($sDirThemeFolder) && !in_array($sObject,array('.','..'))) {
-                $aFolder[$sDirThemeFolder] = filemtime($sDirThemeFolder);
+        try {
+            $this->theme_manager->install($dest);
+            @unlink($dest);
+            $aFolderScan = @scandir(_PS_ALL_THEMES_DIR_);
+
+            foreach ($aFolderScan as $key => $sObject) {
+                $sDirThemeFolder = _PS_ALL_THEMES_DIR_.$sObject;
+                if (is_dir($sDirThemeFolder) && !in_array($sObject,array('.','..'))) {
+                    $aFolder[filemtime($sDirThemeFolder)] = $sDirThemeFolder;
+                }
+            }
+
+            krsort($aFolder);
+            $aChildthemeFolder = array_values($aFolder);
+            return $aChildthemeFolder[0];
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * the child theme must not having modules. If it does, we will delete it later.
+     *
+     * @param string
+     * @return bool
+     */
+    public function checkChildThemeHasModules($sFolderPath)
+    {
+        $aScanedRoot = @scandir($sFolderPath);
+
+        if (in_array("modules", $aScanedRoot)) {
+            $aScanModules = @scandir($sFolderPath."/modules");
+            unset($aScanModules[array_search(".", $aScanModules)]);
+            unset($aScanModules[array_search("..", $aScanModules)]);
+            if (($key = array_search("index.php", $aScanModules)) !== false) {
+                unset($aScanModules[$key]);
+            }
+            $iHasModules = count($aScanModules);
+            if ($iHasModules > 0) {
+                return true;
+            } else {
+                return false;
             }
         }
-        arsort($aFolder);
-        // $sChildThemeFolder = array_keys($aFolder[0]);
-        var_dump($sChildThemeFolder);
+        return false;
+    }
+
+    /**
+     * the child theme has modules. We can't keep it.
+     *
+     * @param string
+     * @return bool
+     */
+    public function deleteChildTheme($sFolderPath)
+    {
+        $it = new RecursiveDirectoryIterator($sFolderPath, RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                @rmdir($file->getRealPath());
+            } else {
+                @unlink($file->getRealPath());
+            }
+        }
+        return @rmdir($sFolderPath);
     }
 
 }
