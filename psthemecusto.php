@@ -31,7 +31,6 @@ if (!defined('_PS_VERSION_')) {
 
 class psthemecusto extends Module
 {
-
     public function __construct()
     {
         // Settings
@@ -156,9 +155,9 @@ class psthemecusto extends Module
         ));
         $js = array(
             $this->js_path.'back.js',
-            $this->js_path.'dropzone.min.js',
+            $this->js_path.'dropzone.js',
         );
-        $css = array( 
+        $css = array(
             $this->css_path.'back.css',
         );
         $this->context->controller->addJS($js);
