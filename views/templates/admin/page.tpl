@@ -14,9 +14,9 @@
 *}
 
 <div class="content-div">
-    <div class="row">
+    <div class="grid">
         <div class="col-lg-12">
-            {include file="./tabs/$configure_type.tpl"}
+            {include file="./controllers/$configure_type/index.tpl"}
         </div>
     </div>
 </div>

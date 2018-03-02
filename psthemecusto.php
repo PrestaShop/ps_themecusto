@@ -70,14 +70,6 @@ class psthemecusto extends Module
      */
     public function install()
     {
-        // register hook used by the module
-        // if (parent::install() &&
-        //     $this->installTab()) {
-        //     return true;
-        // } else { // if something wrong return false
-        //     $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
-        //     return false;
-        // }
         if (parent::install() &&
             $this->installTabList()) {
             return true;

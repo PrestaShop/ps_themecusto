@@ -41,15 +41,32 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         parent::initContent();
         $this->context->smarty->assign(array(
             'bootstrap'         =>  1,
-            'configure_type'    => 'advanced_css'
+            'configure_type'    => 'advanced'
         ));
         $this->module->setMedia();
         $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
 
+     /**
+     * Clone a theme and modify the config to set the parent theme
+     *
+     * @param none
+     * @return bool
+     */
     public function ajaxProcessDownloadChildTheme()
     {
-        die(self::createChildTheme());
+        global $kernel;
+
+        if (!$this->module->hasEditRight()) {
+            return $this->l("You do not have permission to edit this.");
+        }
+
+        $exporter = $kernel->getContainer()->get('prestashop.core.addon.theme.exporter');
+        $path = $exporter->export($this->context->shop->theme);
+        $aPath = array_reverse(explode("/", $path));
+        $sThemeZipPath = "/themes/".$aPath[0];
+
+        die($sThemeZipPath);
     }
 
     /**
@@ -75,28 +92,6 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
                 die('Child theme installed !!!');
             }
         }
-    }
-
-    /**
-     * Clone a theme and modify the config to set the parent theme
-     *
-     * @param none
-     * @return bool
-     */
-    public function createChildTheme()
-    {
-        global $kernel;
-
-        if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
-        }
-
-        $exporter = $kernel->getContainer()->get('prestashop.core.addon.theme.exporter');
-        $path = $exporter->export($this->context->shop->theme);
-        $aPath = array_reverse(explode("/", $path));
-        $sThemeZipPath = "/themes/".$aPath[0];
-
-        return $sThemeZipPath;
     }
 
     public function processUploadFileChild($aChildThemeReturned, $dest)

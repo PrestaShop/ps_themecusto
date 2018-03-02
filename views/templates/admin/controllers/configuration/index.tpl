@@ -18,7 +18,18 @@
         {l s='Change the color, the typo and the place of the logo' mod='psthemecusto'}
     </div>
     <div class="row">
-        YEAH
+        <div class="col-lg-1">
+            <i class="process-icon-edit" aria-hidden="true"></i>
+        </div>
+        <div class="col-lg-9">
+            <p>
+                {l s='Use the Theme Configurator module to customize the main graphic elements of your site' mod='psthemecusto'}:<br/>
+                {l s='colors, buttons, typography and position of your logo.' mod='psthemecusto'}.
+            </p>
+        </div>
+        <div class="col-lg-2">
+            <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='psthemecusto'}</a>
+        </div>
     </div>
 </div>
 
@@ -27,6 +38,11 @@
         {l s='Modules place\'s' mod='psthemecusto'}
     </div>
     <div class="row">
-        YEAH
+        <div class="col-lg-5">
+            <img style="width: 100%;" src="/modules/psthemecusto/views/templates/admin/controllers/configuration/elem/test.png">
+        </div>
+        <div class="col-lg-7"
+        </div
     </div>
 </div>
+

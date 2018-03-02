@@ -42,4 +42,14 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
 
+    /*
+     SELECT m.id_module, m.name, hm.position
+    FROM ps_hook_module hm
+    INNER JOIN ps_hook h ON h.id_hook = hm.id_hook
+    INNER JOIN ps_module m ON m.id_module = hm.id_module
+    WHERE 1
+    AND h.name = 'displayHome'
+    ORDER BY hm.position ASC
+    */
+
 }
