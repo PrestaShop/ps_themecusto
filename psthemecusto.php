@@ -40,8 +40,12 @@ class psthemecusto extends Module
 
         $this->module_key = '7c707e5791af499b0fb5983803599bb3';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
-        $this->controller_name = 'AdminPsThemeCusto';
-        $this->front_controller =  'index.php?controller='.$this->controller_name.'&token='.Tools::getAdminTokenLite($this->controller_name);
+        $this->controller_name = array( 'AdminPsThemeCustoAdvanced',
+                                        'AdminPsThemeCustoConfiguration'
+                                    );
+        $this->front_controller =  array('index.php?controller='.$this->controller_name[0].'&token='.Tools::getAdminTokenLite($this->controller_name[0]),
+                                        'index.php?controller='.$this->controller_name[1].'&token='.Tools::getAdminTokenLite($this->controller_name[1])
+                                        );
         $this->bootstrap = true;
         parent::__construct();
         $this->displayName = $this->l('Theme Customization');
@@ -55,6 +59,7 @@ class psthemecusto extends Module
         $this->img_path = $this->_path.'views/img/';
         $this->logo_path = $this->_path.'logo.png';
         $this->module_path = $this->_path;
+        $themesTab = Tab::getInstanceFromClassName('AdminThemes');
     }
 
     /**
@@ -66,9 +71,15 @@ class psthemecusto extends Module
     public function install()
     {
         // register hook used by the module
+        // if (parent::install() &&
+        //     $this->installTab()) {
+        //     return true;
+        // } else { // if something wrong return false
+        //     $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
+        //     return false;
+        // }
         if (parent::install() &&
-            $this->installTab() &&
-            $this->registerHook('header')) {
+            $this->installTabList()) {
             return true;
         } else { // if something wrong return false
             $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
@@ -86,7 +97,7 @@ class psthemecusto extends Module
     {
         // unregister hook
         if (parent::uninstall() &&
-            $this->uninstallTab()) {
+            $this->uninstallTabList()) {
             return true;
         } else {
             $this->_errors[] = $this->l('There was an error during the desinstallation. Please contact us through Addons website');
@@ -96,25 +107,69 @@ class psthemecusto extends Module
     }
 
     /**
-     * This method is often use to create an ajax controller
-     *
-     * @param none
-     * @return bool
+     * Assign all sub menu on Admin tab variable
      */
-    public function installTab()
+    public function assignTabList()
     {
-        $tab = new Tab();
-        $tab->active = 1;
-        $tab->class_name = $this->controller_name;
-        $tab->name = array();
-        foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = $this->displayName;
-        }
-        $tab->id_parent = (int) Tab::getIdFromClassName("AdminParentThemes");
-        $tab->module = $this->name;
-        $tab->position = 1;
-        $result = $tab->add();
+        $themesTab = Tab::getInstanceFromClassName('AdminThemes');
+        return array(
+            array(
+                'class' => $this->controller_name[1],
+                'active' => true,
+                'position' => 2,
+                'name' => 'Configuration',
+                'id_parent' => $themesTab->id_parent,
+                'module' => $this->name,
+            ),
+            array(
+                'class' => $this->controller_name[0],
+                'active' => true,
+                'position' => 3,
+                'name' => 'Advanced CSS customisation',
+                'id_parent' => $themesTab->id_parent,
+                'module' => $this->name,
+            )
+        );
+    }
 
+    /**
+     * Install all admin tab
+     * @return boolean
+     */
+    public function installTabList()
+    {
+        /* First, we clone the tab "Theme & Logo" to redefined it correctly
+            Without that, we can't have tabs in this section */
+        $themesTab = Tab::getInstanceFromClassName('AdminThemes');
+        $newTab = clone($themesTab);
+        $newTab->id = 0;
+        $newTab->id_parent = $themesTab->id_parent;
+        $newTab->class_name = $themesTab->class_name.'Parent';
+        $newTab->save();
+        // Second save in order to get the proper position (add() resets it)
+        $newTab->position = $themesTab->position;
+        $newTab->save();
+        $themesTab->id_parent = $newTab->id;
+        $themesTab->save();
+
+        /* We install all the tabs from this module */
+        $tab = new tab();
+        $aTabs = $this->assignTabList();
+        foreach ($aTabs as $aValue) {
+            $tab->active = 1;
+            $tab->class_name = $aValue['class'];
+            $tab->name = array();
+            foreach (Language::getLanguages(true) as $lang) {
+                $tab->name[$lang['id_lang']] =  $aValue['name'];
+            }
+            $tab->id_parent = $aValue['id_parent'];
+            $tab->module = $aValue['module'];
+            $tab->position = $aValue['position'];
+            $result = $tab->add();
+            if (!$result) {
+                return false;
+            }
+        }
         return ($result);
     }
 
@@ -124,21 +179,31 @@ class psthemecusto extends Module
      * @param none
      * @return bool
      */
-    public function uninstallTab()
+    public function uninstallTabList()
     {
-        $id_tab = (int)Tab::getIdFromClassName($this->controller_name);
-        if ($id_tab) {
-            $tab = new Tab($id_tab);
-            if (Validate::isLoadedObject($tab)) {
-                return ($tab->delete());
-            } else {
-                $return = false;
+        $aTabs = $this->assignTabList();
+        foreach ($aTabs as $aValue) {
+            $id_tab = (int)Tab::getIdFromClassName($aValue['class']);
+            if ($id_tab) {
+                $tab = new Tab($id_tab);
+                if (Validate::isLoadedObject($tab)) {
+                    $result = $tab->delete();
+                } else {
+                    return false;
+                }
             }
-        } else {
-            $return = true;
         }
-
-        return ($return);
+        // Duplicate existing Theme tab for sub tree
+        $themesTabParent = Tab::getInstanceFromClassName('AdminThemesParent');
+        $themesTab = Tab::getInstanceFromClassName('AdminThemes');
+        if (!$themesTabParent || !$themesTab) {
+            return false;
+        }
+        $themesTab->position = $themesTabParent->position;
+        $themesTab->id_parent = $themesTabParent->id_parent;
+        $themesTabParent->delete();
+        $themesTab->save();
+        return $result;
     }
 
     /**
@@ -150,8 +215,8 @@ class psthemecusto extends Module
     public function setMedia()
     {
         Media::addJsDef(array(
-            'admin_module_controller_psthemecusto'  => $this->controller_name,
-            'admin_module_ajax_url_psthemecusto'    => $this->front_controller,
+            'admin_module_controller_psthemecusto'  => $this->controller_name[0],
+            'admin_module_ajax_url_psthemecusto'    => $this->front_controller[0],
         ));
         $js = array(
             $this->js_path.'back.js',
@@ -172,7 +237,7 @@ class psthemecusto extends Module
     {
         $result = Profile::getProfileAccess(
             (int)Context::getContext()->cookie->profile,
-            (int)Tab::getIdFromClassName($this->controller_name)
+            (int)Tab::getIdFromClassName($this->controller_name[0])
         );
         return (bool)$result['edit'];
     }

@@ -26,7 +26,7 @@
 
 use PrestaShop\PrestaShop\Core\Addon\Theme\ThemeManagerBuilder;
 
-class AdminPsThemeCustoController extends ModuleAdminController
+class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 {
     public function __construct()
     {
@@ -38,7 +38,6 @@ class AdminPsThemeCustoController extends ModuleAdminController
 
     public function initContent()
     {
-        /* VOIR https://gitlab.com/ps-addons/psgiftcards/blob/master/controllers/front/Giftcards.php */
         parent::initContent();
         $this->context->smarty->assign(array(
             'bootstrap'         =>  1,
@@ -50,7 +49,7 @@ class AdminPsThemeCustoController extends ModuleAdminController
 
     public function ajaxProcessDownloadChildTheme()
     {
-        die(self::createChildTheme());   
+        die(self::createChildTheme());
     }
 
     /**
