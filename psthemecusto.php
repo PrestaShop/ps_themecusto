@@ -211,8 +211,9 @@ class psthemecusto extends Module
             'admin_module_ajax_url_psthemecusto'    => $this->front_controller[0],
         ));
         $js = array(
-            $this->js_path.'back.js',
-            $this->js_path.'dropzone.js',
+            $this->js_path.'/controllers/advanced/back.js',
+            $this->js_path.'/controllers/advanced/dropzone.js',
+            $this->js_path.'/controllers/configuration/back.js',
         );
         $css = array(
             $this->css_path.'back.css',

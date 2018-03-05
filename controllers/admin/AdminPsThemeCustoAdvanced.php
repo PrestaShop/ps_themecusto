@@ -36,6 +36,12 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $this->theme_repository = (new ThemeManagerBuilder($this->context, Db::getInstance()))->buildRepository();
     }
 
+    /**
+     * Initialize the content by adding Boostrap and loading the TPL
+     *
+     * @param none
+     * @return none
+     */
     public function initContent()
     {
         parent::initContent();

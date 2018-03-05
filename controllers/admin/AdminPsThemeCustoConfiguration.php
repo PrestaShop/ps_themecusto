@@ -31,25 +31,59 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         parent::__construct();
     }
 
+    /**
+     * Initialize the content by adding Boostrap and loading the TPL
+     *
+     * @param none
+     * @return none
+     */
     public function initContent()
     {
         parent::initContent();
-        $this->context->smarty->assign(array(
-            'bootstrap'         =>  1,
-            'configure_type'    => 'configuration'
-        ));
+        $oContext = Context::getContext();
+
         $this->module->setMedia();
         $this->setTemplate( $this->module->template_dir.'page.tpl');
+        $this->context->smarty->assign(array(
+            'bootstrap'         =>  1,
+            'configure_type'    => 'configuration',
+            'modulesList'       => $this->getModulesByHook('displayHome'),
+            'modulesPage'       => $oContext->link->getAdminLink('AdminModules'),
+        ));
+
+        Media::addJsDef(array(
+            'wireframeUri' => '/modules/psthemecusto/views/img/wireframe/wireframe_'
+        ));
     }
 
-    /*
-     SELECT m.id_module, m.name, hm.position
-    FROM ps_hook_module hm
-    INNER JOIN ps_hook h ON h.id_hook = hm.id_hook
-    INNER JOIN ps_module m ON m.id_module = hm.id_module
-    WHERE 1
-    AND h.name = 'displayHome'
-    ORDER BY hm.position ASC
-    */
+    /**
+     * Initialize the content by adding Boostrap and loading the TPL
+     *
+     * @param string $sHookName
+     * @return array $aModulesList
+     */
+    public function getModulesByHook($sHookName)
+    {
+        $oContext = Context::getContext();
+        $sSql = '   SELECT m.id_module, m.name, hm.position, m.active
+                    FROM `'._DB_PREFIX_.'hook_module` hm
+                    INNER JOIN `'._DB_PREFIX_.'hook` h ON h.id_hook = hm.id_hook
+                    INNER JOIN `'._DB_PREFIX_.'module` m ON m.id_module = hm.id_module
+                    WHERE 1
+                    AND h.name = "'.pSQL($sHookName).'"
+                    ORDER BY hm.position ASC';
+        $aModulesList = Db::getInstance()->executeS($sSql);
+        foreach ($aModulesList as $aModule) {
+            $aModuleInstance = Module::getInstanceByName($aModule['name']);
+            $aModuleFinalList[$aModule['position']]['name'] = $aModuleInstance->name;
+            $aModuleFinalList[$aModule['position']]['displayName'] = $aModuleInstance->displayName;
+            $aModuleFinalList[$aModule['position']]['description'] = $aModuleInstance->description;
+            $aModuleFinalList[$aModule['position']]['controller_name'] = (isset($aModuleInstance->controller_name)? $aModuleInstance->controller_name : '');
+            $aModuleFinalList[$aModule['position']]['url'] = $oContext->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
+            $aModuleFinalList[$aModule['position']]['logo'] = '/modules/'.$aModuleInstance->name.'/logo.png';
+            unset($aModuleInstance);
+        }
+        return $aModuleFinalList;
+    }
 
 }
