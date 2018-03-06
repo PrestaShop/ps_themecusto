@@ -79,30 +79,43 @@ form#importDropzone {
  * Configuration
  */
 
-#psthemecusto .wireframe img{
-     width: 95%;
- }
+#psthemecusto .js-wireframe img{
+    width: 95%;
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    -moz-filter: grayscale(1);
+    -o-filter: grayscale(1);
+    -ms-filter: grayscale(1);
+    cursor: pointer;
+}
+#psthemecusto .js-wireframe .active img,
+#psthemecusto .js-wireframe img:hover{
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+    -moz-filter: grayscale(0);
+    -o-filter: grayscale(0);
+    -ms-filter: grayscale(0);
+    -webkit-transition: filter .2s;
+    transition: filter .2s;
+}
 #psthemecusto .module-list {
     position: -webkit-sticky;
     position: sticky;
-    top: 185px;
+    top: 186px;
 }
 #psthemecusto .configuration-rectangle {
     border-left: 4px solid #dcdcdc;
     margin-bottom: 25px;
 }
-
 #psthemecusto .configuration-rectangle.active,
 #psthemecusto .configuration-rectangle:hover {
     border-color: #52b0f0;
     -webkit-transition: border-color .2s;
     transition: border-color .2s;
 }
-
 #psthemecusto .configuration-rectangle .module-logo {
     width: 30px;
 }
-
 #psthemecusto .configuration-rectangle .js-module-name {
     text-transform: uppercase;
     font-family: OpenSans;
@@ -121,7 +134,6 @@ form#importDropzone {
     -webkit-box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
     box-shadow: 0px 2px 1px rgba(0,0,0,0.2);
 }
-
 #psthemecusto .configuration-rectangle .js-module-name.active,
 #psthemecusto .configuration-rectangle .js-module-name:hover {
     background-color: #52b0f0;
@@ -130,7 +142,6 @@ form#importDropzone {
     -webkit-transition: opacity .2s, color .2s, background-color .2s, -webkit-transform .2s;
     transition: opacity .2s, color .2s, background-color .2s, transform .2s;
 }
-
 #psthemecusto .configuration-rectangle .module-informations {
     display: none;
     padding: 25px;

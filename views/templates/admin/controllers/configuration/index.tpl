@@ -38,13 +38,13 @@
             {l s='Modules place\'s' mod='psthemecusto'}
         </div>
         <div class="row">
-            <div class="col-lg-5 wireframe">
-                <img src="/modules/psthemecusto/views/img/wireframe/wireframe_base.jpg">
+            <div class="col-lg-5">
+                {include file="./elem/wireframe.tpl"}
             </div>
             <div class="col-lg-7 module-list">
                 {foreach from=$modulesList item=module}
                 <div class="row configuration-rectangle">
-                    <div class="col-lg-12 js-module-name" data-module_name="{$module.name}">
+                    <div class="col-lg-12 js-module-name js-title-{$module.name}" data-module_name="{$module.name}">
                         {$module.displayName}
                     </div>
                     <div class="col-lg-12 module-informations">

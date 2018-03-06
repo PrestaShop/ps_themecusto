@@ -25,33 +25,31 @@
 * Don't forget to prefix your containers with your own identifier
 * to avoid any conflicts with others containers.
 */
-$(document).ready(function() {
 
-    $(document).on('click', '#psthemecusto .js-module-name', function(){
-        $('#psthemecusto .wireframe').height($('#psthemecusto .wireframe img').height());
+$(document).ready(function() {
+    $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
         if ($(this).hasClass('active')) {
-            resetActiveModule($(this));
+            resetActiveModule($('#psthemecusto .js-wireframe div'), $('#psthemecusto .js-module-name'));
         } else {
-            resetActiveModule($('#psthemecusto .js-module-name'));
+            resetActiveModule($('#psthemecusto .js-wireframe div'), $('#psthemecusto .js-module-name'));
             setActiveModule($(this));
         }
     });
-
 });
 
-function resetActiveModule(elem)
+function resetActiveModule(elemImg, elemTitle)
 {
-    $('.wireframe').html('<img src="'+wireframeUri+'base.jpg"/>');
-    elem.removeClass('active');
-    elem.parent('.configuration-rectangle').removeClass('active');
-    elem.parent('.configuration-rectangle').find('.module-informations').slideUp();
+    elemImg.removeClass('active');
+    elemTitle.removeClass('active');
+    elemTitle.parent('.configuration-rectangle').removeClass('active');
+    elemTitle.parent('.configuration-rectangle').find('.module-informations').slideUp();
 }
 
 function setActiveModule(elem)
 {
-    let imgSrc = elem.data('module_name');
-    elem.addClass('active');
-    $('.wireframe').html('<img src="'+wireframeUri+imgSrc+'.jpg"/>');
-    elem.parent('.configuration-rectangle').addClass('active');
-    elem.parent('.configuration-rectangle').find('.module-informations').slideDown();
+    let module = elem.data('module_name');
+    $('.js-img-'+module).addClass('active');
+    $('.js-title-'+module).addClass('active');
+    $('.js-title-'+module).parent('.configuration-rectangle').addClass('active');
+    $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
 }

@@ -49,10 +49,10 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'configure_type'    => 'configuration',
             'modulesList'       => $this->getModulesByHook('displayHome'),
             'modulesPage'       => $oContext->link->getAdminLink('AdminModules'),
+            'moduleImgUri'      => $this->module->module_path.'views/img'
         ));
-
         Media::addJsDef(array(
-            'wireframeUri' => '/modules/psthemecusto/views/img/wireframe/wireframe_'
+            'wireframeUri' => $this->module->module_path.'views/img/wireframe/wireframe_'
         ));
     }
 
