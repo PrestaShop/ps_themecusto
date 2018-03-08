@@ -27,22 +27,48 @@
 */
 
 $(document).ready(function() {
+
     $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
         if ($(this).hasClass('active')) {
-            resetActiveModule($('#psthemecusto .js-wireframe div'), $('#psthemecusto .js-module-name'));
+            resetActiveModule();
         } else {
-            resetActiveModule($('#psthemecusto .js-wireframe div'), $('#psthemecusto .js-module-name'));
+            resetActiveModule();
             setActiveModule($(this));
         }
     });
+
+    $(document).on('click', '#psthemecusto #module-actions form button', function() {
+        console.log( $(this).parent('form') );
+        let action = $(this).parent('form').data('action');
+        let name = $(this).parent('form').data('module_name');
+        let displayName = $(this).parent('form').data('module_displayname');
+        let url = $(this).parent('form').prop('action');
+
+        if (action == 'uninstall' || action == 'disable' || action == 'reset') {
+            $('.modal .action_available').hide();
+            $('.modal .'+action).show();
+            $('.modal .modal-footer a').prop('href', url).attr('data-name', name);
+            $('.modal .module-displayname').html(displayName);
+        } else {
+            ajaxActionModule(url, name);
+        }
+    });
+
+    $(document).on('click', '#psthemecusto .modal .modal-footer a', function(event) {
+        event.preventDefault();
+        let url = $(this).attr('href');
+        let module_name = $(this).data('name');
+        ajaxActionModule(url, module_name);
+    });
+
 });
 
-function resetActiveModule(elemImg, elemTitle)
+function resetActiveModule()
 {
-    elemImg.removeClass('active');
-    elemTitle.removeClass('active');
-    elemTitle.parent('.configuration-rectangle').removeClass('active');
-    elemTitle.parent('.configuration-rectangle').find('.module-informations').slideUp();
+    $('#psthemecusto .js-wireframe div').removeClass('active');
+    $('#psthemecusto .js-module-name').removeClass('active');
+    $('#psthemecusto .js-module-name').parent('.configuration-rectangle').removeClass('active');
+    $('#psthemecusto .js-module-name').parent('.configuration-rectangle').find('.module-informations').slideUp();
 }
 
 function setActiveModule(elem)
@@ -52,4 +78,20 @@ function setActiveModule(elem)
     $('.js-title-'+module).addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
+}
+
+function ajaxActionModule(url, module_name)
+{
+    $.ajax({
+        type: 'POST',
+        url: url,
+        dataType: 'json',
+        success : function(data) {
+            $.growl.notice({ title: "Notice!", message: data[module_name].msg });
+            // $('.js-title-'+module_name).parent('.configuration-rectangle').fadeOut();
+        },
+        error : function(data) {
+            $.growl.error({ title: "Notice!", message: data[module_name].msg });
+        }
+    });
 }

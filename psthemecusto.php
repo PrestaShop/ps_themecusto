@@ -24,7 +24,6 @@
 * International Registered Trademark & Property of PrestaShop SA
 **/
 
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -216,7 +215,7 @@ class psthemecusto extends Module
             $this->js_path.'/controllers/configuration/back.js',
         );
         $css = array(
-            $this->css_path.'back.css',
+            $this->css_path.'/controllers/configuration/back.css',
         );
         $this->context->controller->addJS($js);
         $this->context->controller->addCSS($css);

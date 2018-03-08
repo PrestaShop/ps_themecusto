@@ -12,6 +12,7 @@
 * @license   http://addons.prestashop.com/en/content/12-terms-and-conditions-of-use
 * International Registered Trademark & Property of PrestaShop SA
 *}
+
 <div id="psthemecusto">
     <div class="panel col-lg-12">
         <div class="panel-heading">
@@ -55,7 +56,7 @@
                             {$module.description}
                         </div>
                         <div class="col-lg-2">
-                            <a class="btn btn-primary btn-lg btn-block" href="{$module.url}">{l s='Configure' mod='psthemecusto'}</a>
+                            {include file="./elem/module_actions.tpl"}
                         </div>
                     </div>
                 </div>
@@ -68,4 +69,6 @@
             </div
         </div>
     </div>
+    {include file="./elem/modal.tpl"}
 </div>
+
