@@ -15,7 +15,7 @@
 
 <div class="btn-group form-action-button-container" id="module-actions">
 	<form class="btn-group form-action-button" method="post" action="{$module.url}" data-module_name="{$module.name}">
-		<button type="button" class="btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}"
+		<button type="{if $module.url_active == 'configure'}submit{else}button{/if}" class="btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}"
 				data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}">
 			{$module.url_active|capitalize}
 		</button>
