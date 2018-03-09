@@ -56,7 +56,7 @@
 }
 #psthemecusto .configuration-rectangle.active,
 #psthemecusto .configuration-rectangle:hover {
-    border-color: #52b0f0;
+    border-color: #25b9d7;
     -webkit-transition: border-color .2s;
     transition: border-color .2s;
 }
@@ -83,7 +83,7 @@
 }
 #psthemecusto .configuration-rectangle .js-module-name.active,
 #psthemecusto .configuration-rectangle .js-module-name:hover {
-    background-color: #52b0f0;
+    background-color: #25b9d7;
     color: #fff;
     opacity: 1;
     -webkit-transition: opacity .2s, color .2s, background-color .2s, -webkit-transform .2s;
@@ -98,4 +98,39 @@
 .modal .disable,
 .modal .reset {
     display: none;
+}
+
+button.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding: .3125rem;
+    clear: both;
+    font-weight: 400;
+    color: #6c868e;
+    text-align: inherit;
+    white-space: nowrap;
+    background: none;
+    border: 0;
+    cursor: initial;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+    color: #25b9d7;
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.btn-outline-primary {
+    color: #25b9d7 !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #25b9d7 !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #3ed2f0 !important;
+    border-color: #3ed2f0 !important;
 }

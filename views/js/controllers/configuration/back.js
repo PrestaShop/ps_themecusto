@@ -37,28 +37,32 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', '#psthemecusto #module-actions form button', function() {
-        console.log( $(this).parent('form') );
-        let action = $(this).parent('form').data('action');
-        let name = $(this).parent('form').data('module_name');
-        let displayName = $(this).parent('form').data('module_displayname');
-        let url = $(this).parent('form').prop('action');
+    $(document).on('click', '#psthemecusto button', function(event) {
+        event.preventDefault();
+        let action = $(this).parent('div').data('action');
+        let name = $(this).parent('div').data('module_name');
+        let displayName = $(this).parent('div').data('module_displayname');
+        let url = $(this).parent('div').prop('action');
+        let id_module = $('.src_parent_'+name).data('id_module');
 
         if (action == 'uninstall' || action == 'disable' || action == 'reset') {
             $('.modal .action_available').hide();
             $('.modal .'+action).show();
-            $('.modal .modal-footer a').prop('href', url).attr('data-name', name);
+            $('.modal .modal-footer a').prop('href', url).attr('data-name', name).attr('data-action', action);
             $('.modal .module-displayname').html(displayName);
         } else {
-            ajaxActionModule(url, name);
+            ajaxActionModule(action, id_module);
         }
     });
 
     $(document).on('click', '#psthemecusto .modal .modal-footer a', function(event) {
         event.preventDefault();
-        let url = $(this).attr('href');
-        let module_name = $(this).data('name');
-        ajaxActionModule(url, module_name);
+        // let url = $(this).attr('href');
+        let name = $(this).data('name');
+        let action = $(this).data('action');
+        let id_module = $('.src_parent_'+name).data('id_module');
+
+        ajaxActionModule(action, id_module);
     });
 
 });
@@ -80,18 +84,35 @@ function setActiveModule(elem)
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
 }
 
-function ajaxActionModule(url, module_name)
+function ajaxActionModule(action, id_module)
 {
+
     $.ajax({
         type: 'POST',
-        url: url,
-        dataType: 'json',
+        url: admin_module_ajax_url_psthemecusto,
+        data: {
+            ajax : true,
+            action : 'UpdateModule',
+            id_module : id_module,
+            action_module : action
+        },
         success : function(data) {
-            $.growl.notice({ title: "Notice!", message: data[module_name].msg });
-            // $('.js-title-'+module_name).parent('.configuration-rectangle').fadeOut();
+          console.log( data);
         },
         error : function(data) {
-            $.growl.error({ title: "Notice!", message: data[module_name].msg });
+
         }
     });
+    // $.ajax({
+    //     type: 'POST',
+    //     url: url,
+    //     dataType: 'json',
+    //     success : function(data) {
+    //         $.growl.notice({ title: "Notice!", message: data[module_name].msg });
+    //         $('.src_parent_'+module_name).html(data[module_name].action_menu_html);
+    //     },
+    //     error : function(data) {
+    //         $.growl.error({ title: "Notice!", message: data[module_name].msg });
+    //     }
+    // });
 }

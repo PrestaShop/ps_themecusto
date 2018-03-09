@@ -206,8 +206,8 @@ class psthemecusto extends Module
     public function setMedia()
     {
         Media::addJsDef(array(
-            'admin_module_controller_psthemecusto'  => $this->controller_name[0],
-            'admin_module_ajax_url_psthemecusto'    => $this->front_controller[0],
+            'admin_module_controller_psthemecusto'  => $this->controller_name[1],
+            'admin_module_ajax_url_psthemecusto'    => $this->front_controller[1],
         ));
         $js = array(
             $this->js_path.'/controllers/advanced/back.js',
