@@ -20,7 +20,8 @@
         </div>
         <div class="row">
             <div class="col-lg-1">
-                <i class="process-icon-edit" aria-hidden="true"></i>
+                {* <i class="process-icon-edit" aria-hidden="true"></i> *}
+                <img src="{$iconConfiguration}"/>
             </div>
             <div class="col-lg-9">
                 <p>
@@ -29,7 +30,7 @@
                 </p>
             </div>
             <div class="col-lg-2">
-                <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='psthemecusto'}</a>
+                <a href="{$themeConfiguratorUrl}" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='psthemecusto'}</a>
             </div>
         </div>
     </div>
@@ -52,10 +53,10 @@
                         <div class="col-lg-1">
                             <img class="module-logo" src="{$module.logo}"/>
                         </div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             {$module.description}
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             {include file="./elem/module_actions.tpl"}
                         </div>
                     </div>
@@ -63,7 +64,7 @@
                 {/foreach}
                 <div class="row">
                     <div class="col-lg-4 col-lg-offset-8">
-                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}">{l s='See all theme\'s modules' mod='psthemecusto'}</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}#built-in_modules">{l s='See all theme\'s modules' mod='psthemecusto'}</a>
                     </div>
                 </div>
             </div

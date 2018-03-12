@@ -51,7 +51,7 @@ $(document).ready(function() {
             $('.modal .modal-footer a').prop('href', url).attr('data-name', name).attr('data-action', action);
             $('.modal .module-displayname').html(displayName);
         } else {
-            ajaxActionModule(action, id_module);
+            ajaxActionModule(action, id_module, name);
         }
     });
 
@@ -62,7 +62,7 @@ $(document).ready(function() {
         let action = $(this).data('action');
         let id_module = $('.src_parent_'+name).data('id_module');
 
-        ajaxActionModule(action, id_module);
+        ajaxActionModule(action, id_module, name);
     });
 
 });
@@ -84,35 +84,40 @@ function setActiveModule(elem)
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
 }
 
-function ajaxActionModule(action, id_module)
+function ajaxActionModule(action, id_module, name)
 {
-
-    $.ajax({
-        type: 'POST',
-        url: admin_module_ajax_url_psthemecusto,
-        data: {
-            ajax : true,
-            action : 'UpdateModule',
-            id_module : id_module,
-            action_module : action
-        },
-        success : function(data) {
-          console.log( data);
-        },
-        error : function(data) {
-
-        }
-    });
-    // $.ajax({
-    //     type: 'POST',
-    //     url: url,
-    //     dataType: 'json',
-    //     success : function(data) {
-    //         $.growl.notice({ title: "Notice!", message: data[module_name].msg });
-    //         $('.src_parent_'+module_name).html(data[module_name].action_menu_html);
-    //     },
-    //     error : function(data) {
-    //         $.growl.error({ title: "Notice!", message: data[module_name].msg });
-    //     }
-    // });
+    if (typeof action != "undefined"
+    && typeof id_module != "undefined"
+    && typeof name != "undefined") {
+        $.ajax({
+            type: 'POST',
+            url: admin_module_ajax_url_psthemecusto,
+            data: {
+                ajax : true,
+                action : 'UpdateModule',
+                id_module : id_module,
+                action_module : action,
+                _token : sToken
+            },
+            beforeSend : function(data) {
+                $('.src_loader_'+name).show();
+                $('.src_parent_'+name).hide();
+            },
+            success : function(data) {
+                if (data == '-1') {
+                    $.growl.error({ title: "Notice!", message: "Wrong Token" });
+                } else {
+                    $.growl.notice({ title: "Notice!", message: "ok" });
+                    $('.src_parent_'+name).html(data);
+                }
+                $('.src_loader_'+name).hide();
+                $('.src_parent_'+name).show();
+            },
+            error : function(data) {
+                $('.src_loader_'+name).hide();
+                $('.src_parent_'+name).show();
+                $.growl.error({ title: "Notice!", message: "ko" });
+            }
+        });
+    }
 }

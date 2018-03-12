@@ -49,7 +49,6 @@ class psthemecusto extends Module
         parent::__construct();
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Configure and Customize your theme !');
-        // $this->template_dir = _PS_MODULE_DIR_.$this->name.'/views/templates/admin/';
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
 
         // Settings paths
@@ -59,6 +58,7 @@ class psthemecusto extends Module
         $this->logo_path = $this->_path.'logo.png';
         $this->module_path = $this->_path;
         $themesTab = Tab::getInstanceFromClassName('AdminThemes');
+        $this->_token = Tools::getAdminTokenLite($this->name.date("Y-m-d h").Tools::getRemoteAddr());
     }
 
     /**
@@ -208,6 +208,7 @@ class psthemecusto extends Module
         Media::addJsDef(array(
             'admin_module_controller_psthemecusto'  => $this->controller_name[1],
             'admin_module_ajax_url_psthemecusto'    => $this->front_controller[1],
+            'sToken'                                => $this->_token
         ));
         $js = array(
             $this->js_path.'/controllers/advanced/back.js',

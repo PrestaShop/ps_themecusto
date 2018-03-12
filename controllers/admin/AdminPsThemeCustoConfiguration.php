@@ -46,58 +46,83 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     public function initContent()
     {
         parent::initContent();
-        $oContext = Context::getContext();
+
         $this->module->setMedia();
         $this->setTemplate( $this->module->template_dir.'page.tpl');
         $this->context->smarty->assign(array(
             'bootstrap'             =>  1,
             'configure_type'        => 'configuration',
+            'iconConfiguration'     => $this->module->img_path.'icon_configurator.png',
             'modulesList'           => $this->getModulesByHook('displayHome'),
-            'modulesPage'           => $oContext->link->getAdminLink('AdminModules'),
+            'modulesPage'           => $this->context->link->getAdminLink('AdminModules'),
             'moduleImgUri'          => $this->module->module_path.'views/img',
             'moduleActions'         => $this->aModuleActions,
-            'moduleActionsNames'    => $this->moduleActionsNames
+            'moduleActionsNames'    => $this->moduleActionsNames,
+            'themeConfiguratorUrl'  => $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => 'ps_themeconfigurator')),
         ));
     }
 
     /**
-     * AJAX
+     * AJAX : Do a module action like Install, disable, enable ...
      *
      * @param null
-     * @return
+     * @return tpl
      */
     public function ajaxProcessUpdateModule()
     {
-        $iModuleId      = (int)Tools::getValue('id_module');
-        $sModuleAction  = pSQL(Tools::getValue('action_module'));
-        $oModule        = Module::getInstanceById($iModuleId);
+        if ($this->module->_token === Tools::getValue('_token')) {
+            $iModuleId      = (int)Tools::getValue('id_module');
+            $sModuleAction  = pSQL(Tools::getValue('action_module'));
+            $oModule        = Module::getInstanceById($iModuleId);
+            $bReturn        = false;
 
-        switch ($sModuleAction) {
-            case 'uninstall':
-                $return = $oModule->uninstall();
-            break;
-            case 'install':
-                $return = $oModule->install();
-            break;
-            case 'enable':
-                $return = $oModule->enable();
-            break;
-            case 'disable':
-                $return = $oModule->disable();
-            break;
-            case 'disable_mobile':
-                $return = $oModule->enableDevice('mobile');
-            break;
-            case 'enable_mobile':
-                $return = $oModule->disableDevice('mobile');
-            break;
-            case 'reset':
-                $return = $oModule->uninstall();
-                $return = $oModule->install();
-            break;
+            switch ($sModuleAction) {
+                case 'uninstall':
+                    $bReturn = $oModule->uninstall();
+                break;
+                case 'install':
+                    $bReturn = $oModule->install();
+                break;
+                case 'enable':
+                    $bReturn = $oModule->enable();
+                break;
+                case 'disable':
+                    $bReturn = $oModule->disable();
+                break;
+                case 'disable_mobile':
+                    $bReturn = $oModule->enableDevice('mobile');
+                break;
+                case 'enable_mobile':
+                    $bReturn = $oModule->disableDevice('mobile');
+                break;
+                case 'reset':
+                    $bReturn = $oModule->uninstall();
+                    $bReturn = $oModule->install();
+                break;
+                default:
+                    die(0);
+                break;
+            }
+
+            $sUrlActive = ($oModule->isEnabled($oModule->name) ? 'configure' : 'enable');
+            $aModule['id_module'] = $oModule->id;
+            $aModule['name'] = $oModule->name;
+            $aModule['displayName'] = $oModule->displayName;
+            $aModule['url_active'] = $sUrlActive;
+            $aModule['active'] = $oModule->enable_device;
+            $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
+            unset($oModule);
+
+            $this->context->smarty->assign(array(
+                'module' => $aModule,
+                'moduleActions'         => $this->aModuleActions,
+                'moduleActionsNames'    => $this->moduleActionsNames
+                )
+            );
+            die($this->context->smarty->fetch(dirname(__FILE__).'/../../views/templates/admin/controllers/configuration/elem/module_actions.tpl'));
+        } else {
+            die("-1");
         }
-
-        die($return);
     }
 
     /**
@@ -108,13 +133,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      */
     public function getModulesByHook($sHookName)
     {
-        global $kernel;
-
-        $instance = $kernel->getContainer();
-        $router = $instance->get('router');
         $aModuleFinalList = array();
 
-        $oContext = Context::getContext();
         $sSql = '   SELECT m.id_module, m.name, hm.position, ms.enable_device as active
                     FROM `'._DB_PREFIX_.'hook_module` hm
                     INNER JOIN `'._DB_PREFIX_.'hook` h ON h.id_hook = hm.id_hook
@@ -126,7 +146,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModulesList = Db::getInstance()->executeS($sSql);
 
         foreach ($aModulesList as $aModule) {
-
             $sUrlActive = ($aModule['active']? 'configure' : 'enable');
             $aModuleInstance = Module::getInstanceByName($aModule['name']);
             $aModuleFinalList[$aModule['position']]['id_module'] = $aModule['id_module'];
@@ -137,19 +156,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $aModuleFinalList[$aModule['position']]['description'] = $aModuleInstance->description;
             $aModuleFinalList[$aModule['position']]['controller_name'] = (isset($aModuleInstance->controller_name)? $aModuleInstance->controller_name : '');
             $aModuleFinalList[$aModule['position']]['logo'] = '/modules/'.$aModuleInstance->name.'/logo.png';
-
-            // foreach ($this->aModuleActions as $sAction) {
-            //     if ($sAction != 'configure') {
-            //         $aModuleFinalList[$aModule['position']]['actions_url'][$sAction] = $router->generate('admin_module_manage_action', array(
-            //             'action'        => $sAction,
-            //             'module_name'   => $aModule['name']
-            //         ));
-            //     } else {
-            //         $aModuleFinalList[$aModule['position']]['actions_url'][$sAction] = $oContext->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
-            //     }
-            // }
-            $aModuleFinalList[$aModule['position']]['actions_url']['configure'] = $oContext->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
-            // $aModuleFinalList[$aModule['position']]['url'] = $aModuleFinalList[$aModule['position']]['actions_url'][$sUrlActive];
+            $aModuleFinalList[$aModule['position']]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
             unset($aModuleInstance);
         }
         return $aModuleFinalList;
