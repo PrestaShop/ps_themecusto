@@ -13,7 +13,7 @@
 * International Registered Trademark & Property of PrestaShop SA
 *}
 
-<div class="panel col-lg-12">
+<div id="psthemecusto" class="panel col-lg-12">
     <div class="panel-heading">
         {l s='Advanced CSS customisation' mod='psthemecusto'}
     </div>
@@ -26,14 +26,16 @@
                 <h4>1 - {l s='Download a child theme' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
                     <p>{l s='A child theme allows you to change small aspects of your site\'s appearance yet still preserve your theme\'s look and functionnality' mod='psthemecusto'}.</p>
-                    <span class="btn btn-primary btn-lg btn-block" rel="noopener" id="download_child_theme">{l s='Download child theme' mod='psthemecusto'}</span>
+                    <div class="btn btn-primary btn-lg btn-block" rel="noopener" id="download_child_theme">
+                        {l s='Download child theme' mod='psthemecusto'}<div class="loader"></div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-offset-1">
                 <h4>2 - {l s='Edit child theme CSS style sheet' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
                     <p>{l s='A child theme allows you to change small aspects of your site\'s appearance yet still preserve your theme\'s look and functionnality' mod='psthemecusto'}.</p>
-                    <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='How to use parents/child themes' mod='psthemecusto'}</a>
+                    <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='psthemecusto'}</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-offset-1">

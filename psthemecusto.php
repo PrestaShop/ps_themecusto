@@ -203,8 +203,10 @@ class psthemecusto extends Module
     public function setMedia($aJsDef, $aJs, $aCss)
     {
         Media::addJsDef($aJsDef);
-        $this->context->controller->addJS($aJs);
+
+        array_push($aCss, $this->css_path."general.css");
         $this->context->controller->addCSS($aCss);
+        $this->context->controller->addJS($aJs);
     }
 
     /**

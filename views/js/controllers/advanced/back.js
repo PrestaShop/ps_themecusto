@@ -37,7 +37,11 @@ $(document).ready(function() {
                 action : 'DownloadChildTheme',
                 ajax : true
             },
+            beforeSend : function(data) {
+                $('.loader').show();
+            },
             success : function(data) {
+                $('.loader').hide();
                 window.location = data;
             }
         });

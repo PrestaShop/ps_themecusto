@@ -17,9 +17,9 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="uninstall action_available modal-title" id="moduleActionlModalLongTitle">{l s='Uninstall module?' mod='psthemecusto'}</h5>
-                <h5 class="disable action_available modal-title" id="moduleActionlModalLongTitle">{l s='Disable module?' mod='psthemecusto'}</h5>
-                <h5 class="reset action_available modal-title" id="moduleActionlModalLongTitle">{l s='Reset module?' mod='psthemecusto'}</h5>
+                <h4 class="uninstall action_available modal-title" id="moduleActionlModalLongTitle">{l s='Uninstall module?' mod='psthemecusto'}</h4>
+                <h4 class="disable action_available modal-title" id="moduleActionlModalLongTitle">{l s='Disable module?' mod='psthemecusto'}</h4>
+                <h4 class="reset action_available modal-title" id="moduleActionlModalLongTitle">{l s='Reset module?' mod='psthemecusto'}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

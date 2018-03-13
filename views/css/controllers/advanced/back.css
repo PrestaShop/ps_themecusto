@@ -28,7 +28,7 @@
 
 /**
  * Advanced CSS customization
- */
+ /*
 #upload-child-modal {
     font-family: Open Sans, sans-serif;
     font-size: 0.9rem;
@@ -48,7 +48,7 @@
     font-weight: 600;
     margin: 0;
     line-height: 1.5;
-}
+} */
 
 form#importDropzone {
     border: 2px dashed #6c868e;
@@ -73,4 +73,34 @@ form#importDropzone {
     font-size: smaller;
     font-style: italic;
     color: #CECCCC;
+}
+.btn-outline-secondary {
+    border: 1px solid #8a8a8a !important;
+}
+a.btn-outline-secondary {
+    color: #8a8a8a;
+}
+#download_child_theme {
+    position: relative;
+}
+
+/**
+    LOADER
+*/
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #25b9d7;
+    width: 31px;
+    height: 31px;
+    position: absolute;
+    top: 4px;
+    right: 15px;
+}
+/**
+    MODAL
+    */
+
+#psthemecusto .modal .module-import-start-footer-text {
+    color: #CECCCC !important;
+    font-size: 0.8rem !important;
 }
