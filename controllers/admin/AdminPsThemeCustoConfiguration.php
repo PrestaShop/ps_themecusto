@@ -69,6 +69,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aCss = array($this->module->css_path.'/controllers/'.$this->controller_quick_name.'/back.css');
         $this->module->setMedia($aJsDef, $aJs, $aCss);
 
+        // $this->context->smarty->fetch(dirname(__FILE__).'/../../views/templates/admin/page.tpl');
         $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
 

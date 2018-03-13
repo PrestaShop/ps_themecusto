@@ -26,30 +26,6 @@
 * to avoid any conflicts with others containers.
 */
 
-/**
- * Advanced CSS customization
- /*
-#upload-child-modal {
-    font-family: Open Sans, sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: #363A41;
-}
-#upload-child-modal .module-modal-title {
-    display: inline-block;
-    padding-left: 1em;
-    display: table-cell;
-    vertical-align: top;
-}
-
-#upload-child-modal .modal-title {
-    color: #363A41;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0;
-    line-height: 1.5;
-} */
-
 form#importDropzone {
     border: 2px dashed #6c868e;
 }
@@ -80,26 +56,26 @@ form#importDropzone {
 a.btn-outline-secondary {
     color: #8a8a8a;
 }
-#download_child_theme {
-    position: relative;
-}
-
 /**
     LOADER
 */
+#psthemecusto .btn-primary.js-loader {
+    position: relative;
+    display: none;
+}
 .loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #25b9d7;
-    width: 31px;
-    height: 31px;
+    display: block;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #25b9d7;
+    width: 22px;
+    height: 22px;
     position: absolute;
-    top: 4px;
-    right: 15px;
+    top: 9px;
+    right: 9px;
 }
 /**
     MODAL
-    */
-
+*/
 #psthemecusto .modal .module-import-start-footer-text {
     color: #CECCCC !important;
     font-size: 0.8rem !important;

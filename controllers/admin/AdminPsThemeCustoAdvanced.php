@@ -101,14 +101,16 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $sFolderPath = self::postProcessInstall(_PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
 
         if ($sFolderPath === false) {
-            die('no good format ZIP');
+            /* Can be the name of the theme (duplicate theme name) */
+            /*  */
+            die($this->l("The theme already exists"));
         } else {
             $bChildThemeHasModules = self::checkChildThemeHasModules($sFolderPath);
             if( $bChildThemeHasModules ) {
                 $test = self::deleteChildTheme($sFolderPath);
-                die('Child theme deleted !!!');
+                die($this->l("You must not have modules in your child theme"));
             } else {
-                die('Child theme installed !!!');
+                die($this->l("Child theme have been added"));
             }
         }
     }

@@ -38,7 +38,8 @@ class psthemecusto extends Module
 
         $this->module_key = '7c707e5791af499b0fb5983803599bb3';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
-        $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
+        $this->controller_name = array( 'AdminPsThemeCustoAdvanced',
+                                        'AdminPsThemeCustoConfiguration');
         $this->front_controller =  array('index.php?controller='.$this->controller_name[0].'&token='.Tools::getAdminTokenLite($this->controller_name[0]),
                                         'index.php?controller='.$this->controller_name[1].'&token='.Tools::getAdminTokenLite($this->controller_name[1])
                                         );
@@ -47,7 +48,6 @@ class psthemecusto extends Module
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Configure and Customize your theme !');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
-        // $this->template_dir = dirname(__FILE__).'/views/templates/admin/';
 
         // Settings paths
         $this->js_path  = $this->_path.'views/js/';

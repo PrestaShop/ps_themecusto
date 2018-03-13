@@ -38,10 +38,12 @@ $(document).ready(function() {
                 ajax : true
             },
             beforeSend : function(data) {
-                $('.loader').show();
+                $('#download_child_theme').hide();
+                $('.js-loader').fadeIn();
             },
             success : function(data) {
-                $('.loader').hide();
+                $('.js-loader').hide();
+                $('#download_child_theme').fadeIn();
                 window.location = data;
             }
         });
