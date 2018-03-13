@@ -33,6 +33,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     {
         parent::__construct();
 
+        $this->controller_quick_name = 'configuration';
         $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset' );
         $this->moduleActionsNames = array('Uninstall', 'Install', 'Configure', 'Enable', 'Disable', 'Disable Mobile', 'Enable Mobile' ,'Reset');
     }
@@ -42,16 +43,14 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      *
      * @param none
      * @return none
-     */
+    */
     public function initContent()
     {
         parent::initContent();
 
-        $this->module->setMedia();
-        $this->setTemplate( $this->module->template_dir.'page.tpl');
         $this->context->smarty->assign(array(
             'bootstrap'             =>  1,
-            'configure_type'        => 'configuration',
+            'configure_type'        => $this->controller_quick_name,
             'iconConfiguration'     => $this->module->img_path.'icon_configurator.png',
             'modulesList'           => $this->getModulesByHook('displayHome'),
             'modulesPage'           => $this->context->link->getAdminLink('AdminModules'),
@@ -60,14 +59,26 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'moduleActionsNames'    => $this->moduleActionsNames,
             'themeConfiguratorUrl'  => $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => 'ps_themeconfigurator')),
         ));
+
+        $aJsDef = array(
+            'admin_module_controller_psthemecusto'  => $this->module->controller_name[1],
+            'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[1],
+            'sToken'=> $this->module->_token
+        );
+        $aJs = array($this->module->js_path.'/controllers/'.$this->controller_quick_name.'/back.js');
+        $aCss = array($this->module->css_path.'/controllers/'.$this->controller_quick_name.'/back.css');
+        $this->module->setMedia($aJsDef, $aJs, $aCss);
+
+        $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
+
 
     /**
      * AJAX : Do a module action like Install, disable, enable ...
      *
      * @param null
      * @return tpl
-     */
+    */
     public function ajaxProcessUpdateModule()
     {
         if ($this->module->_token === Tools::getValue('_token')) {
@@ -90,10 +101,10 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     $bReturn = $oModule->disable();
                 break;
                 case 'disable_mobile':
-                    $bReturn = $oModule->enableDevice('mobile');
+                    $bReturn = $oModule->disableDevice(Context::DEVICE_MOBILE);
                 break;
                 case 'enable_mobile':
-                    $bReturn = $oModule->disableDevice('mobile');
+                    $bReturn = $oModule->enableDevice(Context::DEVICE_MOBILE);
                 break;
                 case 'reset':
                     $bReturn = $oModule->uninstall();
@@ -104,22 +115,26 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 break;
             }
 
+            $iModuleIsMobileActive = Db::getInstance()->getValue('SELECT ms.enable_device as active FROM `'._DB_PREFIX_.'module_shop` ms WHERE ms.id_module = '.(int)$oModule->id);
             $sUrlActive = ($oModule->isEnabled($oModule->name) ? 'configure' : 'enable');
+
             $aModule['id_module'] = $oModule->id;
             $aModule['name'] = $oModule->name;
             $aModule['displayName'] = $oModule->displayName;
             $aModule['url_active'] = $sUrlActive;
-            $aModule['active'] = $oModule->enable_device;
+            $aModule['active'] = $iModuleIsMobileActive;
             $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
+
             unset($oModule);
 
             $this->context->smarty->assign(array(
-                'module' => $aModule,
+                'module'                => $aModule,
                 'moduleActions'         => $this->aModuleActions,
                 'moduleActionsNames'    => $this->moduleActionsNames
                 )
             );
-            die($this->context->smarty->fetch(dirname(__FILE__).'/../../views/templates/admin/controllers/configuration/elem/module_actions.tpl'));
+
+            die($this->context->smarty->fetch(dirname(__FILE__).'/../../views/templates/admin/controllers/'.$this->controller_quick_name.'/elem/module_actions.tpl'));
         } else {
             die("-1");
         }
@@ -130,7 +145,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      *
      * @param string $sHookName
      * @return array $aModulesList
-     */
+    */
     public function getModulesByHook($sHookName)
     {
         $aModuleFinalList = array();
@@ -143,6 +158,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     WHERE 1
                     AND h.name = "'.pSQL($sHookName).'"
                     ORDER BY hm.position ASC';
+
         $aModulesList = Db::getInstance()->executeS($sSql);
 
         foreach ($aModulesList as $aModule) {
@@ -159,7 +175,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $aModuleFinalList[$aModule['position']]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
             unset($aModuleInstance);
         }
+
         return $aModuleFinalList;
     }
-
 }

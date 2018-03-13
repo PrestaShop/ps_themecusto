@@ -32,16 +32,13 @@ class psthemecusto extends Module
 {
     public function __construct()
     {
-        // Settings
         $this->name = 'psthemecusto';
         $this->version = '0.0.1';
         $this->author = 'PrestaShop';
 
         $this->module_key = '7c707e5791af499b0fb5983803599bb3';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
-        $this->controller_name = array( 'AdminPsThemeCustoAdvanced',
-                                        'AdminPsThemeCustoConfiguration'
-                                    );
+        $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
         $this->front_controller =  array('index.php?controller='.$this->controller_name[0].'&token='.Tools::getAdminTokenLite($this->controller_name[0]),
                                         'index.php?controller='.$this->controller_name[1].'&token='.Tools::getAdminTokenLite($this->controller_name[1])
                                         );
@@ -50,6 +47,7 @@ class psthemecusto extends Module
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Configure and Customize your theme !');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
+        // $this->template_dir = dirname(__FILE__).'/views/templates/admin/';
 
         // Settings paths
         $this->js_path  = $this->_path.'views/js/';
@@ -57,7 +55,6 @@ class psthemecusto extends Module
         $this->img_path = $this->_path.'views/img/';
         $this->logo_path = $this->_path.'logo.png';
         $this->module_path = $this->_path;
-        $themesTab = Tab::getInstanceFromClassName('AdminThemes');
         $this->_token = Tools::getAdminTokenLite($this->name.date("Y-m-d h").Tools::getRemoteAddr());
     }
 
@@ -203,23 +200,11 @@ class psthemecusto extends Module
      * @param none
      * @return none
      */
-    public function setMedia()
+    public function setMedia($aJsDef, $aJs, $aCss)
     {
-        Media::addJsDef(array(
-            'admin_module_controller_psthemecusto'  => $this->controller_name[1],
-            'admin_module_ajax_url_psthemecusto'    => $this->front_controller[1],
-            'sToken'                                => $this->_token
-        ));
-        $js = array(
-            $this->js_path.'/controllers/advanced/back.js',
-            $this->js_path.'/controllers/advanced/dropzone.js',
-            $this->js_path.'/controllers/configuration/back.js',
-        );
-        $css = array(
-            $this->css_path.'/controllers/configuration/back.css',
-        );
-        $this->context->controller->addJS($js);
-        $this->context->controller->addCSS($css);
+        Media::addJsDef($aJsDef);
+        $this->context->controller->addJS($aJs);
+        $this->context->controller->addCSS($aCss);
     }
 
     /**

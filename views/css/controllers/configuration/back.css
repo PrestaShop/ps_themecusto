@@ -93,13 +93,9 @@
     display: none;
     padding: 25px;
 }
-
-.modal .uninstall,
-.modal .disable,
-.modal .reset {
-    display: none;
+#psthemecusto .modal {
+    overflow:hidden;
 }
-
 button.dropdown-item {
     display: block;
     width: 100%;
