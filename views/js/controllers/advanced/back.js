@@ -53,6 +53,20 @@ $(document).ready(function() {
         event.preventDefault();
         $('#importDropzone').trigger( "click" );
     });
+    $('body').on('click', '.module-import-failure-details-action', function() {
+        event.preventDefault();
+        $('.module-import-failure-details').slideDown();
+    });
+    $('body').on('click', '.module-import-failure-retry', function() {
+        event.preventDefault();
+        $('.module-import-start').show();
+        $('.module-import-failure').hide();
+    });
+    $("#upload-child-modal").on("hidden.bs.modal", function () {
+        $('.module-import-start').show();
+        $('.module-import-failure').hide();
+        $('.module-import-success').hide();
+    });
     Dropzone.options.importDropzone = {
         acceptedFiles: '.zip',
         maxFiles: 1,
@@ -60,10 +74,22 @@ $(document).ready(function() {
         dictDefaultMessage: '',
         hiddenInputContainer: '#importDropzone',
         success: function(file, response){
-            $('.modal-body .row').html(response);
+            $('.module-import-start').hide();
+            let treatment = JSON.parse(response);
+            switch (treatment.state) {
+                case 0:
+                    $('.module-import-failure').show();
+                    $('.module-import-failure-details').html(treatment.message);
+                break;
+                case 1:
+                    $('.module-import-success').show();
+                    $('.module-import-success-msg').html(treatment.message);
+                break;
+            }
+            this.removeAllFiles();
         },
         error: function(file, response){
-            $('.modal-body .row').html('not ok !');
+            $('.module-import-failure').show();
         }
     };
 });

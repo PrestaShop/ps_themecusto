@@ -47,39 +47,7 @@
                     <p>{l s='Using a child theme lets you upgrade the parent theme without affecting the customizations you\'ve made to your site' mod='psthemecusto'}.</p>
                     <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal">{l s='Upload child theme' mod='psthemecusto'}</a>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="upload-child-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title module-modal-title" id="exampleModalLongTitle">{l s='Upload child theme' mod='psthemecusto'}</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <form action="#" class="dropzone dz-clickable" id="importDropzone">
-                                            <div class="module-import-start">
-                                                <i class="module-import-start-icon material-icons">cloud_upload</i><br>
-                                                <p class="module-import-start-main-text">
-                                                    Drop your module archive here or <a href="#" class="module-import-start-select-manual">select file</a>
-                                                </p>
-                                                <p class="module-import-start-footer-text">
-                                                    Please upload one file at a time, .zip.
-                                                    Your module will be installed right after that.
-                                                </p>
-                                            </div>
-                                            <input type="hidden" name="action" value="UploadChildTheme" />
-                                            <div class="dz-default dz-message"><span></span></div><input name="childthemefile" type="file" class="dz-hidden-input" accept=".zip" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {include file="./elem/modal.tpl"}
             </div>
         </div>
     </div>

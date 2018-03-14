@@ -99,20 +99,31 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $aChildThemeReturned = Tools::fileAttachment('file');
         self::processUploadFileChild( $aChildThemeReturned, _PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
         $sFolderPath = self::postProcessInstall(_PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
+        $aReturn = array();
 
         if ($sFolderPath === false) {
-            /* Can be the name of the theme (duplicate theme name) */
-            /*  */
-            die($this->l("The theme already exists"));
+            $aReturn = array(
+                'state'     => 0,
+                'message'   => $this->l('The theme already exists')
+            );
         } else {
             $bChildThemeHasModules = self::checkChildThemeHasModules($sFolderPath);
             if( $bChildThemeHasModules ) {
                 $test = self::deleteChildTheme($sFolderPath);
-                die($this->l("You must not have modules in your child theme"));
+                $aReturn = array(
+                    'state'     => 0,
+                    'message'   => $this->l('You must not have modules in your child theme')
+                );
             } else {
-                die($this->l("Child theme have been added"));
+                $aReturn = array(
+                    'state'         => 1,
+                    'message'       => $this->l('Child theme have been added'),
+                    'theme_name'    => $aChildThemeReturned['rename']
+                );
             }
         }
+
+        die(Tools::jsonEncode($aReturn));
     }
 
     public function processUploadFileChild($aChildThemeReturned, $dest)

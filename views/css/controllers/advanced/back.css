@@ -76,7 +76,32 @@ a.btn-outline-secondary {
 /**
     MODAL
 */
+.dz-preview {
+    display: none !important;
+}
+#psthemecusto .modal .module-import-failure,
+#psthemecusto .modal .module-import-failure-details,
+#psthemecusto .modal .module-import-success {
+    display: none;
+    text-align: center;
+}
 #psthemecusto .modal .module-import-start-footer-text {
     color: #CECCCC !important;
     font-size: 0.8rem !important;
+}
+#psthemecusto .modal .module-import-failure {
+    font-size: 0.8rem;
+    line-height: 2rem;
+}
+#psthemecusto .modal .module-import-failure .module-import-failure-icon {
+    color: #c45c67;
+    font-size: 70px;
+}
+#psthemecusto .modal .module-import-failure .module-import-failure-msg {
+    font-weight: 700;
+    margin-bottom: 0;
+}
+#psthemecusto .modal .module-import-success .module-import-success-icon {
+    color: #1c8ca3;
+    font-size: 70px;
 }
