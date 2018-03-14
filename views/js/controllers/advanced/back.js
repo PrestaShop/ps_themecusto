@@ -53,29 +53,40 @@ $(document).ready(function() {
         event.preventDefault();
         $('#importDropzone').trigger( "click" );
     });
+
     $('body').on('click', '.module-import-failure-details-action', function() {
         event.preventDefault();
         $('.module-import-failure-details').slideDown();
     });
+
     $('body').on('click', '.module-import-failure-retry', function() {
         event.preventDefault();
         $('.module-import-start').show();
         $('.module-import-failure').hide();
     });
+
     $("#upload-child-modal").on("hidden.bs.modal", function () {
         $('.module-import-start').show();
         $('.module-import-failure').hide();
         $('.module-import-success').hide();
     });
+
     Dropzone.options.importDropzone = {
         acceptedFiles: '.zip',
         maxFiles: 1,
         maxFilesize: 50, // File size in Mb
         dictDefaultMessage: '',
         hiddenInputContainer: '#importDropzone',
-        success: function(file, response){
+        sending: function sending() {
+            $('.modal .loader').show();
             $('.module-import-start').hide();
+            $('.module-import-failure').hide();
+            $('.module-import-success').hide();
+        },
+        success: function(file, response){
             let treatment = JSON.parse(response);
+
+            $('.modal .loader').hide();
             switch (treatment.state) {
                 case 0:
                     $('.module-import-failure').show();
@@ -89,6 +100,7 @@ $(document).ready(function() {
             this.removeAllFiles();
         },
         error: function(file, response){
+            $('.modal .loader').hide();
             $('.module-import-failure').show();
         }
     };

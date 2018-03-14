@@ -63,7 +63,7 @@ a.btn-outline-secondary {
     position: relative;
     display: none;
 }
-.loader {
+.btn .loader {
     display: block;
     border: 2px solid #f3f3f3;
     border-top: 2px solid #25b9d7;
@@ -72,6 +72,12 @@ a.btn-outline-secondary {
     position: absolute;
     top: 9px;
     right: 9px;
+}
+.modal .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #25b9d7;
+    width: 100px;
+    height: 100px;
 }
 /**
     MODAL

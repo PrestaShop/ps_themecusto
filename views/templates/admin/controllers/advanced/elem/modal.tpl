@@ -26,6 +26,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form action="#" class="dropzone dz-clickable" id="importDropzone">
+                            <div class="loader"></div>
                             <div class="module-import-start">
                                 <i class="module-import-start-icon material-icons">cloud_upload</i><br>
                                 <p class="module-import-start-main-text">
