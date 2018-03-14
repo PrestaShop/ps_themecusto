@@ -97,31 +97,41 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function ajaxProcessUploadChildTheme()
     {
         $aChildThemeReturned = Tools::fileAttachment('file');
-        self::processUploadFileChild( $aChildThemeReturned, _PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
+        $sZipPath = self::processUploadFileChild( $aChildThemeReturned, _PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
         $sFolderPath = self::postProcessInstall(_PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
         $aReturn = array();
 
         if ($sFolderPath === false) {
+            @unlink($sZipPath);
             $aReturn = array(
                 'state'     => 0,
-                'message'   => $this->l('The theme already exists')
+                'message'   => $this->l('The theme already exists or the parent name in the config file is wrong')
             );
-        } else {
-            $bChildThemeHasModules = self::checkChildThemeHasModules($sFolderPath);
-            if( $bChildThemeHasModules ) {
-                $test = self::deleteChildTheme($sFolderPath);
-                $aReturn = array(
-                    'state'     => 0,
-                    'message'   => $this->l('You must not have modules in your child theme')
-                );
-            } else {
-                $aReturn = array(
-                    'state'         => 1,
-                    'message'       => $this->l('Child theme have been added'),
-                    'theme_name'    => $aChildThemeReturned['rename']
-                );
-            }
+            die(Tools::jsonEncode($aReturn));
         }
+
+        if (self::checkChildThemeHasModules($sFolderPath)) {
+            self::deleteChildTheme($sFolderPath);
+            $aReturn = array(
+                'state'     => 0,
+                'message'   => $this->l('You must not have modules in your child theme')
+            );
+            die(Tools::jsonEncode($aReturn));
+        }
+
+        if (!self::checkIfIsChildTheme($sFolderPath)) {
+            self::deleteChildTheme($sFolderPath);
+            $aReturn = array(
+                'state'     => 0,
+                'message'   => $this->l('You must enter the parent theme name in the theme.yml file. Furthermore, the parent name must be the current parent theme.')
+            );
+            die(Tools::jsonEncode($aReturn));
+        }
+
+        $aReturn = array(
+            'state'         => 1,
+            'message'       => $this->l('Child theme have been added')
+        );
 
         die(Tools::jsonEncode($aReturn));
     }
@@ -249,6 +259,33 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             }
         }
         return false;
+    }
+
+    /**
+     * We check in theme.yml if this theme is a child theme of the current main theme.
+     *
+     * @param string
+     * @return bool
+     */
+    public function checkIfIsChildTheme($sFolderPath)
+    {
+        $sFile = "theme.yml";
+        $aLines = file($sFolderPath.'/config/'.$sFile);
+        $sSearchString = "parent:";
+        $bIsChildTheme = false;
+
+        foreach ($aLines as $line) {
+            if(strpos($line, $sSearchString) !== false) {
+                $aParentThemeName = explode(":", $line);
+                $sParentThemeName = trim($aParentThemeName[1]);
+                if ($sParentThemeName == _THEME_NAME_) {
+                    $bIsChildTheme = true;
+                }
+                break;
+            }
+        }
+
+        return $bIsChildTheme;
     }
 
     /**
