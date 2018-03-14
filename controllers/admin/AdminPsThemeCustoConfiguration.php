@@ -24,6 +24,8 @@
 * International Registered Trademark & Property of PrestaShop SA
 **/
 
+require_once(dirname(__FILE__).'../../../classes/ThemeCustoRequests.php');
+
 class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 {
     private $aModuleActions;
@@ -150,17 +152,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     public function getModulesByHook($sHookName)
     {
         $aModuleFinalList = array();
-
-        $sSql = '   SELECT m.id_module, m.name, hm.position, ms.enable_device as active
-                    FROM `'._DB_PREFIX_.'hook_module` hm
-                    INNER JOIN `'._DB_PREFIX_.'hook` h ON h.id_hook = hm.id_hook
-                    INNER JOIN `'._DB_PREFIX_.'module` m ON m.id_module = hm.id_module
-                    LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
-                    WHERE 1
-                    AND h.name = "'.pSQL($sHookName).'"
-                    ORDER BY hm.position ASC';
-
-        $aModulesList = Db::getInstance()->executeS($sSql);
+        $aModulesList = ThemeCustoRequests::getModulesListByHook($sHookName);
 
         foreach ($aModulesList as $aModule) {
             $sUrlActive = ($aModule['active']? 'configure' : 'enable');
