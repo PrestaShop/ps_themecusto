@@ -48,6 +48,24 @@ class ThemeCustoRequests
     }
 
     /**
+     * Get all the modules by name
+     *
+     * @param string $aModulesName
+     * @return array $aModulesList
+    */
+    public static function getModulesListByName($aModulesName)
+    {
+        $sSql = '   SELECT m.id_module, m.name, ms.enable_device as active
+                    FROM `'._DB_PREFIX_.'module` m
+                    LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
+                    WHERE m.name IN ('.implode(',', $aModulesName).')';
+
+        $aModulesList = Db::getInstance()->executeS($sSql);
+
+        return $aModulesList;
+    }
+
+    /**
      * Get the device status of a module
      *
      * @param int $iModuleId

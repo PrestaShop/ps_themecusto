@@ -94,7 +94,13 @@
 }
 #psthemecusto .configuration-rectangle .module-informations {
     display: none;
-    padding: 25px;
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 0;
+}
+#psthemecusto .configuration-rectangle .module-informations:last-child {
+    padding-bottom: 25px;
 }
 button.dropdown-item {
     display: block;

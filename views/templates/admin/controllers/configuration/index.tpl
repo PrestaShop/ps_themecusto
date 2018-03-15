@@ -44,22 +44,31 @@
                 {include file="./elem/wireframe.tpl"}
             </div>
             <div class="col-lg-7 module-list">
-                {foreach from=$modulesList item=module}
+                {foreach from=$modulesList key=categoryname item=categorymodules name=cat}
                 <div class="row configuration-rectangle">
-                    <div class="col-lg-12 js-module-name js-title-{$module.name}" data-module_name="{$module.name}">
-                        {$module.displayName}
+                    <div class="col-lg-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
+                        {$modulesCategories[$smarty.foreach.cat.index]}
                     </div>
+                    {foreach from=$categorymodules item=module}
                     <div class="col-lg-12 module-informations">
-                        <div class="col-lg-1">
-                            <img class="module-logo" src="{$module.logo}"/>
+                        <div class="col-lg-12">
+                            <div class="col-lg-1">
+                                <img class="module-logo" src="{$module.logo}"/>
+                            </div>
+                            <div class="col-lg-11">
+                                <b>{$module.displayName}</b>
+                            </div>
                         </div>
-                        <div class="col-lg-8">
-                            {$module.description}
-                        </div>
-                        <div class="col-lg-3">
-                            {include file="./elem/module_actions.tpl"}
+                        <div class="col-lg-12">
+                            <div class="col-lg-8 col-lg-offset-1">
+                                {$module.description}
+                            </div>
+                            <div class="col-lg-3">
+                                {include file="./elem/module_actions.tpl"}
+                            </div>
                         </div>
                     </div>
+                    {/foreach}
                 </div>
                 {/foreach}
                 <div class="row">
