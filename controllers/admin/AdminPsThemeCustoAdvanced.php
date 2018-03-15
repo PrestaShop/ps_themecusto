@@ -66,12 +66,12 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
 
-     /**
+    /**
      * Clone a theme and modify the config to set the parent theme
      *
      * @param none
      * @return bool
-     */
+    */
     public function ajaxProcessDownloadChildTheme()
     {
         global $kernel;

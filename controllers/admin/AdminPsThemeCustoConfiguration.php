@@ -28,9 +28,6 @@ require_once(dirname(__FILE__).'../../../classes/ThemeCustoRequests.php');
 
 class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 {
-    private $aModuleActions;
-    private $aModuleActionsNames;
-
     public function __construct()
     {
         parent::__construct();
@@ -65,13 +62,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[1],
             'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[1],
-            'sToken'=> $this->module->_token
+            'sToken'                                => $this->module->_token
         );
         $aJs = array($this->module->js_path.'/controllers/'.$this->controller_quick_name.'/back.js');
         $aCss = array($this->module->css_path.'/controllers/'.$this->controller_quick_name.'/back.css');
-        $this->module->setMedia($aJsDef, $aJs, $aCss);
 
-        // $this->context->smarty->fetch(dirname(__FILE__).'/../../views/templates/admin/page.tpl');
+        $this->module->setMedia($aJsDef, $aJs, $aCss);
         $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
 
@@ -80,7 +76,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      * AJAX : Do a module action like Install, disable, enable ...
      *
      * @param null
-     * @return tpl
+     * @return mixed int | tpl
     */
     public function ajaxProcessUpdateModule()
     {
@@ -118,14 +114,13 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 break;
             }
 
-            $iModuleIsMobileActive = Db::getInstance()->getValue('SELECT ms.enable_device as active FROM `'._DB_PREFIX_.'module_shop` ms WHERE ms.id_module = '.(int)$oModule->id);
             $sUrlActive = ($oModule->isEnabled($oModule->name) ? 'configure' : 'enable');
 
             $aModule['id_module'] = $oModule->id;
             $aModule['name'] = $oModule->name;
             $aModule['displayName'] = $oModule->displayName;
             $aModule['url_active'] = $sUrlActive;
-            $aModule['active'] = $iModuleIsMobileActive;
+            $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
             $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
 
             unset($oModule);

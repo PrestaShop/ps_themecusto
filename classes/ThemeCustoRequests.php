@@ -39,12 +39,28 @@ class ThemeCustoRequests
                     INNER JOIN `'._DB_PREFIX_.'hook` h ON h.id_hook = hm.id_hook
                     INNER JOIN `'._DB_PREFIX_.'module` m ON m.id_module = hm.id_module
                     LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
-                    WHERE 1
-                    AND h.name = "'.pSQL($sHookName).'"
+                    WHERE h.name = "'.pSQL($sHookName).'"
                     ORDER BY hm.position ASC';
 
         $aModulesList = Db::getInstance()->executeS($sSql);
 
         return $aModulesList;
+    }
+
+    /**
+     * Get the device status of a module
+     *
+     * @param int $iModuleId
+     * @return int $iModuleStatus
+    */
+    public static function getModuleDeviceStatus($iModuleId)
+    {
+        $sSql = '   SELECT ms.enable_device as active
+                    FROM `'._DB_PREFIX_.'module_shop` ms
+                    WHERE ms.id_module = '.(int)$iModuleId;
+
+        $iModuleStatus = Db::getInstance()->getValue($sSql);
+
+        return $iModuleStatus;
     }
 }
