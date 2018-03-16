@@ -47,7 +47,13 @@
                 {foreach from=$modulesList key=categoryname item=categorymodules name=cat}
                 <div class="row configuration-rectangle">
                     <div class="col-lg-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
-                        {$modulesCategories[$smarty.foreach.cat.index]}
+                        <span class="col-lg-11">
+                            {l s=$modulesCategories[$smarty.foreach.cat.index] mod='psthemecusto'}
+                        </span>
+                        <span class="col-lg-1 configuration-rectangle-caret">
+                            <i class="material-icons down">keyboard_arrow_down</i>
+                            <i class="material-icons up">keyboard_arrow_up</i>
+                        </span>
                     </div>
                     {foreach from=$categorymodules item=module}
                     <div class="col-lg-12 module-informations">

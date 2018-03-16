@@ -29,24 +29,28 @@
 /**
     GENERAL
 */
-#psthemecusto .js-wireframe img{
+#psthemecusto .js-wireframe div {
     width: 95%;
+}
+#psthemecusto .js-wireframe img{
+    max-width: 100%;
+    /* width: 95%;
     filter: grayscale(1);
     -webkit-filter: grayscale(1);
     -moz-filter: grayscale(1);
     -o-filter: grayscale(1);
     -ms-filter: grayscale(1);
-    cursor: pointer;
+    cursor: pointer; */
 }
 #psthemecusto .js-wireframe .active img,
 #psthemecusto .js-wireframe img:hover{
-    filter: grayscale(0);
+    /* filter: grayscale(0);
     -webkit-filter: grayscale(0);
     -moz-filter: grayscale(0);
     -o-filter: grayscale(0);
     -ms-filter: grayscale(0);
     -webkit-transition: filter .2s;
-    transition: filter .2s;
+    transition: filter .2s; */
 }
 #psthemecusto .module-list {
     position: -webkit-sticky;
@@ -68,7 +72,7 @@
 }
 #psthemecusto .configuration-rectangle .js-module-name {
     text-transform: uppercase;
-    font-family: OpenSans;
+    font-family: "Open Sans";
     font-size: 12px;
     font-weight: 600;
     font-style: normal;
@@ -77,7 +81,7 @@
     letter-spacing: normal;
     text-align: left;
     color: #4a4a4a;
-    padding: 17px 24px;
+    padding: 18px 24px 8px 12px;
     opacity: 0.6;
     background-color: #eff1f2;
     cursor: pointer;
@@ -102,6 +106,14 @@
 #psthemecusto .configuration-rectangle .module-informations:last-child {
     padding-bottom: 25px;
 }
+#psthemecusto .configuration-rectangle .configuration-rectangle-caret {
+    text-align: right;
+}
+#psthemecusto .configuration-rectangle .configuration-rectangle-caret .caret {
+    border-top: 8px solid;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+}
 button.dropdown-item {
     display: block;
     width: 100%;
@@ -116,7 +128,6 @@ button.dropdown-item {
     border: 0;
     cursor: initial;
 }
-
 .dropdown-item:focus,
 .dropdown-item:hover {
     color: #25b9d7;
@@ -149,4 +160,20 @@ button.dropdown-item {
     border-top: 4px solid #25b9d7;
     width: 31px;
     height: 31px;
+}
+.configuration-rectangle .dropdown-action {
+    padding: 0;
+}
+.configuration-rectangle .dropdown-action .material-icons{
+    line-height: 0 !important;
+    padding-top: 18px;
+}
+.configuration-rectangle .general-action .btn {
+    padding: 8.5px 0px;
+}
+.dropdown-menu {
+    box-shadow: 1px 1px 2px 0 rgba(0,0,0,.3) !important;
+}
+.material-icons.up{
+    display: none;
 }

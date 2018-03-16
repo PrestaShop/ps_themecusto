@@ -30,10 +30,10 @@ $(document).ready(function() {
 
     $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
         if ($(this).hasClass('active')) {
-            resetActiveModule();
+            resetActiveCategory();
         } else {
-            resetActiveModule();
-            setActiveModule($(this));
+            resetActiveCategory();
+            setActiveCategory($(this));
         }
     });
 
@@ -55,33 +55,35 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', '#psthemecusto .modal .modal-footer a', function(event) {
+    $(document).on('click', '.modal .modal-footer a', function(event) {
         event.preventDefault();
-        // let url = $(this).attr('href');
-        let name = $(this).data('name');
-        let action = $(this).data('action');
+        let name = $(this).attr('data-name');
+        let action = $(this).attr('data-action');
         let id_module = $('.src_parent_'+name).data('id_module');
-
         ajaxActionModule(action, id_module, name);
     });
 
 });
 
-function resetActiveModule()
+function resetActiveCategory()
 {
     $('#psthemecusto .js-wireframe div').removeClass('active');
     $('#psthemecusto .js-module-name').removeClass('active');
     $('#psthemecusto .js-module-name').parent('.configuration-rectangle').removeClass('active');
     $('#psthemecusto .js-module-name').parent('.configuration-rectangle').find('.module-informations').slideUp();
+    $('#psthemecusto .configuration-rectangle-caret .material-icons.up').hide();
+    $('#psthemecusto .configuration-rectangle-caret .material-icons.down').show();
 }
 
-function setActiveModule(elem)
+function setActiveCategory(elem)
 {
     let module = elem.data('module_name');
     $('.js-img-'+module).addClass('active');
     $('.js-title-'+module).addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
+    $('.js-title-'+module+' .material-icons.up').show();
+    $('.js-title-'+module+' .material-icons.down').hide();
 }
 
 function ajaxActionModule(action, id_module, name)
@@ -91,11 +93,17 @@ function ajaxActionModule(action, id_module, name)
     && typeof name != "undefined") {
         $.ajax({
             type: 'POST',
+
+            url: "http://172.17.0.2/admin-dev/index.php/module/manage/action/install/ps_newproducts?_token=HArbfJtatPF7XSQowEyRWueA_quM5asxCKJIcZllaaE",
+
+            POUR INSALLER UN MODULE QU'ON NE POSSEDE PAS !
+
             url: admin_module_ajax_url_psthemecusto,
             data: {
                 ajax : true,
                 action : 'UpdateModule',
                 id_module : id_module,
+                module_name : name,
                 action_module : action,
                 _token : sToken
             },

@@ -14,28 +14,36 @@
 *}
 
 <div class="row js-wireframe">
-    <div class="col-lg-12 js-img-ps_menu" data-module_name="ps_menu">
-        <img src="{$moduleImgUri}/wireframe/ps_menu.jpg"/>
+    <div class="col-lg-12 js-img-menu" data-module_name="menu">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/menu.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/menu_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_imageslider" data-module_name="ps_imageslider">
-        <img src="{$moduleImgUri}/wireframe/ps_imageslider.jpg"/>
+    <div class="col-lg-12 js-img-slider" data-module_name="slider">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/slider.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/slider_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_featuredproducts" data-module_name="ps_featuredproducts">
-        <img src="{$moduleImgUri}/wireframe/ps_featuredproducts.jpg"/>
+    <div class="col-lg-12 js-img-home_products" data-module_name="home_products">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/home_products.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/home_products_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_customtext" data-module_name="ps_customtext">
-        <img src="{$moduleImgUri}/wireframe/ps_customtext.jpg"/>
+    <div class="col-lg-12 js-img-bloc_text" data-module_name="bloc_text">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/bloc_text.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/bloc_text_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_banner" data-module_name="ps_banner">
-        <img src="{$moduleImgUri}/wireframe/ps_banner.jpg"/>
+    <div class="col-lg-12 js-img-banner" data-module_name="banner">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/banner.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/banner_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_newsletter" data-module_name="ps_newsletter">
-        <img src="{$moduleImgUri}/wireframe/ps_newsletter.jpg"/>
+    <div class="col-lg-12 js-img-social_newsletter" data-module_name="social_newsletter">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/newsletter.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/newsletter_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_featuredproducts" data-module_name="ps_featuredproducts">
-        <img src="{$moduleImgUri}/wireframe/ps_featuredproducts_2.jpg"/>
+    <div class="col-lg-12 js-img-home_products" data-module_name="home_products">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/home_products2.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/home_products2_hover.jpg"/>
     </div>
-    <div class="col-lg-12 js-img-ps_footer" data-module_name="ps_footer">
-        <img src="{$moduleImgUri}/wireframe/ps_footer.jpg"/>
+    <div class="col-lg-12 js-img-footer" data-module_name="footer">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/footer.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/footer_hover.jpg"/>
     </div>
 </div>

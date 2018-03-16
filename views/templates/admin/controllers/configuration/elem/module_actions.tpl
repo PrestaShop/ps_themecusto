@@ -13,22 +13,27 @@
 * International Registered Trademark & Property of PrestaShop SA
 *}
 <div class="loader src_loader_{$module.name}"></div>
+
 <div class="col-lg-12 btn-group form-action-button-container src_parent_{$module.name}" data-id_module="{$module.id_module}" >
-	<div class="col-lg-9 no-padding" data-module_name="{$module.name}" data-action="{$module.url_active }" data-module_displayname="{$module.displayName}">
+
+	<div class="col-lg-9 no-padding general-action" data-module_name="{$module.name}" data-action="{$module.url_active }" data-module_displayname="{$module.displayName}">
 		{if $module.url_active == 'configure'}
 		<a class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}">
-			{$module.url_active|capitalize}
+			{l s=$module.url_active|capitalize mod='psthemecusto'}
 		</a>
 		{else}
 		<button type="button" class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}" >
-			{$module.url_active|capitalize}
+			{l s=$module.url_active|capitalize mod='psthemecusto'}
 		</button>
 		{/if}
 	</div>
+
 	<input type="hidden" class="btn">
-	<button type="button" class="col-lg-3 btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		<span class="caret"></span>
-		<span class="sr-only">Toggle Dropdown</span>
+
+	<button type="button" class="col-lg-3 btn btn-outline-primary dropdown-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{* <span class="caret"></span>
+		<span class="sr-only">Toggle Dropdown</span> *}
+		<i class="material-icons">keyboard_arrow_down</i>
 	</button>
 	<div class="dropdown-menu">
 		{foreach from=$moduleActions item=action key=key}
@@ -46,11 +51,12 @@
 					{else}
 					<button type="button" class="dropdown-item module_action_menu_{$action}">
 					{/if}
-						{$moduleActionsNames.$key|capitalize}
+						{l s=$moduleActionsNames.$key|capitalize mod='psthemecusto'}
 					</button>
 				</div>
 			</li>
 			{/if}
 		{/foreach}
 	</div>
+
 </div>

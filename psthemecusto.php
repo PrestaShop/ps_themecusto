@@ -102,20 +102,20 @@ class psthemecusto extends Module
         $themesTab = Tab::getInstanceFromClassName('AdminThemes');
         return array(
             array(
-                'class' => $this->controller_name[1],
-                'active' => true,
-                'position' => 2,
-                'name' => 'Configuration',
+                'class'     => $this->controller_name[1],
+                'active'    => true,
+                'position'  => 2,
+                'name'      => 'Configuration',
                 'id_parent' => $themesTab->id_parent,
-                'module' => $this->name,
+                'module'    => $this->name,
             ),
             array(
-                'class' => $this->controller_name[0],
-                'active' => true,
-                'position' => 3,
-                'name' => 'Advanced CSS customisation',
+                'class'     => $this->controller_name[0],
+                'active'    => true,
+                'position'  => 3,
+                'name'      => 'Advanced CSS customisation',
                 'id_parent' => $themesTab->id_parent,
-                'module' => $this->name,
+                'module'    => $this->name,
             )
         );
     }
@@ -147,9 +147,11 @@ class psthemecusto extends Module
             $tab->active = 1;
             $tab->class_name = $aValue['class'];
             $tab->name = array();
+
             foreach (Language::getLanguages(true) as $lang) {
                 $tab->name[$lang['id_lang']] =  $aValue['name'];
             }
+
             $tab->id_parent = $aValue['id_parent'];
             $tab->module = $aValue['module'];
             $tab->position = $aValue['position'];
@@ -158,6 +160,7 @@ class psthemecusto extends Module
                 return false;
             }
         }
+
         return ($result);
     }
 

@@ -48,32 +48,32 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     {
         $aModulesList = array(
             'menu' => array(
-                '"ps_categorytree"', //22314
-                '"ps_customtext"', //22317
-                '"statsbestsuppliers"', //21166
-                '"ps_mainmenu"', //22321
+                'ps_categorytree', //22314
+                'ps_customtext', //22317
+                'statsbestsuppliers', //21166
+                'ps_mainmenu', //22321
             ),
             'slider' => array(
-                '"ps_imageslider"', //22320
+                'ps_imageslider', //22320
             ),
             'home_products' => array(
-                '"ps_featuredproducts"', //22319
-                '"statsbestproducts"', //21165
-                '"ps_newproducts"', //24671
+                'ps_featuredproducts', //22319
+                'statsbestproducts', //21165
+                'ps_newproducts', //24671
             ),
             'bloc_text' => array(
-                '"ps_customtext"', //22317
+                'ps_customtext', //22317
             ),
             'banner' => array(
-                '"ps_banner"', //22313
+                'ps_banner', //22313
             ),
             'social_newsletter' => array(
-                '"ps_emailsubscription"', //22318
-                '"ps_socialfollow"', //22323
+                'ps_emailsubscription', //22318
+                'ps_socialfollow', //22323
             ),
             'footer' => array(
-                '"ps_linklist"', //24360
-                '"ps_socialfollow"', //22323
+                'ps_linklist', //24360
+                'ps_socialfollow', //22323
             ),
         );
 
@@ -125,10 +125,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     */
     public function ajaxProcessUpdateModule()
     {
-        if ($this->module->_token === Tools::getValue('_token')) {
+        if ($this->module->_token == Tools::getValue('_token')) {
             $iModuleId      = (int)Tools::getValue('id_module');
+            $sModuleName    = pSQL(Tools::getValue('module_name'));
             $sModuleAction  = pSQL(Tools::getValue('action_module'));
-            $oModule        = Module::getInstanceById($iModuleId);
+            $oModule        = ($sModuleAction == 'install') ? Module::getInstanceByName($sModuleName) : Module::getInstanceById($iModuleId);
             $bReturn        = false;
 
             switch ($sModuleAction) {
@@ -171,9 +172,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             unset($oModule);
 
             $this->context->smarty->assign(array(
-                '"module'                => $aModule,
-                '"moduleActions'         => $this->aModuleActions,
-                '"moduleActionsNames'    => $this->moduleActionsNames
+                'module'                => $aModule,
+                'moduleActions'         => $this->aModuleActions,
+                'moduleActionsNames'    => $this->moduleActionsNames
                 )
             );
 
@@ -213,35 +214,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     }
 
     /**
-     * Get modules by ID to create an array with all modules informations to do actions on it
-     *
-     * @param string $sHookName
-     * @return array $aModulesList
-    */
-    public function getModulesById($aModulesIds)
-    {
-        $aModuleFinalList = array();
-        $aModulesList = ThemeCustoRequests::getModulesListById($aModulesIds);
-
-        foreach ($aModulesList as $aModule) {
-            $sUrlActive = ($aModule['active']? 'configure' : 'enable');
-            $aModuleInstance = Module::getInstanceByName($aModule['name']);
-            $aModuleFinalList[$aModule['position']]['id_module'] = $aModule['id_module'];
-            $aModuleFinalList[$aModule['position']]['active'] = $aModule['active'];
-            $aModuleFinalList[$aModule['position']]['url_active'] = $sUrlActive;
-            $aModuleFinalList[$aModule['position']]['name'] = $aModuleInstance->name;
-            $aModuleFinalList[$aModule['position']]['displayName'] = $aModuleInstance->displayName;
-            $aModuleFinalList[$aModule['position']]['description'] = $aModuleInstance->description;
-            $aModuleFinalList[$aModule['position']]['controller_name'] = (isset($aModuleInstance->controller_name)? $aModuleInstance->controller_name : '');
-            $aModuleFinalList[$aModule['position']]['logo'] = '/modules/'.$aModuleInstance->name.'/logo.png';
-            $aModuleFinalList[$aModule['position']]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
-            unset($aModuleInstance);
-        }
-
-        return $aModuleFinalList;
-    }
-
-    /**
      * get modules list to show for Ready
      *
      * @param array $aModulesList
@@ -252,23 +224,49 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModuleFinalList = array();
 
         foreach ($aModulesList as $sSegmentName => $aModules) {
-            $aModuleBySegment = ThemeCustoRequests::getModulesListByName($aModules);
-            foreach ($aModuleBySegment as $aModule) {
-                $sUrlActive = ($aModule['active']? 'configure' : 'enable');
-                $aModuleInstance = Module::getInstanceByName($aModule['name']);
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['id_module'] = $aModule['id_module'];
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['active'] = $aModule['active'];
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['url_active'] = $sUrlActive;
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['name'] = $aModuleInstance->name;
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['displayName'] = $aModuleInstance->displayName;
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['description'] = $aModuleInstance->description;
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['controller_name'] = (isset($aModuleInstance->controller_name)? $aModuleInstance->controller_name : '');
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['logo'] = '/modules/'.$aModuleInstance->name.'/logo.png';
-                $aModuleFinalList[$sSegmentName][$aModule['name']]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
-                unset($aModuleInstance);
+            foreach ($aModules as $sModule) {
+                if (Module::isInstalled($sModule)) {
+                    $aModuleInstance = Module::getInstanceByName($sModule);
+                    $aModuleFinalList[$sSegmentName][$sModule]['id_module'] = $aModuleInstance->id;
+                    $aModuleFinalList[$sSegmentName][$sModule]['active'] = $aModuleInstance->active;
+                    $aModuleFinalList[$sSegmentName][$sModule]['url_active'] = ($aModuleInstance->active? 'configure' : 'enable');
+                    $aModuleFinalList[$sSegmentName][$sModule]['name'] = $aModuleInstance->name;
+                    $aModuleFinalList[$sSegmentName][$sModule]['displayName'] = $aModuleInstance->displayName;
+                    $aModuleFinalList[$sSegmentName][$sModule]['description'] = $aModuleInstance->description;
+                    $aModuleFinalList[$sSegmentName][$sModule]['controller_name'] = (isset($aModuleInstance->controller_name)? $aModuleInstance->controller_name : '');
+                    $aModuleFinalList[$sSegmentName][$sModule]['logo'] = '/modules/'.$aModuleInstance->name.'/logo.png';
+                    $aModuleFinalList[$sSegmentName][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $aModuleInstance->name));
+                    unset($aModuleInstance);
+                } else {
+                    try {
+                        include_once(_PS_MODULE_DIR_.$sModule.'/'.$sModule.'.php');
+                        $oModule = new $sModule();
+                        $aModuleFinalList[$sSegmentName][$sModule]['id_module'] = $oModule->id;
+                        $aModuleFinalList[$sSegmentName][$sModule]['active'] = $oModule->active;
+                        $aModuleFinalList[$sSegmentName][$sModule]['url_active'] = 'install';
+                        $aModuleFinalList[$sSegmentName][$sModule]['name'] = $oModule->name;
+                        $aModuleFinalList[$sSegmentName][$sModule]['displayName'] = $oModule->displayName;
+                        $aModuleFinalList[$sSegmentName][$sModule]['description'] = $oModule->description;
+                        $aModuleFinalList[$sSegmentName][$sModule]['controller_name'] = (isset($oModule->controller_name)? $oModule->controller_name : '');
+                        $aModuleFinalList[$sSegmentName][$sModule]['logo'] = '/modules/'.$oModule->name.'/logo.png';
+                        $aModuleFinalList[$sSegmentName][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('install' => $oModule->name));
+                        unset($oModule);
+                    }
+                    catch (Exception $e) {
+                        $aModuleFinalList[$sSegmentName][$sModule]['id_module'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['active'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['url_active'] = 'install';
+                        $aModuleFinalList[$sSegmentName][$sModule]['name'] = $sModule;
+                        $aModuleFinalList[$sSegmentName][$sModule]['displayName'] = $sModule;
+                        $aModuleFinalList[$sSegmentName][$sModule]['description'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['controller_name'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['logo'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('install' => $sModule));
+                    }
+                }
             }
         }
-        // var_dump('<pre>',$aModuleFinalList);
+
         return $aModuleFinalList;
     }
 }
