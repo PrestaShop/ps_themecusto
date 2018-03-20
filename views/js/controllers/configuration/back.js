@@ -31,9 +31,11 @@ $(document).ready(function() {
     $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
         if ($(this).hasClass('active')) {
             resetActiveCategory();
+            $(this).removeClass('active');
         } else {
             resetActiveCategory();
             setActiveCategory($(this));
+            $(this).addClass('active');
         }
     });
 
@@ -63,11 +65,23 @@ $(document).ready(function() {
         ajaxActionModule(action, id_module, name);
     });
 
+    $("#psthemecusto .js-wireframe div").hover(
+        function() {
+            $(this).find('.on-element').removeClass('displaynone');
+            $(this).find('.out-element').addClass('displaynone');
+        }, function() {
+            $(this).find('.on-element').addClass('displaynone');
+            $(this).find('.out-element').removeClass('displaynone');
+        }
+    );
+
 });
 
 function resetActiveCategory()
 {
     $('#psthemecusto .js-wireframe div').removeClass('active');
+    $('#psthemecusto .js-wireframe div .on-element').addClass('displaynone');
+    $('#psthemecusto .js-wireframe div .out-element').removeClass('displaynone');
     $('#psthemecusto .js-module-name').removeClass('active');
     $('#psthemecusto .js-module-name').parent('.configuration-rectangle').removeClass('active');
     $('#psthemecusto .js-module-name').parent('.configuration-rectangle').find('.module-informations').slideUp();
@@ -79,6 +93,8 @@ function setActiveCategory(elem)
 {
     let module = elem.data('module_name');
     $('.js-img-'+module).addClass('active');
+    $('.js-img-'+module+' .on-element').removeClass('displaynone');
+    $('.js-img-'+module+' .out-element').addClass('displaynone');
     $('.js-title-'+module).addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
@@ -93,31 +109,21 @@ function ajaxActionModule(action, id_module, name)
     && typeof name != "undefined") {
         $.ajax({
             type: 'POST',
-
-            url: "http://172.17.0.2/admin-dev/index.php/module/manage/action/install/ps_newproducts?_token=HArbfJtatPF7XSQowEyRWueA_quM5asxCKJIcZllaaE",
-
-            POUR INSALLER UN MODULE QU'ON NE POSSEDE PAS !
-
             url: admin_module_ajax_url_psthemecusto,
             data: {
                 ajax : true,
                 action : 'UpdateModule',
                 id_module : id_module,
                 module_name : name,
-                action_module : action,
-                _token : sToken
+                action_module : action
             },
             beforeSend : function(data) {
                 $('.src_loader_'+name).show();
                 $('.src_parent_'+name).hide();
             },
             success : function(data) {
-                if (data == '-1') {
-                    $.growl.error({ title: "Notice!", message: "Wrong Token" });
-                } else {
-                    $.growl.notice({ title: "Notice!", message: "ok" });
-                    $('.src_parent_'+name).html(data);
-                }
+                $.growl.notice({ title: "Notice!", message: "ok" });
+                $('.src_parent_'+name).html(data);
                 $('.src_loader_'+name).hide();
                 $('.src_parent_'+name).show();
             },

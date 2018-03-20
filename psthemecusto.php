@@ -55,7 +55,6 @@ class psthemecusto extends Module
         $this->img_path = $this->_path.'views/img/';
         $this->logo_path = $this->_path.'logo.png';
         $this->module_path = $this->_path;
-        $this->_token = Tools::getAdminTokenLite($this->name.date("Y-m-d h").Tools::getRemoteAddr());
     }
 
     /**

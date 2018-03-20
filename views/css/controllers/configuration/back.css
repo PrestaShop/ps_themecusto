@@ -34,23 +34,15 @@
 }
 #psthemecusto .js-wireframe img{
     max-width: 100%;
-    /* width: 95%;
-    filter: grayscale(1);
-    -webkit-filter: grayscale(1);
-    -moz-filter: grayscale(1);
-    -o-filter: grayscale(1);
-    -ms-filter: grayscale(1);
-    cursor: pointer; */
 }
-#psthemecusto .js-wireframe .active img,
-#psthemecusto .js-wireframe img:hover{
-    /* filter: grayscale(0);
-    -webkit-filter: grayscale(0);
-    -moz-filter: grayscale(0);
-    -o-filter: grayscale(0);
-    -ms-filter: grayscale(0);
-    -webkit-transition: filter .2s;
-    transition: filter .2s; */
+#psthemecusto .js-wireframe div { cursor: pointer; }
+#psthemecusto .js-wireframe div .on-element{ display: none; opacity: 0; }
+#psthemecusto .js-wireframe div:hover .out-element,
+#psthemecusto .js-wireframe div.active .out-element{ display: none; }
+#psthemecusto .js-wireframe div:hover .on-element,
+#psthemecusto .js-wireframe div.active .on-element{
+    display: block;
+    opacity: 1;
 }
 #psthemecusto .module-list {
     position: -webkit-sticky;
