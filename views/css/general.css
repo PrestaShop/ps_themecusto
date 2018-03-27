@@ -89,6 +89,9 @@
 /**
     BUTTON
 */
+#psthemecusto .btn {
+    border-radius: 0 !important;
+}
 #psthemecusto .btn.btn-primary {
     text-transform: initial;
     background-color: #25b9d7 !important;

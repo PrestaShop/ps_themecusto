@@ -54,9 +54,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'AdminManufacturers' => array('Create Brands & Suppliers', 'Ma descriptions des marques et fournisseurs!'),
                 ),
                 'modules' => array(
-                    // 'ps_categorytree', //22314
-                    // 'ps_customtext', //22317
-                    // 'statsbestsuppliers', //21166
                     'ps_mainmenu', //22321
                 ),
             ),
@@ -125,7 +122,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[1],
-            'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[1]
+            'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[1],
+            'module_action_sucess'                  => $this->l('Action on the module successfully completed'),
+            'module_action_failed'                  => $this->l('Action on module failed'),
         );
         $aJs = array($this->module->js_path.'/controllers/'.$this->controller_quick_name.'/back.js');
         $aCss = array($this->module->css_path.'/controllers/'.$this->controller_quick_name.'/back.css');
@@ -190,13 +189,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['url_active'] = $sUrlActive;
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
         $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
-
         unset($oModule);
 
         $this->context->smarty->assign(array(
             'module'                => $aModule,
             'moduleActions'         => $this->aModuleActions,
-            'moduleActionsNames'    => $this->moduleActionsNames
+            'moduleActionsNames'    => $this->moduleActionsNames,
             )
         );
 

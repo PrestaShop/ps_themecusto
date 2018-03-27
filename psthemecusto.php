@@ -68,7 +68,7 @@ class psthemecusto extends Module
         if (parent::install() &&
             $this->installTabList()) {
             return true;
-        } else { // if something wrong return false
+        } else {
             $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
             return false;
         }

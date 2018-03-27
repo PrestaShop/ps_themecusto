@@ -130,15 +130,15 @@ function ajaxActionModule(action, id_module, name)
                 $('.src_parent_'+name).hide();
             },
             success : function(data) {
-                $.growl.notice({ title: "Notice!", message: "ok" });
                 $('.src_parent_'+name).html(data);
+                $.growl.notice({ title: "Notice!", message: module_action_sucess});
                 $('.src_loader_'+name).hide();
                 $('.src_parent_'+name).show();
             },
             error : function(data) {
                 $('.src_loader_'+name).hide();
                 $('.src_parent_'+name).show();
-                $.growl.error({ title: "Notice!", message: "ko" });
+                $.growl.error({ title: "Notice!", message: module_action_failed });
             }
         });
     }
