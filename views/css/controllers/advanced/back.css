@@ -56,6 +56,9 @@ form#importDropzone {
 a.btn-outline-secondary {
     color: #8a8a8a;
 }
+.row-buttons .btn {
+    margin-bottom: 10px;
+}
 /**
     LOADER
 */
@@ -78,6 +81,7 @@ a.btn-outline-secondary {
     border-top: 4px solid #25b9d7;
     width: 50px;
     height: 50px;
+    margin-top: 32px;
 }
 /**
     MODAL

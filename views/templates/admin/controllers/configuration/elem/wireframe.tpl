@@ -30,6 +30,10 @@
         <img class="out-element" src="{$moduleImgUri}/wireframe/bloc_text.jpg"/>
         <img class="on-element" src="{$moduleImgUri}/wireframe/bloc_text_hover.jpg"/>
     </div>
+    <div class="col-lg-12 js-img-home_products" data-module_name="home_products">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/home_products2.jpg"/>
+        <img class="on-element" src="{$moduleImgUri}/wireframe/home_products2_hover.jpg"/>
+    </div>
     <div class="col-lg-12 js-img-banner" data-module_name="banner">
         <img class="out-element" src="{$moduleImgUri}/wireframe/banner.jpg"/>
         <img class="on-element" src="{$moduleImgUri}/wireframe/banner_hover.jpg"/>
@@ -37,10 +41,6 @@
     <div class="col-lg-12 js-img-social_newsletter" data-module_name="social_newsletter">
         <img class="out-element" src="{$moduleImgUri}/wireframe/newsletter.jpg"/>
         <img class="on-element" src="{$moduleImgUri}/wireframe/newsletter_hover.jpg"/>
-    </div>
-    <div class="col-lg-12 js-img-home_products" data-module_name="home_products">
-        <img class="out-element" src="{$moduleImgUri}/wireframe/home_products2.jpg"/>
-        <img class="on-element" src="{$moduleImgUri}/wireframe/home_products2_hover.jpg"/>
     </div>
     <div class="col-lg-12 js-img-footer" data-module_name="footer">
         <img class="out-element" src="{$moduleImgUri}/wireframe/footer.jpg"/>

@@ -27,7 +27,6 @@
 */
 
 $(document).ready(function() {
-
     $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
         if ($(this).hasClass('active')) {
             resetActiveCategory();
@@ -100,6 +99,15 @@ function setActiveCategory(elem)
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
     $('.js-title-'+module+' .material-icons.up').show();
     $('.js-title-'+module+' .material-icons.down').hide();
+
+    headHeight = $('.page-head.with-tabs').height();
+    navHeight = $('#header_infos').height();
+    topOffset = headHeight + navHeight;
+    if (elem.hasClass('js-img-'+module)) {
+        $('html, body').animate({scrollTop: $('.js-title-'+module).offset().top-topOffset}, 1000);
+    } else {
+        $('html, body').animate({scrollTop: $('.js-img-'+module).offset().top-topOffset}, 1000);
+    }
 }
 
 function ajaxActionModule(action, id_module, name)

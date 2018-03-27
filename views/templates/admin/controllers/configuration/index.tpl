@@ -30,7 +30,7 @@
                 </p>
             </div>
             <div class="col-lg-2">
-                <a href="{$themeConfiguratorUrl}" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='psthemecusto'}</a>
+                <a href="{$themeConfiguratorUrl}" target="_blank" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='psthemecusto'}</a>
             </div>
         </div>
     </div>
@@ -44,36 +44,63 @@
                 {include file="./elem/wireframe.tpl"}
             </div>
             <div class="col-lg-7 module-list">
-                {foreach from=$modulesList key=categoryname item=categorymodules name=cat}
+                {foreach from=$elementsList key=categoryname item=categories name=cat}
                 <div class="row configuration-rectangle">
                     <div class="col-lg-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
                         <span class="col-lg-11">
-                            {l s=$modulesCategories[$smarty.foreach.cat.index] mod='psthemecusto'}
+                            {l s=$listCategories[$smarty.foreach.cat.index] mod='psthemecusto'}
                         </span>
                         <span class="col-lg-1 configuration-rectangle-caret">
                             <i class="material-icons down">keyboard_arrow_down</i>
                             <i class="material-icons up">keyboard_arrow_up</i>
                         </span>
                     </div>
-                    {foreach from=$categorymodules item=module}
-                    <div class="col-lg-12 module-informations">
-                        <div class="col-lg-12">
-                            <div class="col-lg-1">
-                                <img class="module-logo" src="{$module.logo}"/>
-                            </div>
-                            <div class="col-lg-11">
-                                <b>{$module.displayName}</b>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="col-lg-8 col-lg-offset-1">
-                                {$module.description}
-                            </div>
-                            <div class="col-lg-3">
-                                {include file="./elem/module_actions.tpl"}
-                            </div>
-                        </div>
-                    </div>
+                    {foreach from=$categories key=type item=elements}
+                        {if $type == 'pages'}
+                            {foreach from=$elements item=page}
+                                <div class="col-lg-12 module-informations">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-1">
+                                            <i class="icon-cogs"></i>
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <b>{l s=$page.displayName mod='psthemecusto'}</b>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-8 col-lg-offset-1">
+                                            {l s=$page.description mod='psthemecusto'}
+                                        </div>
+                                        <div class="col-lg-3 general-action">
+                                            <a class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}" target="_blank">
+                                                {l s=$page.action|capitalize mod='psthemecusto'}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        {else}
+                            {foreach from=$elements item=module}
+                                <div class="col-lg-12 module-informations">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-1">
+                                            <img class="module-logo" src="{$module.logo}"/>
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <b>{$module.displayName}</b>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-8 col-lg-offset-1">
+                                            {$module.description}
+                                        </div>
+                                        <div class="col-lg-3">
+                                            {include file="./elem/module_actions.tpl"}
+                                        </div>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        {/if}
                     {/foreach}
                 </div>
                 {/foreach}

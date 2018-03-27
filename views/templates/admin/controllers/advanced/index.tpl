@@ -26,30 +26,38 @@
                 <h4>1 - {l s='Download a child theme' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
                     <p>{l s='A child theme allows you to change small aspects of your site\'s appearance yet still preserve your theme\'s look and functionnality' mod='psthemecusto'}.</p>
-                    <div class="btn btn-primary btn-lg btn-block" rel="noopener" id="download_child_theme">
-                        {l s='Download child theme' mod='psthemecusto'}
-                    </div>
-                    <div class="btn btn-primary btn-lg btn-block js-loader" rel="noopener" >
-                        {l s='Downloading' mod='psthemecusto'}<div class="loader"></div>
-                    </div>
                 </div>
             </div>
             <div class="col-lg-3 col-lg-push-1">
                 <h4>2 - {l s='Edit child theme CSS style sheet' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
                     <p>{l s='A child theme allows you to change small aspects of your site\'s appearance yet still preserve your theme\'s look and functionnality' mod='psthemecusto'}.</p>
-                    <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='psthemecusto'}</a>
                 </div>
             </div>
             <div class="col-lg-3 col-lg-push-2">
                 <h4>3 - {l s='Upload child theme' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
                     <p>{l s='Using a child theme lets you upgrade the parent theme without affecting the customizations you\'ve made to your site' mod='psthemecusto'}.</p>
-                    <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal">{l s='Upload child theme' mod='psthemecusto'}</a>
                 </div>
-                {include file="./elem/modal.tpl"}
             </div>
         </div>
     </div>
+    <div class="row row-buttons">
+        <div class="col-lg-3">
+            <div class="btn btn-primary btn-lg btn-block" rel="noopener" id="download_child_theme">
+                {l s='Download child theme' mod='psthemecusto'}
+            </div>
+            <div class="btn btn-primary btn-lg btn-block js-loader" rel="noopener" >
+                {l s='Downloading' mod='psthemecusto'}<div class="loader"></div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-lg-push-1">
+            <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='psthemecusto'}</a>
+        </div>
+        <div class="col-lg-3 col-lg-push-2">
+            <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal">{l s='Upload child theme' mod='psthemecusto'}</a>
+        </div>
+    </div>
+    {include file="./elem/modal.tpl"}
 </div>
 
