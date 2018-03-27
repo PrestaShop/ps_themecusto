@@ -39,7 +39,7 @@
 					&& !($module.url_active eq 'configure' && $action eq 'enable')
 					&& !($module.url_active eq 'enable' && $action eq 'disable')
 					&& !(($module.active eq 3 || $module.active eq 0) && $action eq 'disable_mobile')
-					&& !(($module.active eq 7 || $module.active eq 1) && $action eq 'enable_mobile')
+					&& !(($module.active eq 7 || $module.active eq 1 || $module.active eq 0) && $action eq 'enable_mobile')
 					&& !($action eq 'install')
 				}
 				<li>
