@@ -14,6 +14,7 @@
 *}
 
 <div id="psthemecusto">
+    {if $is_ps_ready}
     <div class="panel col-lg-12">
         <div class="panel-heading">
             {l s='Change the color, the typo and the place of the logo' mod='psthemecusto'}
@@ -34,7 +35,7 @@
             </div>
         </div>
     </div>
-
+    {/if}
     <div class="panel col-lg-12">
         <div class="panel-heading">
             {l s='Modules place\'s' mod='psthemecusto'}
@@ -48,7 +49,7 @@
                 <div class="row configuration-rectangle">
                     <div class="col-lg-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
                         <span class="col-lg-11">
-                            {l s=$listCategories[$smarty.foreach.cat.index] mod='psthemecusto'}
+                            {l s=$listCategories[$categoryname] mod='psthemecusto'}
                         </span>
                         <span class="col-lg-1 configuration-rectangle-caret">
                             <i class="material-icons down">keyboard_arrow_down</i>
@@ -80,7 +81,7 @@
                                 </div>
                             {/foreach}
                         {else}
-                            {foreach from=$elements item=module}
+                            {foreach from=$elements item=module name=mods}
                                 <div class="col-lg-12 module-informations">
                                     <div class="col-lg-12">
                                         <div class="col-lg-1">
@@ -101,6 +102,27 @@
                                 </div>
                             {/foreach}
                         {/if}
+                    {foreachelse}
+                        <div class="col-lg-12 module-informations">
+                            <div class="col-lg-12">
+                                <div class="col-lg-1">
+                                    <i class="material-icons hidden-xs">extension</i>
+                                </div>
+                                <div class="col-lg-11">
+                                    <b>{l s='There is no module for this section' mod='psthemecusto'}</b>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-8 col-lg-offset-1">
+                                    {l s='You can install a module for this section from our Modules Selection' mod='psthemecusto'}
+                                </div>
+                                <div class="col-lg-3 general-action">
+                                    <a class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$modulesPage}" target="_blank">
+                                        {l s='See modules selection' mod='psthemecusto'}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     {/foreach}
                 </div>
                 {/foreach}

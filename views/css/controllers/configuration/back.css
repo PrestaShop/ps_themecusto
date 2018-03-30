@@ -68,6 +68,9 @@
 #psthemecusto .configuration-rectangle .module-logo {
     width: 30px;
 }
+#psthemecusto .configuration-rectangle .form-action-button-container {
+    padding: 0;
+}
 #psthemecusto .configuration-rectangle .js-module-name {
     text-transform: uppercase;
     font-family: "Open Sans";

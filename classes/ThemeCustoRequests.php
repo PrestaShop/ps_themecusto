@@ -27,27 +27,6 @@
 class ThemeCustoRequests
 {
     /**
-     * Get all the modules linked to a hook
-     *
-     * @param string $sHookName
-     * @return array $aModulesList
-    */
-    public static function getModulesListByHook($sHookName)
-    {
-        $sSql = '   SELECT m.id_module, m.name, hm.position, ms.enable_device as active
-                    FROM `'._DB_PREFIX_.'hook_module` hm
-                    INNER JOIN `'._DB_PREFIX_.'hook` h ON h.id_hook = hm.id_hook
-                    INNER JOIN `'._DB_PREFIX_.'module` m ON m.id_module = hm.id_module
-                    LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
-                    WHERE h.name = "'.pSQL($sHookName).'"
-                    ORDER BY hm.position ASC';
-
-        $aModulesList = Db::getInstance()->executeS($sSql);
-
-        return $aModulesList;
-    }
-
-    /**
      * Get all the modules by name
      *
      * @param string $aModulesName

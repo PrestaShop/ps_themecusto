@@ -18,7 +18,7 @@
 	{if $module.url_active != 'install'}
 		<div class="col-lg-9 no-padding general-action" data-module_name="{$module.name}" data-action="{$module.url_active }" data-module_displayname="{$module.displayName}">
 			{if $module.url_active == 'configure'}
-			<a class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}">
+			<a class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}" target="_blank">
 				{l s=$module.url_active|capitalize mod='psthemecusto'}
 			</a>
 			{else}
