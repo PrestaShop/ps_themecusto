@@ -21,6 +21,10 @@
 			<a class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}" target="_blank">
 				{l s=$module.url_active|capitalize mod='psthemecusto'}
 			</a>
+			{elseif $module.url_active == 'disable' }
+			<button type="button" class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}" data-toggle="modal" data-target="#moduleActionModal">
+				{l s=$module.url_active|capitalize mod='psthemecusto'}
+			</button>
 			{else}
 			<button type="button" class="col-lg-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}" >
 				{l s=$module.url_active|capitalize mod='psthemecusto'}
@@ -38,6 +42,9 @@
 				{if ($action != $module.url_active)
 					&& !($module.url_active eq 'configure' && $action eq 'enable')
 					&& !($module.url_active eq 'enable' && $action eq 'disable')
+					&& !($module.url_active eq 'disable' && $action eq 'enable')
+					&& !($module.url_active eq 'disable' && $action eq 'configure')
+					&& !(!$module.can_configure && $action eq 'configure')
 					&& !(($module.active eq 3 || $module.active eq 0) && $action eq 'disable_mobile')
 					&& !(($module.active eq 7 || $module.active eq 1 || $module.active eq 0) && $action eq 'enable_mobile')
 					&& !($action eq 'install')

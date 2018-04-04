@@ -76,7 +76,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'modules' => array(
                     'ps_featuredproducts', //22319
                     'statsbestproducts', //21165
-                    'ps_newproducts', //24671
+                    'ps_newproducts', //24671²
                 ),
             ),
             'bloc_text' => array(
@@ -123,7 +123,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'iconConfiguration'     => $this->module->img_path.'icon_configurator.png',
             'listCategories'        => $this->categoryList,
             'elementsList'          => $this->setFinalList($aListToConfigure),
-            'modulesPage'           => $this->context->link->getAdminLink('AdminModules'),
+            'modulesPage'           => $this->context->link->getAdminLink('AdminModulesSf', true, array('route' => 'admin_module_manage')),
             'moduleImgUri'          => $this->module->module_path.'views/img',
             'moduleActions'         => $this->aModuleActions,
             'moduleActionsNames'    => $this->moduleActionsNames,
@@ -158,7 +158,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $sModuleAction  = pSQL(Tools::getValue('action_module'));
         $oModule        = Module::getInstanceByName($sModuleName);
         $bReturn        = false;
-        $sUrlActive     = false;
+        $sUrlActive     = ($oModule->isEnabled($oModule->name)? 'configure' : 'enable');
 
         switch ($sModuleAction) {
             case 'uninstall':
@@ -167,31 +167,32 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             break;
             case 'install':
                 $bReturn = $oModule->install();
-                $sUrlActive = 'configure';
+                $sUrlActive = (method_exists($oModule, 'getContent'))? 'configure' : 'disable';
             break;
             case 'enable':
                 $bReturn = $oModule->enable();
+                $sUrlActive = (method_exists($oModule, 'getContent'))? 'configure' : 'disable';
             break;
             case 'disable':
                 $bReturn = $oModule->disable();
+                $sUrlActive = 'enable';
             break;
             case 'disable_mobile':
                 $bReturn = $oModule->disableDevice(Context::DEVICE_MOBILE);
+                $sUrlActive = (method_exists($oModule, 'getContent'))? 'configure' : 'disable';
             break;
             case 'enable_mobile':
                 $bReturn = $oModule->enableDevice(Context::DEVICE_MOBILE);
+                $sUrlActive = (method_exists($oModule, 'getContent'))? 'configure' : 'disable';
             break;
             case 'reset':
                 $bReturn = $oModule->uninstall();
                 $bReturn = $oModule->install();
+                $sUrlActive = (method_exists($oModule, 'getContent'))? 'configure' : 'disable';
             break;
             default:
                 die(0);
             break;
-        }
-
-        if ($sUrlActive === false) {
-            $sUrlActive = (($oModule->isEnabled($oModule->name) || $sUrlActive) ? 'configure' : 'enable');
         }
 
         $aModule['id_module'] = $oModule->id;
@@ -200,6 +201,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['url_active'] = $sUrlActive;
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
         $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
+        $aModule['can_configure'] = (method_exists($oModule, 'getContent'))? true : false;
         unset($oModule);
 
         $this->context->smarty->assign(array(
@@ -237,13 +239,21 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                             $oModuleInstance = Module::getInstanceByName($sModule);
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['id_module'] = $oModuleInstance->id;
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['active'] = $oModuleInstance->active;
-                            $aModuleFinalList[$sSegmentName][$sType][$sModule]['url_active'] = ($oModuleInstance->active? 'configure' : 'enable');
+                            $aModuleFinalList[$sSegmentName][$sType][$sModule]['can_configure'] = (method_exists($oModuleInstance, 'getContent'))? true : false;
+
+                            if (method_exists($oModuleInstance, 'getContent')) {
+                                $aModuleFinalList[$sSegmentName][$sType][$sModule]['url_active'] = ($oModuleInstance->active? 'configure' : 'enable');
+                            } else {
+                                $aModuleFinalList[$sSegmentName][$sType][$sModule]['url_active'] = ($oModuleInstance->active? 'disable' : 'enable');
+                            }
+
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['name'] = $oModuleInstance->name;
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['displayName'] = $oModuleInstance->displayName;
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['description'] = $oModuleInstance->description;
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['controller_name'] = (isset($oModuleInstance->controller_name)? $oModuleInstance->controller_name : '');
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['logo'] = '/modules/'.$oModuleInstance->name.'/logo.png';
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModuleInstance->name));
+
                             unset($oModuleInstance);
                         } else {
                             try {

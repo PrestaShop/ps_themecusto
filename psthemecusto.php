@@ -104,7 +104,7 @@ class psthemecusto extends Module
                 'class'     => $this->controller_name[1],
                 'active'    => true,
                 'position'  => 2,
-                'name'      => 'Configuration',
+                'name'      => 'Homepage Configuration',
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             ),
@@ -112,7 +112,7 @@ class psthemecusto extends Module
                 'class'     => $this->controller_name[0],
                 'active'    => true,
                 'position'  => 3,
-                'name'      => 'Advanced CSS customisation',
+                'name'      => 'Advanced customisation',
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             )
@@ -207,6 +207,7 @@ class psthemecusto extends Module
         Media::addJsDef($aJsDef);
 
         array_push($aCss, $this->css_path."general.css");
+        array_push($aJs, $this->js_path."general.js");
         $this->context->controller->addCSS($aCss);
         $this->context->controller->addJS($aJs);
     }

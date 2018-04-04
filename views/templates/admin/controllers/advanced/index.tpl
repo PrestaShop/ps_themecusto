@@ -55,7 +55,7 @@
             <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='psthemecusto'}</a>
         </div>
         <div class="col-lg-3 col-lg-push-2">
-            <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal">{l s='Upload child theme' mod='psthemecusto'}</a>
+            <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal" >{l s='Upload child theme' mod='psthemecusto'}</a>
         </div>
     </div>
     {include file="./elem/modal.tpl"}
