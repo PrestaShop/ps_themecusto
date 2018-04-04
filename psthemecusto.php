@@ -48,7 +48,7 @@ class psthemecusto extends Module
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Configure and Customize your theme !');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
-        $this->ps_uri = Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true);
+        $this->ps_uri = (Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true)).__PS_BASE_URI__;
 
         // Settings paths
         $this->js_path  = $this->_path.'views/js/';
