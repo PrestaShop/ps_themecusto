@@ -17,7 +17,7 @@
     {if $is_ps_ready}
     <div class="panel col-lg-12">
         <div class="panel-heading">
-            {l s='Change the color, the typo and the place of the logo' mod='psthemecusto'}
+            {l s='Change colors, typography and your logo position' mod='psthemecusto'}
         </div>
         <div class="row">
             <div class="col-lg-1">
@@ -26,8 +26,7 @@
             </div>
             <div class="col-lg-9">
                 <p>
-                    {l s='Use the Theme Configurator module to customize the main graphic elements of your site' mod='psthemecusto'}:<br/>
-                    {l s='colors, buttons, typography and position of your logo.' mod='psthemecusto'}.
+                    {l s='Use the Theme configurator module to customize the main graphic elements of your website : colors, buttons, typography, logo position.' mod='psthemecusto'}:<br/>
                 </p>
             </div>
             <div class="col-lg-2">
@@ -38,7 +37,7 @@
     {/if}
     <div class="panel col-lg-12">
         <div class="panel-heading">
-            {l s='Modules place\'s' mod='psthemecusto'}
+            {l s='Main theme modules cartography' mod='psthemecusto'}
         </div>
         <div class="row">
             <div class="col-lg-5">
@@ -85,7 +84,7 @@
                                 <div class="col-lg-12 module-informations">
                                     <div class="col-lg-12">
                                         <div class="col-lg-1">
-                                            <img class="module-logo" src="{$module.logo}"/>
+                                            <img class="module-logo" src="{$ps_uri|cat:$module.logo}"/>
                                         </div>
                                         <div class="col-lg-11">
                                             <b>{$module.displayName}</b>

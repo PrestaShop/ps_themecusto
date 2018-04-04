@@ -48,6 +48,7 @@ class psthemecusto extends Module
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Configure and Customize your theme !');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
+        $this->ps_uri = Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true);
 
         // Settings paths
         $this->js_path  = $this->_path.'views/js/';
@@ -87,7 +88,7 @@ class psthemecusto extends Module
             $this->uninstallTabList()) {
             return true;
         } else {
-            $this->_errors[] = $this->l('There was an error during the desinstallation. Please contact us through Addons website');
+            $this->_errors[] = $this->l('There was an error during the uninstall. Please contact us through Addons website');
             return false;
         }
         return parent::uninstall();

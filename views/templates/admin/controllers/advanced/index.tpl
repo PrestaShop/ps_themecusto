@@ -25,19 +25,19 @@
             <div class="col-lg-3">
                 <h4>1 - {l s='Download a child theme' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
-                    <p>{l s='A child theme allows you to change small aspects of your site\'s appearance yet still preserve your theme\'s look and functionnality' mod='psthemecusto'}.</p>
+                    <p>{l s='You picked a theme but still want to bring some specific adjustments? Get a child theme, it will allow you to keep the parts you want and customize the others!' mod='psthemecusto'}.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-lg-push-1">
                 <h4>2 - {l s='Edit child theme CSS style sheet' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
-                    <p>{l s='A child theme allows you to change small aspects of your site\'s appearance yet still preserve your theme\'s look and functionnality' mod='psthemecusto'}.</p>
+                    <p>{l s='Once the child theme created, next step is simple: apply the changes you want within the CSS files, it will handle the customization part while keeping the parent theme’s look and functionality.' mod='psthemecusto'}.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-lg-push-2">
                 <h4>3 - {l s='Upload child theme' mod='psthemecusto'}</h4>
                 <div class="col-lg-12">
-                    <p>{l s='Using a child theme lets you upgrade the parent theme without affecting the customizations you\'ve made to your site' mod='psthemecusto'}.</p>
+                    <p>{l s='As you only bring modification to the child theme, you can upgrade the parent theme easily, without losing your customization.' mod='psthemecusto'}.</p>
                 </div>
             </div>
         </div>

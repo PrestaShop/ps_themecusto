@@ -43,7 +43,7 @@
                                 <div class="module-import-failure-details">{l s='An error has occurred.' mod='psthemecusto'}</div>
                                 <p>
                                     <a class="module-import-failure-retry btn btn-tertiary" href="#">{l s='Try again' mod='psthemecusto'}</a>
-                                    </p>
+                                </p>
                             </div>
                             <div class="module-import-success">
                                 <i class="module-import-success-icon material-icons">done</i><br>

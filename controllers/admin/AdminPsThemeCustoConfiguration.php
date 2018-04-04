@@ -57,9 +57,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aList = array(
             'menu' => array(
                 'pages' => array(
-                    'AdminCategories' => array('Create product categories', 'Ma description de catégorie !'),
-                    'AdminCmsContent' => array('Create content pages', 'Ma description de CMS !'),
-                    'AdminManufacturers' => array('Create Brands & Suppliers', 'Ma descriptions des marques et fournisseurs!'),
+                    'AdminCategories' => array('Create and manage Product Categories', 'Create here a full range of categories and subcategories to classify your products and manage your catalog easily.'),
+                    'AdminCmsContent' => array('Create content pages', 'Add and manage your content pages (CMS pages : Terms and conditions of use, Our stores, About us, etc.) as you want. '),
+                    'AdminManufacturers' => array('Create Brands and Suppliers pages', 'This page allows you to create and manage your Brands and/or Suppliers pages.'),
                 ),
                 'modules' => array(
                     'ps_mainmenu', //22321
@@ -128,7 +128,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'moduleActions'         => $this->aModuleActions,
             'moduleActionsNames'    => $this->moduleActionsNames,
             'themeConfiguratorUrl'  => $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => 'ps_themeconfigurator')),
-            'is_ps_ready'           => ((getenv('PLATEFORM') === 'PSREADY')? 1 : 0)
+            'is_ps_ready'           => ((getenv('PLATEFORM') === 'PSREADY')? 1 : 0),
+            'ps_uri'                => $this->module->ps_uri
         ));
 
         $aJsDef = array(

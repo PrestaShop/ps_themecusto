@@ -46,6 +46,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function initContent()
     {
         parent::initContent();
+
         $this->context->smarty->assign(array(
             'bootstrap'         =>  1,
             'configure_type'    => $this->controller_quick_name
@@ -81,8 +82,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         $exporter = $kernel->getContainer()->get('prestashop.core.addon.theme.exporter');
         $path = $exporter->export($this->context->shop->theme);
-        $aPath = array_reverse(explode("/", $path));
-        $sThemeZipPath = "/themes/".$aPath[0];
+        $aPath = array_reverse(explode('/', $path));
+        $sThemeZipPath = $this->module->ps_uri.'/themes/'.$aPath[0];
 
         die($sThemeZipPath);
     }
