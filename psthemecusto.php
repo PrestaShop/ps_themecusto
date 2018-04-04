@@ -33,7 +33,7 @@ class psthemecusto extends Module
     public function __construct()
     {
         $this->name = 'psthemecusto';
-        $this->version = '0.0.2';
+        $this->version = '0.1.0';
         $this->author = 'PrestaShop';
 
         $this->module_key = '7c707e5791af499b0fb5983803599bb3';
@@ -135,7 +135,8 @@ class psthemecusto extends Module
         $newTab->class_name = $themesTab->class_name.'Parent';
         $newTab->save();
         // Second save in order to get the proper position (add() resets it)
-        $newTab->position = $themesTab->position;
+        // $newTab->position = $themesTab->position;
+        $newTab->position = 0;
         $newTab->save();
         $themesTab->id_parent = $newTab->id;
         $themesTab->save();
