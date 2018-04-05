@@ -106,7 +106,9 @@ function setActiveCategory(elem)
     if (elem.hasClass('js-img-'+module)) {
         $('html, body').animate({scrollTop: $('.js-title-'+module).offset().top-topOffset}, 1000);
     } else {
-        $('html, body').animate({scrollTop: $('.js-img-'+module).offset().top-topOffset}, 1000);
+        if ($(window).innerWidth() > 991) {
+            $('html, body').animate({scrollTop: $('.js-img-'+module).offset().top-topOffset}, 1000);
+        }
     }
 }
 

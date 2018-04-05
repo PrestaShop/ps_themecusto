@@ -30,7 +30,12 @@
     GENERAL
 */
 #psthemecusto .js-wireframe div {
-    width: 95%;
+    width: 92%;
+}
+@media screen and (max-width: 991px) {
+    #psthemecusto .js-wireframe div {
+        width: 100%;
+    }
 }
 #psthemecusto .js-wireframe img{
     max-width: 100%;
@@ -48,6 +53,11 @@
     position: -webkit-sticky;
     position: sticky;
     top: 186px;
+}
+@media screen and (max-width: 991px) {
+    #psthemecusto .module-list {
+        margin-top: 25px;
+    }
 }
 #psthemecusto .configuration-rectangle {
     border-left: 4px solid #dcdcdc;
@@ -67,6 +77,7 @@
 }
 #psthemecusto .configuration-rectangle .module-logo {
     width: 30px;
+    max-width: 100%;
 }
 #psthemecusto .configuration-rectangle .form-action-button-container {
     padding: 0;
@@ -102,9 +113,12 @@
 }
 #psthemecusto .configuration-rectangle .module-informations {
     display: none;
-    padding-top: 25px;
+    /* padding-top: 25px;
     padding-right: 25px;
-    padding-left: 25px;
+    padding-left: 25px; */
+    padding-top: 1.2vw;
+    padding-right: 1.2vw;
+    padding-left: 1.2vw;
     padding-bottom: 0;
 }
 #psthemecusto .configuration-rectangle .module-informations:last-child {

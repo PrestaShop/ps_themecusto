@@ -68,8 +68,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'slider' => array(
                 'modules' => array(
                     ((getenv('PLATEFORM') === 'PSREADY')? 'pshomeslider' : 'ps_imageslider')
-                    // 'ps_imageslider', //22320 For Download
-                    // 'pshomeslider' //27562 For Ready
                 ),
             ),
             'home_products' => array(
