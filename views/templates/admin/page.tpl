@@ -16,7 +16,13 @@
 <div class="content-div">
     <div class="grid">
         <div class="col-lg-12">
-            {include file="./controllers/$configure_type/index.tpl"}
+            {if $enable}
+                {include file="./controllers/$configure_type/index.tpl"}
+            {else}
+                <div class="panel col-lg-12">
+                    <h4>{l s="The module $moduleName has been disabled" mod='psthemecusto'}</h4>
+                </div>
+            {/if}
         </div>
     </div>
 </div>

@@ -118,7 +118,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         $aListToConfigure = $this->getListToConfigure();
         $this->context->smarty->assign(array(
-            'bootstrap'             =>  1,
+            'enable'                => $this->module->active,
+            'moduleName'            => $this->module->displayName,
+            'bootstrap'             => 1,
             'configure_type'        => $this->controller_quick_name,
             'iconConfiguration'     => $this->module->img_path.'icon_configurator.png',
             'listCategories'        => $this->categoryList,

@@ -48,10 +48,11 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         parent::initContent();
 
         $this->context->smarty->assign(array(
-            'bootstrap'         =>  1,
+            'enable'            => $this->module->active,
+            'moduleName'        => $this->module->displayName,
+            'bootstrap'         => 1,
             'configure_type'    => $this->controller_quick_name
         ));
-
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],
             'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[0]

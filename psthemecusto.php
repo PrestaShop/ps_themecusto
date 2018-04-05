@@ -135,7 +135,6 @@ class psthemecusto extends Module
         $newTab->class_name = $themesTab->class_name.'Parent';
         $newTab->save();
         // Second save in order to get the proper position (add() resets it)
-        // $newTab->position = $themesTab->position;
         $newTab->position = 0;
         $newTab->save();
         $themesTab->id_parent = $newTab->id;
@@ -191,9 +190,11 @@ class psthemecusto extends Module
         if (!$themesTabParent || !$themesTab) {
             return false;
         }
-        $themesTab->position = $themesTabParent->position;
         $themesTab->id_parent = $themesTabParent->id_parent;
         $themesTabParent->delete();
+        $themesTab->save();
+        /* saving again for changing position to 0 */
+        $themesTab->position = 0;
         $themesTab->save();
         return $result;
     }
