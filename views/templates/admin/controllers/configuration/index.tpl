@@ -63,17 +63,17 @@
                                             <i class="icon-cogs"></i>
                                         </div>
                                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                                            <b>{l s=$page.displayName mod='psthemecusto'}</b>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-lg-offset-1 col-md-offset-1 col-sm-offset col-xs-offset-1">
-                                            {l s=$page.description mod='psthemecusto'}
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3  general-action">
-                                            <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}" target="_blank">
-                                                {l s=$page.action|capitalize mod='psthemecusto'}
-                                            </a>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <b>{l s=$page.displayName mod='psthemecusto'}</b>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 description">
+                                                {l s=$page.description mod='psthemecusto'}
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
+                                                <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}" target="_blank">
+                                                    {l s=$page.action|capitalize mod='psthemecusto'}
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -86,17 +86,18 @@
                                             <img class="module-logo" src="{$ps_uri|cat:$module.logo}"/>
                                         </div>
                                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                                            <b>{$module.displayName}</b>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <b>{$module.displayName}</b>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 description">
+                                                {$module.description}
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                                                {include file="./elem/module_actions.tpl"}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-lg-offset-1 col-md-offset-1 col-sm-offset col-xs-offset-1">
-                                            {$module.description}
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                            {include file="./elem/module_actions.tpl"}
-                                        </div>
-                                    </div>
+
                                 </div>
                             {/foreach}
                         {/if}
@@ -107,17 +108,17 @@
                                     <i class="material-icons hidden-xs">extension</i>
                                 </div>
                                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                                    <b>{l s='There is no module for this section' mod='psthemecusto'}</b>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
-                                    {l s='You can install a module for this section from our Modules Selection' mod='psthemecusto'}
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 general-action">
-                                    <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$modulesPage}" target="_blank">
-                                        {l s='See modules selection' mod='psthemecusto'}
-                                    </a>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <b>{l s='There is no module for this section' mod='psthemecusto'}</b>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 description">
+                                        {l s='You can install a module for this section from our Modules Selection' mod='psthemecusto'}
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
+                                        <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$modulesPage}" target="_blank">
+                                            {l s='See modules selection' mod='psthemecusto'}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

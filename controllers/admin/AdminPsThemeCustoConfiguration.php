@@ -94,6 +94,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 ),
             ),
             'footer' => array(
+                'pages' => array(
+                    'AdminStores' => array('Shop Informations', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
+                  ),
                 'modules' => array(
                     'ps_linklist', //24360
                     'ps_socialfollow', //22323
@@ -254,7 +257,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['controller_name'] = (isset($oModuleInstance->controller_name)? $oModuleInstance->controller_name : '');
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['logo'] = '/modules/'.$oModuleInstance->name.'/logo.png';
                             $aModuleFinalList[$sSegmentName][$sType][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModuleInstance->name));
-
                             unset($oModuleInstance);
                         } else {
                             try {

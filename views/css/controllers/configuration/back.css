@@ -121,6 +121,22 @@
     padding-left: 1.2vw;
     padding-bottom: 0;
 }
+#psthemecusto .configuration-rectangle .module-informations b {
+    font-weight: bolder;
+    color: #363a41;
+    margin: 0;
+    font-size: 14px;
+    font-size: .875rem;
+    margin-bottom: 7px;
+    display: block;
+}
+#psthemecusto .configuration-rectangle .module-informations .description {
+    font-size: 13px;
+    font-size: .8rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #363a41;
+}
 #psthemecusto .configuration-rectangle .module-informations:last-child {
     padding-bottom: 25px;
 }
