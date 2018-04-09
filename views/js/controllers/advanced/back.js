@@ -87,6 +87,7 @@ $(document).ready(function() {
             let treatment = JSON.parse(response);
 
             $('.modal .loader').hide();
+            $('.modal .module-import-failure-details').hide();
             switch (treatment.state) {
                 case 0:
                     $('.module-import-failure').show();

@@ -73,8 +73,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'home_products' => array(
                 'modules' => array(
                     'ps_featuredproducts', //22319
-                    'statsbestproducts', //21165
-                    'ps_newproducts', //24671²
+                    'ps_newproducts', //24671
+                    'ps_specials', //24672
                 ),
             ),
             'bloc_text' => array(
