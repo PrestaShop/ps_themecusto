@@ -56,7 +56,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         /* CECI EST LA SOLUTION !!!! */
         file_put_contents(_PS_MODULE_DIR_.'ps_banner.zip', Tools::addonsRequest('module', array('id_module' => 22313)));
-
+        if (Tools::ZipExtract(_PS_MODULE_DIR_.'ps_banner.zip', _PS_MODULE_DIR_)) {
+            unlink(_PS_MODULE_DIR_.'ps_banner.zip');
+        }
 
 
 
@@ -297,15 +299,15 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                             } catch (Exception $e) {
                                 /* For a module coming from outside. It will be downloaded and installed */
                                 // $aModuleFinalList[$sSegmentName][$sType][$sModule] = array();
-                                $aModuleFinalList[$sSegmentName][$sModule]['id_module'] = 1;
-                        $aModuleFinalList[$sSegmentName][$sModule]['active'] = 1;
-                        $aModuleFinalList[$sSegmentName][$sModule]['url_active'] = 'install';
-                        $aModuleFinalList[$sSegmentName][$sModule]['name'] = $sModule;
-                        $aModuleFinalList[$sSegmentName][$sModule]['displayName'] = $sModule;
-                        $aModuleFinalList[$sSegmentName][$sModule]['description'] = 1;
-                        $aModuleFinalList[$sSegmentName][$sModule]['controller_name'] = 1;
-                        $aModuleFinalList[$sSegmentName][$sModule]['logo'] = 1;
-                        $aModuleFinalList[$sSegmentName][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('install' => $sModule));
+                                // $aModuleFinalList[$sSegmentName][$sModule]['id_module'] = 1;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['active'] = 1;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['url_active'] = 'install';
+                                // $aModuleFinalList[$sSegmentName][$sModule]['name'] = $sModule;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['displayName'] = $sModule;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['description'] = 1;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['controller_name'] = 1;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['logo'] = 1;
+                                // $aModuleFinalList[$sSegmentName][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('install' => $sModule));
 
 
                             }
