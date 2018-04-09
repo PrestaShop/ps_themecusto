@@ -44,6 +44,28 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'social_newsletter' => 'Social &  Newsletter',
             'footer'            => 'Footer'
         );
+
+        // $modules = Module::getModulesOnDisk();
+        // foreach ($modules as $module) {
+        //    var_dump($module->name);
+        // }
+
+        // $content = Tools::addonsRequest('module', array('id_module' => 22313));
+
+
+
+        /* CECI EST LA SOLUTION !!!! */
+        file_put_contents(_PS_MODULE_DIR_.'ps_banner.zip', Tools::addonsRequest('module', array('id_module' => 22313)));
+
+
+
+
+        // var_dump($content);
+        // $xml = @simplexml_load_string($content, null, LIBXML_NOCDATA);
+        // var_dump($content);
+        // if ($xml && isset($xml->module)) {
+        // }
+        // die(var_dump($test));
     }
 
     /**
@@ -95,8 +117,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'footer' => array(
                 'pages' => array(
-                    'AdminStores' => array('Shop Informations', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
-                  ),
+                    'AdminStores' => array('Shop Informations', 'Configure and Customize your theme !'),
+                ),
                 'modules' => array(
                     'ps_linklist', //24360
                     'ps_socialfollow', //22323
@@ -275,6 +297,17 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                             } catch (Exception $e) {
                                 /* For a module coming from outside. It will be downloaded and installed */
                                 // $aModuleFinalList[$sSegmentName][$sType][$sModule] = array();
+                                $aModuleFinalList[$sSegmentName][$sModule]['id_module'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['active'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['url_active'] = 'install';
+                        $aModuleFinalList[$sSegmentName][$sModule]['name'] = $sModule;
+                        $aModuleFinalList[$sSegmentName][$sModule]['displayName'] = $sModule;
+                        $aModuleFinalList[$sSegmentName][$sModule]['description'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['controller_name'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['logo'] = 1;
+                        $aModuleFinalList[$sSegmentName][$sModule]['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('install' => $sModule));
+
+
                             }
                         }
                     }
