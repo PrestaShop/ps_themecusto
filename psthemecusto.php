@@ -33,7 +33,7 @@ class psthemecusto extends Module
     public function __construct()
     {
         $this->name = 'psthemecusto';
-        $this->version = '0.1.0';
+        $this->version = '1.0.0';
         $this->author = 'PrestaShop';
 
         $this->module_key = '7c707e5791af499b0fb5983803599bb3';
