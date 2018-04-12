@@ -51,7 +51,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'enable'            => $this->module->active,
             'moduleName'        => $this->module->displayName,
             'bootstrap'         => 1,
-            'configure_type'    => $this->controller_quick_name
+            'configure_type'    => $this->controller_quick_name,
+            'images'            => $this->module->img_path."/controllers/advanced/",
         ));
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],

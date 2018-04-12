@@ -26,6 +26,21 @@
 * to avoid any conflicts with others containers.
 */
 
+#psthemecusto .center-img img {
+    display: block;
+    margin: 2rem auto;
+}
+
+#psthemecusto h4 {
+    font-weight: bolder;
+    color: #363a41;
+    margin: 0;
+    font-size: 14px;
+    font-size: .875rem;
+    margin-bottom: 7px;
+    display: block;
+}
+
 form#importDropzone {
     border: 2px dashed #6c868e;
 }
