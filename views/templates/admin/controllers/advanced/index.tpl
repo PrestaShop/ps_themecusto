@@ -21,7 +21,7 @@
         <div class="col-ld-12">
             <p>{l s='You can edit your theme\'s CSS style sheet by using the Parent/Child theme feature' mod='psthemecusto'}:</p>
         </div>
-        <div class="col-ld-12">
+        <div class="col-ld-12 steps">
             <div class="col-lg-3">
                 <div class="col-lg-12 center-img">
                     <img src="{$images}download.png"/>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-lg-push-1">
-            <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='psthemecusto'}</a>
+            <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="link-child btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='psthemecusto'} <i class="icon-external-link"></i></a>
         </div>
         <div class="col-lg-3 col-lg-push-2">
             <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal" >{l s='Upload child theme' mod='psthemecusto'}</a>
