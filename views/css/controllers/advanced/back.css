@@ -65,7 +65,7 @@
     /* text-align: justify; */
 }
 
-#psthemecusto .btn {
+#psthemecusto .row.row-buttons .btn{
     white-space: initial !important;
 }
 
