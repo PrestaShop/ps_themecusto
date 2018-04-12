@@ -53,6 +53,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'bootstrap'         => 1,
             'configure_type'    => $this->controller_quick_name,
             'images'            => $this->module->img_path."/controllers/advanced/",
+            'is_ps_ready'       => ((getenv('PLATEFORM') === 'PSREADY')? 1 : 0),
         ));
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],
@@ -132,7 +133,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         $aReturn = array(
             'state'         => 1,
-            'message'       => $this->l('Child theme have been added')
+            'message'       => $this->l('The child theme has been added successfully.')
         );
 
         die(Tools::jsonEncode($aReturn));

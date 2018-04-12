@@ -127,7 +127,7 @@
                 {/foreach}
                 <div class="row">
                     <div class="col-lg-4 col-lg-offset-8">
-                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}#built-in_modules" target="_blank">{l s='See all theme\'s modules' mod='psthemecusto'}</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}#theme_modules" target="_blank">{l s='See all theme\'s modules' mod='psthemecusto'}</a>
                     </div>
                 </div>
             </div>

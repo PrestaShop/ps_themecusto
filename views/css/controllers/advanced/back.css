@@ -30,7 +30,6 @@
     display: block;
     margin: 1rem auto 2rem auto;
 }
-
 #psthemecusto b {
     font-weight: bolder;
     color: #363a41;
@@ -40,7 +39,6 @@
     margin-bottom: 7px;
     display: block;
 }
-
 #psthemecusto p {
     font-size: 13px;
     font-size: .8rem;
@@ -48,11 +46,9 @@
     line-height: 1.5;
     color: #363a41;
 }
-
 #psthemecusto .row.row-buttons {
     margin-top: 1rem;
 }
-
 #psthemecusto .icon-external-link {
     font-weight: 400;
     font-size: 20px;
@@ -60,15 +56,12 @@
     display:  inline-block;
     vertical-align: middle;
 }
-
-#psthemecusto .steps p {
-    /* text-align: justify; */
+#psthemecusto .alert {
+    margin-top: 1.5rem;
 }
-
 #psthemecusto .row.row-buttons .btn{
     white-space: initial !important;
 }
-
 form#importDropzone {
     border: 2px dashed #6c868e;
 }

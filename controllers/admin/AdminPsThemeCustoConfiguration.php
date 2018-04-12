@@ -73,8 +73,10 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'home_products' => array(
                 'modules' => array(
                     'ps_featuredproducts' => 22319,
+                    'ps_bestsellers' => 24566,
                     'ps_newproducts' => 24671,
                     'ps_specials' => 24672,
+
                 ),
             ),
             'bloc_text' => array(
@@ -98,8 +100,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'AdminStores' => array('Shop Informations', 'Display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                 ),
                 'modules' => array(
-                    'ps_linklist' => 24360,
-                    'ps_socialfollow' => 22323,
+                    'ps_linklist' => 24360
                 ),
             ),
         );

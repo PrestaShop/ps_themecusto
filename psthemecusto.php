@@ -46,7 +46,7 @@ class psthemecusto extends Module
         $this->bootstrap = true;
         parent::__construct();
         $this->displayName = $this->l('Theme Customization');
-        $this->description = $this->l('Configure and Customize your theme !');
+        $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
         $this->ps_uri = (Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true)).__PS_BASE_URI__;
 
@@ -113,7 +113,7 @@ class psthemecusto extends Module
                 'class'     => $this->controller_name[0],
                 'active'    => true,
                 'position'  => 3,
-                'name'      => 'Advanced customisation',
+                'name'      => 'Advanced Customization',
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             )
