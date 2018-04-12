@@ -26,7 +26,7 @@
                 <div class="col-lg-12 center-img">
                     <img src="{$images}download.png"/>
                 </div>
-                <h4>1 - {l s='Download a child theme' mod='psthemecusto'}</h4>
+                <b>1 - {l s='Download a child theme' mod='psthemecusto'}</b>
                 <div class="col-lg-12">
                     <p>{l s='You picked a theme but still want to bring some specific adjustments? Get a child theme, it will allow you to keep the parts you want and customize the others!' mod='psthemecusto'}.</p>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="col-lg-12 center-img">
                     <img src="{$images}edit.png"/>
                 </div>
-                <h4>2 - {l s='Edit child theme CSS style sheet' mod='psthemecusto'}</h4>
+                <b>2 - {l s='Edit child theme CSS style sheet' mod='psthemecusto'}</b>
                 <div class="col-lg-12">
                     <p>{l s='Once the child theme created, next step is simple: apply the changes you want within the CSS files, it will handle the customization part while keeping the parent theme’s look and functionality.' mod='psthemecusto'}.</p>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="col-lg-12 center-img">
                     <img src="{$images}reupload.png"/>
                 </div>
-                <h4>3 - {l s='Upload child theme' mod='psthemecusto'}</h4>
+                <b>3 - {l s='Upload child theme' mod='psthemecusto'}</b>
                 <div class="col-lg-12">
                     <p>{l s='As you only bring modification to the child theme, you can upgrade the parent theme easily, without losing your customization.' mod='psthemecusto'}.</p>
                 </div>
