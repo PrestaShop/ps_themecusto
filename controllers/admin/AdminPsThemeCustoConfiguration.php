@@ -205,7 +205,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['displayName'] = $oModule->displayName;
         $aModule['url_active'] = $sUrlActive;
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
-        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
+        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array($sUrlActive => $oModule->name));
         $aModule['can_configure'] = (method_exists($oModule, 'getContent'))? true : false;
         unset($oModule);
 
@@ -304,7 +304,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['description'] = $oModuleInstance->description;
         $aModule['controller_name'] = (isset($oModuleInstance->controller_name)? $oModuleInstance->controller_name : '');
         $aModule['logo'] = '/modules/'.$oModuleInstance->name.'/logo.png';
-        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('install' => $oModuleInstance->name));
+        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array($aModule['url_active'] => $oModuleInstance->name));
 
         return $aModule;
     }
