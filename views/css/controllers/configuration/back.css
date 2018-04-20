@@ -211,6 +211,18 @@ button.dropdown-item {
 .dropdown-menu {
     box-shadow: 1px 1px 2px 0 rgba(0,0,0,.3) !important;
 }
+.dropdown-menu>li a{
+    padding: 5px !important;
+    padding: .3125rem !important;
+    cursor: default;
+    text-decoration: none;
+    color: #6c868e;
+    display: block;
+}
+.dropdown-menu>li a:hover {
+    text-decoration: none;
+    color: #3ed2f0;
+}
 .material-icons.up{
     display: none;
 }

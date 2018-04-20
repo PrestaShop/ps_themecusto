@@ -35,18 +35,16 @@ class ps_themecusto extends Module
         $this->name = 'ps_themecusto';
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
-
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
-        $this->controller_name = array( 'AdminPsThemeCustoAdvanced',
-                                        'AdminPsThemeCustoConfiguration');
-        $this->front_controller =  array('index.php?controller='.$this->controller_name[0].'&token='.Tools::getAdminTokenLite($this->controller_name[0]),
-                                        'index.php?controller='.$this->controller_name[1].'&token='.Tools::getAdminTokenLite($this->controller_name[1])
-                                        );
         $this->bootstrap = true;
+
         parent::__construct();
+        $this->controller_name = array( 'AdminPsThemeCustoAdvanced','AdminPsThemeCustoConfiguration');
+        $this->front_controller =  array( $this->context->link->getAdminLink($this->controller_name[0]),
+                                          $this->context->link->getAdminLink($this->controller_name[1]));
         $this->displayName = $this->l('Theme Customization');
-        $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules');
+        $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
         $this->ps_uri = (Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true)).__PS_BASE_URI__;
 
@@ -105,7 +103,7 @@ class ps_themecusto extends Module
                 'class'     => $this->controller_name[1],
                 'active'    => true,
                 'position'  => 2,
-                'name'      => 'Homepage Configuration',
+                'name'      => $this->l('Homepage Configuration'),
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             ),
@@ -113,7 +111,7 @@ class ps_themecusto extends Module
                 'class'     => $this->controller_name[0],
                 'active'    => true,
                 'position'  => 3,
-                'name'      => 'Advanced Customization',
+                'name'      => $this->l('Advanced Customization'),
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             )
@@ -217,6 +215,7 @@ class ps_themecusto extends Module
 
     /**
     * check if the employee has the right to use this admin controller
+    * @param none
     * @return bool
     */
     public function hasEditRight()
