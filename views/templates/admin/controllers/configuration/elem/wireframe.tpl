@@ -26,7 +26,7 @@
         <img class="out-element" src="{$moduleImgUri}/wireframe/home_products.jpg"/>
         <img class="on-element" src="{$moduleImgUri}/wireframe/home_products_hover.jpg"/>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-bloc_text" data-module_name="bloc_text">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-block_text" data-module_name="block_text">
         <img class="out-element" src="{$moduleImgUri}/wireframe/bloc_text.jpg"/>
         <img class="on-element" src="{$moduleImgUri}/wireframe/bloc_text_hover.jpg"/>
     </div>

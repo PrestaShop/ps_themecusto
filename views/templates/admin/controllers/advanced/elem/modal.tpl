@@ -30,7 +30,7 @@
                             <div class="module-import-start">
                                 <i class="module-import-start-icon material-icons">cloud_upload</i><br>
                                 <p class="module-import-start-main-text">
-                                    {l s='Drop your child theme archive here or' mod='ps_themecusto'} <a href="#" class="module-import-start-select-manual">select file</a>
+                                    {l s='Drop your child theme archive here or' mod='ps_themecusto'} <a href="#" class="module-import-start-select-manual">{l s='select file' mod='ps_themecusto'}</a>
                                 </p>
                                 <p class="module-import-start-footer-text">
                                     {l s='Please upload one file at a time, .zip. Your child theme will be installed right after that.' mod='ps_themecusto'}

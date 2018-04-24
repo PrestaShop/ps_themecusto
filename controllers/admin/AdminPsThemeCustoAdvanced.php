@@ -66,7 +66,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $aCss = array($this->module->css_path.'/controllers/'.$this->controller_quick_name.'/back.css');
         $this->module->setMedia($aJsDef, $aJs, $aCss);
 
-        $this->setTemplate( $this->module->template_dir.'page.tpl');
+        $this->setTemplate($this->module->template_dir.'page.tpl');
     }
 
     /**
@@ -100,8 +100,16 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function ajaxProcessUploadChildTheme()
     {
         $aChildThemeReturned = Tools::fileAttachment('file');
-        $sZipPath = self::processUploadFileChild( $aChildThemeReturned, _PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
-        $sFolderPath = self::postProcessInstall(_PS_ALL_THEMES_DIR_.$aChildThemeReturned['rename']);
+        $sZipPath = self::processUploadFileChild($aChildThemeReturned, '/tmp/'.$aChildThemeReturned['rename']);
+        $bUploadIsClean = self::processCheckFiles($sZipPath, $aChildThemeReturned['tmp_name']);
+        if (!$bUploadIsClean) {
+            $aReturn = array(
+                'state'     => 0,
+                'message'   => $this->l('There is some PHP files in your ZIP')
+            );
+            die(Tools::jsonEncode($aReturn));
+        }
+        $sFolderPath = self::postProcessInstall('/tmp/'.$aChildThemeReturned['rename']);
         $aReturn = array();
 
         if ($sFolderPath === false) {
@@ -206,6 +214,59 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     }
 
     /**
+     * We unzip the child theme zip in a sandbox to check it
+     *
+     * @param string $sZipSource
+     * @param string $sSandboxPath
+     * @return bool $bCleanFiles
+     */
+    public function processCheckFiles($sZipSource, $sSandboxPath)
+    {
+        if (!$this->module->hasEditRight()) {
+            return $this->l("You do not have permission to edit this.");
+        }
+
+        Tools::ZipExtract($sZipSource, $sSandboxPath);
+        $bCleanFiles = self::getDirContents($sSandboxPath);
+
+        $di = new RecursiveDirectoryIterator($sSandboxPath, FilesystemIterator::SKIP_DOTS);
+        $ri = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($ri as $file) {
+            $file->isDir() ?  @rmdir($file) : @unlink($file);
+        }
+        @rmdir($sSandboxPath);
+
+        return $bCleanFiles;
+    }
+
+    /**
+     * We check if there is some PHP files
+     *
+     * @param string $sSandboxPath
+     * @param reference array $sSandboxPath
+     * @return bool
+     */
+    public function getDirContents($sSandboxPath, &$results = array())
+    {
+        $files = scandir($sSandboxPath);
+        $sPattern = '#[.\-\/](php)#';
+
+        foreach ($files as $key => $value) {
+            $path = realpath($sSandboxPath.DIRECTORY_SEPARATOR.$value);
+            if (!is_dir($path)) {
+                $sSubject = $value.mime_content_type($path);
+                if (preg_match($sPattern, $sSubject)) {
+                    return false;
+                }
+            } else if ($value != '.' && $value != '..') {
+                self::getDirContents($path, $results);
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * We install the child theme and we return the folder child theme's name
      *
      * @param string
@@ -224,7 +285,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
             foreach ($aFolderScan as $key => $sObject) {
                 $sDirThemeFolder = _PS_ALL_THEMES_DIR_.$sObject;
-                if (is_dir($sDirThemeFolder) && !in_array($sObject,array('.','..'))) {
+                if (is_dir($sDirThemeFolder) && !in_array($sObject,array('.', '..'))) {
                     $aFolder[filemtime($sDirThemeFolder)] = $sDirThemeFolder;
                 }
             }
@@ -278,7 +339,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $bIsChildTheme = false;
 
         foreach ($aLines as $line) {
-            if(strpos($line, $sSearchString) !== false) {
+            if (strpos($line, $sSearchString) !== false) {
                 $aParentThemeName = explode(":", $line);
                 $sParentThemeName = trim($aParentThemeName[1]);
                 if ($sParentThemeName == _THEME_NAME_) {
