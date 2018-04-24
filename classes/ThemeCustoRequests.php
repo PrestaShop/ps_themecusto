@@ -37,7 +37,7 @@ class ThemeCustoRequests
         $sSql = '   SELECT m.id_module, m.name, ms.enable_device as active
                     FROM `'._DB_PREFIX_.'module` m
                     LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
-                    WHERE m.name IN ('.implode(',', $aModulesName).')';
+                    WHERE m.name IN ('.implode(', ', array_map('pSQL', $aModulesName)).')';
 
         $aModulesList = Db::getInstance()->executeS($sSql);
 

@@ -67,7 +67,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'slider' => array(
                 'modules' => array(
-                    ((getenv('PLATEFORM') === 'PSREADY')? 'pshomeslider' : 'ps_imageslider') => ((getenv('PLATEFORM') === 'PSREADY')? 27562 : 22320)
+                    (($this->module->ready)? 'pshomeslider' : 'ps_imageslider') => (($this->module->ready)? 27562 : 22320)
                 ),
             ),
             'home_products' => array(
@@ -132,7 +132,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'moduleActions'         => $this->aModuleActions,
             'moduleActionsNames'    => $this->moduleActionsNames,
             'themeConfiguratorUrl'  => $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => 'ps_themeconfigurator')),
-            'is_ps_ready'           => ((getenv('PLATEFORM') === 'PSREADY')? 1 : 0),
+            'is_ps_ready'           => $this->module->ready,
             'ps_uri'                => $this->module->ps_uri
         ));
 
@@ -158,6 +158,10 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     */
     public function ajaxProcessUpdateModule()
     {
+        if (!$this->module->hasEditRight()) {
+            die($this->l("You do not have permission to edit this."));
+        }
+
         $iModuleId      = (int)Tools::getValue('id_module');
         $sModuleName    = pSQL(Tools::getValue('module_name'));
         $sModuleAction  = pSQL(Tools::getValue('action_module'));
@@ -167,10 +171,16 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         switch ($sModuleAction) {
             case 'uninstall':
+                if ($this->module->ready === true) {
+                    break;
+                }
                 $bReturn = $oModule->uninstall();
                 $sUrlActive = 'install';
             break;
             case 'install':
+                if ($this->module->ready === true) {
+                    break;
+                }
                 $bReturn = $oModule->install();
                 $sUrlActive = (method_exists($oModule, 'getContent'))? 'configure' : 'disable';
             break;
@@ -213,6 +223,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'module'                => $aModule,
             'moduleActions'         => $this->aModuleActions,
             'moduleActionsNames'    => $this->moduleActionsNames,
+            'is_ps_ready'           => $this->module->ready,
             )
         );
 
@@ -245,22 +256,24 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                             $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, true);
                             unset($oModuleInstance);
                         } else {
-                            try {
-                                include_once(_PS_MODULE_DIR_.$sModuleName.'/'.$sModuleName.'.php');
-                                $oModuleInstance = new $sModuleName();
-                                $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, false);
-                                unset($oModuleInstance);
-                            } catch (Exception $e) {
-                                /* For a module coming from outside. It will be downloaded and installed */
-                                file_put_contents(_PS_MODULE_DIR_.$sModuleName.'.zip', Tools::addonsRequest('module', array('id_module' => $iModuleId)));
-                                if (Tools::ZipExtract(_PS_MODULE_DIR_.$sModuleName.'.zip', _PS_MODULE_DIR_)) {
-                                    unlink(_PS_MODULE_DIR_.$sModuleName.'.zip');
-                                }
-                                include_once(_PS_MODULE_DIR_.$sModuleName.'/'.$sModuleName.'.php');
+                            if ($this->module->ready === false) {
+                                try {
+                                    include_once(_PS_MODULE_DIR_.basename($sModuleName).'/'.basename($sModuleName).'.php');
+                                    $oModuleInstance = new $sModuleName();
+                                    $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, false);
+                                    unset($oModuleInstance);
+                                } catch (Exception $e) {
+                                    /* For a module coming from outside. It will be downloaded and installed */
+                                    file_put_contents(_PS_MODULE_DIR_.basename($sModuleName).'.zip', Tools::addonsRequest('module', array('id_module' => $iModuleId)));
+                                    if (Tools::ZipExtract(_PS_MODULE_DIR_.basename($sModuleName).'.zip', _PS_MODULE_DIR_)) {
+                                        unlink(_PS_MODULE_DIR_.basename($sModuleName).'.zip');
+                                    }
+                                    include_once(_PS_MODULE_DIR_.basename($sModuleName).'/'.basename($sModuleName).'.php');
 
-                                $oModuleInstance = new $sModuleName();
-                                $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, false);
-                                unset($oModuleInstance);
+                                    $oModuleInstance = new $sModuleName();
+                                    $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, false);
+                                    unset($oModuleInstance);
+                                }
                             }
                         }
                     }

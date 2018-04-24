@@ -48,6 +48,8 @@
                     && !(($module.active eq 3 || $module.active eq 0) && $action eq 'disable_mobile')
                     && !(($module.active eq 7 || $module.active eq 1 || $module.active eq 0) && $action eq 'enable_mobile')
                     && !($action eq 'install')
+                    && !($action eq 'uninstall' && $is_ps_ready)
+                    && !($action eq 'install' && $is_ps_ready)
                 }
                 <li>
                     <div data-action="{$action}" data-module_name="{$module.name}" data-module_displayname="{$module.displayName}">

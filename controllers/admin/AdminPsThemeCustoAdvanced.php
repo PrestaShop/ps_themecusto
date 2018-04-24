@@ -53,7 +53,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'bootstrap'         => 1,
             'configure_type'    => $this->controller_quick_name,
             'images'            => $this->module->img_path."/controllers/advanced/",
-            'is_ps_ready'       => ((getenv('PLATEFORM') === 'PSREADY')? 1 : 0),
+            'is_ps_ready'       => $this->module->ready,
         ));
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],
@@ -247,8 +247,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         $aScanedRoot = @scandir($sFolderPath);
 
-        if (in_array("modules", $aScanedRoot)) {
-            $aScanModules = @scandir($sFolderPath."/modules");
+        if (in_array("dependencies", $aScanedRoot)) {
+            $aScanModules = @scandir($sFolderPath."/dependencies");
             unset($aScanModules[array_search(".", $aScanModules)]);
             unset($aScanModules[array_search("..", $aScanModules)]);
             if (($key = array_search("index.php", $aScanModules)) !== false) {
