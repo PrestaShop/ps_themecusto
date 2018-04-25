@@ -132,15 +132,6 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             die(Tools::jsonEncode($aReturn));
         }
 
-        if (self::checkChildThemeHasModules($sFolderPath)) {
-            self::recursiveDelete($sFolderPath);
-            $aReturn = array(
-                'state'     => 0,
-                'message'   => $this->l('You must not have modules in your child theme')
-            );
-            die(Tools::jsonEncode($aReturn));
-        }
-
         if (!self::checkIfIsChildTheme($sFolderPath)) {
             self::recursiveDelete($sFolderPath);
             $aReturn = array(
@@ -180,21 +171,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $mimeType = false;
         $goodMimeType = false;
 
-        if (function_exists('finfo_open')) {
-            $finfo = @finfo_open(FILEINFO_MIME);
-            $mimeType = @finfo_file($finfo, $tmp_name);
-            @finfo_close($finfo);
-        } elseif (function_exists('mime_content_type')) {
-            $mimeType = @mime_content_type($tmp_name);
-        } elseif (function_exists('exec')) {
-            $mimeType = trim(@exec('file -b --mime-type '.escapeshellarg($tmp_name)));
-            if (!$mimeType) {
-                $mimeType = trim(@exec('file --mime '.escapeshellarg($tmp_name)));
-            }
-            if (!$mimeType) {
-                $mimeType = trim(@exec('file -bi '.escapeshellarg($tmp_name)));
-            }
-        }
+        $mimeType = self::processCheckMimeType($tmp_name);
 
         if (!empty($mimeType)) {
             preg_match('#application/zip#', $mimeType, $matches);
@@ -222,6 +199,33 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         }
 
         return $dest;
+    }
+
+    /**
+     * Get the mime type of the file
+     *
+     * @param string $tmp_name
+     * @return string $mimeType
+     */
+    public function processCheckMimeType($tmp_name)
+    {
+        if (function_exists('finfo_open')) {
+            $finfo = @finfo_open(FILEINFO_MIME);
+            $mimeType = @finfo_file($finfo, $tmp_name);
+            @finfo_close($finfo);
+        } elseif (function_exists('mime_content_type')) {
+            $mimeType = @mime_content_type($tmp_name);
+        } elseif (function_exists('exec')) {
+            $mimeType = trim(@exec('file -b --mime-type '.escapeshellarg($tmp_name)));
+            if (!$mimeType) {
+                $mimeType = trim(@exec('file --mime '.escapeshellarg($tmp_name)));
+            }
+            if (!$mimeType) {
+                $mimeType = trim(@exec('file -bi '.escapeshellarg($tmp_name)));
+            }
+        }
+
+        return $mimeType;
     }
 
     /**
@@ -290,7 +294,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         foreach ($files as $key => $value) {
             $path = realpath($sSandboxPath.DIRECTORY_SEPARATOR.$value);
             if (!is_dir($path)) {
-                $sSubject = $value.mime_content_type($path);
+                $sSubject = $value.self::processCheckMimeType($path);
                 if (preg_match($sPattern, $sSubject)) {
                     return false;
                 }
@@ -332,33 +336,6 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         } catch (Exception $e) {
             return false;
         }
-    }
-
-    /**
-     * the child theme must not having modules. If it does, we will delete it later.
-     *
-     * @param string
-     * @return bool
-     */
-    public function checkChildThemeHasModules($sFolderPath)
-    {
-        $aScanedRoot = @scandir($sFolderPath);
-
-        if (in_array("dependencies", $aScanedRoot)) {
-            $aScanModules = @scandir($sFolderPath."/dependencies");
-            unset($aScanModules[array_search(".", $aScanModules)]);
-            unset($aScanModules[array_search("..", $aScanModules)]);
-            if (($key = array_search("index.php", $aScanModules)) !== false) {
-                unset($aScanModules[$key]);
-            }
-            $iHasModules = count($aScanModules);
-            if ($iHasModules > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
     }
 
     /**
