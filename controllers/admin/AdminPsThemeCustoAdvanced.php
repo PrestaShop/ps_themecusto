@@ -32,6 +32,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         parent::__construct();
 
+        $this->sandbox_path = _PS_CACHE_DIR_.'sandbox/';
         $this->controller_quick_name = 'advanced';
         $this->theme_manager = (new ThemeManagerBuilder($this->context, Db::getInstance()))->build();
         $this->theme_repository = (new ThemeManagerBuilder($this->context, Db::getInstance()))->buildRepository();
@@ -100,7 +101,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function ajaxProcessUploadChildTheme()
     {
         $aChildThemeReturned = Tools::fileAttachment('file');
-        $sZipPath = self::processUploadFileChild($aChildThemeReturned, '/tmp/'.$aChildThemeReturned['rename']);
+        $sZipPath = self::processUploadFileChild($aChildThemeReturned, $this->sandbox_path.$aChildThemeReturned['rename']);
         $bZipFormat = self::processCheckZipFormat($sZipPath);
         if (!$bZipFormat) {
             $aReturn = array(
@@ -110,7 +111,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             die(Tools::jsonEncode($aReturn));
         }
 
-        $bUploadIsClean = self::processCheckFiles($sZipPath, $aChildThemeReturned['tmp_name']);
+        $bUploadIsClean = self::processCheckFiles($sZipPath, $this->sandbox_path.rand());
 
         if (!$bUploadIsClean) {
             $aReturn = array(
@@ -120,7 +121,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             die(Tools::jsonEncode($aReturn));
         }
 
-        $sFolderPath = self::postProcessInstall('/tmp/'.$aChildThemeReturned['rename']);
+        $sFolderPath = self::postProcessInstall($this->sandbox_path.$aChildThemeReturned['rename']);
         $aReturn = array();
 
         if ($sFolderPath === false) {
@@ -273,7 +274,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         }
 
         Tools::ZipExtract($sZipSource, $sSandboxPath);
-        $bCleanFiles = self::getDirPhpContents($sSandboxPath);
+        $bCleanFiles = self::getDirPhpContents($sZipSource, $sSandboxPath);
         self::recursiveDelete($sSandboxPath);
 
         return $bCleanFiles;
@@ -285,21 +286,29 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      * @param string $sSandboxPath
      * @param reference array $sSandboxPath
      * @return bool
-     */
-    public function getDirPhpContents($sSandboxPath, &$results = array())
+    */
+    public function getDirPhpContents($sZipSource, $sSandboxPath)
     {
         $files = scandir($sSandboxPath);
         $sPattern = '#[.\-\/](php)#';
+        $bReturn = true;
 
-        foreach ($files as $key => $value) {
-            $path = realpath($sSandboxPath.DIRECTORY_SEPARATOR.$value);
-            if (!is_dir($path)) {
-                $sSubject = $value.self::processCheckMimeType($path);
-                if (preg_match($sPattern, $sSubject)) {
-                    return false;
+        $it = new RecursiveDirectoryIterator($sSandboxPath, RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($files as $file) {
+            if (!$file->isDir()) {
+                $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
+                if ($file->getFilename() === 'index.php') {
+                    $zip = new ZipArchive;
+                    if ($zip->open($sZipSource)) {
+                        $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
+                        $zip->deleteName($sRealPathFile);
+                        $zip->addFromString($sRealPathFile, Tools::getDefaultIndexContent());
+                        $zip->close();
+                    }
+                } elseif (preg_match($sPattern, $sSubject) && $bReturn === true){
+                    $bReturn = false;
                 }
-            } else if ($value != '.' && $value != '..') {
-                self::getDirPhpContents($path, $results);
             }
         }
 
@@ -311,7 +320,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      *
      * @param string
      * @return string
-     */
+    */
     public function postProcessInstall($dest)
     {
         if (!$this->module->hasEditRight()) {
@@ -343,7 +352,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      *
      * @param string
      * @return bool
-     */
+    */
     public function checkIfIsChildTheme($sFolderPath)
     {
         $sFile = "theme.yml";
