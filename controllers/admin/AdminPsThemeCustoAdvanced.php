@@ -121,7 +121,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             die(Tools::jsonEncode($aReturn));
         }
 
-        $sFolderPath = self::postProcessInstall($this->sandbox_path.$aChildThemeReturned['rename']);
+        $sFolderPath = self::postProcessInstall($sZipPath);
         $aReturn = array();
 
         if ($sFolderPath === false) {
@@ -291,27 +291,29 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         $files = scandir($sSandboxPath);
         $sPattern = '#[.\-\/](php)#';
-        $bReturn = true;
+        $sIndexPhpFile = Tools::getDefaultIndexContent();
 
+        $zip = new ZipArchive;
         $it = new RecursiveDirectoryIterator($sSandboxPath, RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
         foreach ($files as $file) {
             if (!$file->isDir()) {
                 $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
                 if ($file->getFilename() === 'index.php') {
-                    $zip = new ZipArchive;
                     if ($zip->open($sZipSource)) {
                         $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
                         $zip->deleteName($sRealPathFile);
-                        $zip->addFromString($sRealPathFile, Tools::getDefaultIndexContent());
-                        $zip->close();
+                        $zip->addFromString($sRealPathFile, $sIndexPhpFile);
                     }
                 } elseif (preg_match($sPattern, $sSubject) && $bReturn === true){
-                    $bReturn = false;
+                    $zip->close();
+                    return false;
                 }
             }
         }
 
+        $zip->close();
         return true;
     }
 
