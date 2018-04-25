@@ -101,7 +101,17 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         $aChildThemeReturned = Tools::fileAttachment('file');
         $sZipPath = self::processUploadFileChild($aChildThemeReturned, '/tmp/'.$aChildThemeReturned['rename']);
+        $bZipFormat = self::processCheckZipFormat($sZipPath);
+        if (!$bZipFormat) {
+            $aReturn = array(
+                'state'     => 0,
+                'message'   => $this->l('Make sure you zip your edited theme files directly to the root of your child theme\'s folder before uploading it.')
+            );
+            die(Tools::jsonEncode($aReturn));
+        }
+
         $bUploadIsClean = self::processCheckFiles($sZipPath, $aChildThemeReturned['tmp_name']);
+
         if (!$bUploadIsClean) {
             $aReturn = array(
                 'state'     => 0,
@@ -109,6 +119,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             );
             die(Tools::jsonEncode($aReturn));
         }
+
         $sFolderPath = self::postProcessInstall('/tmp/'.$aChildThemeReturned['rename']);
         $aReturn = array();
 
@@ -122,7 +133,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         }
 
         if (self::checkChildThemeHasModules($sFolderPath)) {
-            self::deleteChildTheme($sFolderPath);
+            self::recursiveDelete($sFolderPath);
             $aReturn = array(
                 'state'     => 0,
                 'message'   => $this->l('You must not have modules in your child theme')
@@ -131,7 +142,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         }
 
         if (!self::checkIfIsChildTheme($sFolderPath)) {
-            self::deleteChildTheme($sFolderPath);
+            self::recursiveDelete($sFolderPath);
             $aReturn = array(
                 'state'     => 0,
                 'message'   => $this->l('You must enter the parent theme name in the theme.yml file. Furthermore, the parent name must be the current parent theme.')
@@ -214,6 +225,37 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     }
 
     /**
+     * We check if the Zip is valid. The root folder must have all the theme element, we check it with the folder Config.
+     *
+     * @param string $sZipPath
+     * @return bool $bZipIsValid
+     */
+    public function processCheckZipFormat($sZipPath)
+    {
+        $oZip = new ZipArchive;
+        $oZip->open($sZipPath);
+
+        for($i = 0; $i < $oZip->numFiles; $i++)
+        {
+            $aZipElement  = array_filter(explode('/', $oZip->getNameIndex($i)));
+            if (count($aZipElement) == 1) {
+                $aRootFilesAndFolders[] = $aZipElement[0];
+            }
+        }
+
+        $oZip->close();
+
+        if (in_array('config', $aRootFilesAndFolders)) {
+            $bZipIsValid = true;
+        } else {
+            $bZipIsValid = false;
+            @unlink($sZipPath);
+        }
+
+        return $bZipIsValid;
+    }
+
+    /**
      * We unzip the child theme zip in a sandbox to check it
      *
      * @param string $sZipSource
@@ -227,14 +269,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         }
 
         Tools::ZipExtract($sZipSource, $sSandboxPath);
-        $bCleanFiles = self::getDirContents($sSandboxPath);
-
-        $di = new RecursiveDirectoryIterator($sSandboxPath, FilesystemIterator::SKIP_DOTS);
-        $ri = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($ri as $file) {
-            $file->isDir() ?  @rmdir($file) : @unlink($file);
-        }
-        @rmdir($sSandboxPath);
+        $bCleanFiles = self::getDirPhpContents($sSandboxPath);
+        self::recursiveDelete($sSandboxPath);
 
         return $bCleanFiles;
     }
@@ -246,7 +282,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      * @param reference array $sSandboxPath
      * @return bool
      */
-    public function getDirContents($sSandboxPath, &$results = array())
+    public function getDirPhpContents($sSandboxPath, &$results = array())
     {
         $files = scandir($sSandboxPath);
         $sPattern = '#[.\-\/](php)#';
@@ -259,7 +295,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
                     return false;
                 }
             } else if ($value != '.' && $value != '..') {
-                self::getDirContents($path, $results);
+                self::getDirPhpContents($path, $results);
             }
         }
 
@@ -358,7 +394,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      * @param string
      * @return bool
      */
-    public function deleteChildTheme($sFolderPath)
+    public function recursiveDelete($sFolderPath)
     {
         $it = new RecursiveDirectoryIterator($sFolderPath, RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
