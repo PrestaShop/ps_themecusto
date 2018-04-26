@@ -84,6 +84,9 @@ $(document).ready(function() {
             $('.module-import-success').hide();
         },
         success: function(file, response){
+            if (response.length == 0) {
+                response = '{"state":0, "message":"'+default_error_upload+'"}';
+            }
             let treatment = JSON.parse(response);
 
             $('.modal .loader').hide();

@@ -58,7 +58,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         ));
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],
-            'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[0]
+            'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[0],
+            'default_error_upload'                  => $this->l('An error occured, please check your zip file'),
         );
         $aJs = array(
             $this->module->js_path.'/controllers/'.$this->controller_quick_name.'/back.js',
