@@ -72,11 +72,19 @@ $(document).ready(function() {
     });
 
     Dropzone.options.importDropzone = {
-        acceptedFiles: '.zip',
+        acceptedFiles: 'application/zip',
         maxFiles: 1,
         maxFilesize: 50, // File size in Mb
         dictDefaultMessage: '',
         hiddenInputContainer: '#importDropzone',
+        init: function() {
+            var self = this;
+            self.on("addedfile", function(file) {
+                $('.module-import-start').hide();
+                $('.module-import-failure-details').html(file_not_valid);
+            });
+        },
+
         sending: function sending() {
             $('.modal .loader').show();
             $('.module-import-start').hide();
@@ -108,5 +116,6 @@ $(document).ready(function() {
             $('.module-import-failure').show();
         }
     };
+
 });
 
