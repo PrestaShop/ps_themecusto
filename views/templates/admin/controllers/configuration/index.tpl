@@ -47,7 +47,7 @@
                 <div class="row configuration-rectangle">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
                         <span class="col-lg-11 col-sm-11 col-xs-11 col-md-11">
-                            {l s=$listCategories[$categoryname] mod='ps_themecusto'}
+                            {$listCategories[$categoryname]}
                         </span>
                         <span class="col-lg-1 col-sm-1 col-xs-1 col-md-1 configuration-rectangle-caret">
                             <i class="material-icons down">keyboard_arrow_down</i>
@@ -64,14 +64,14 @@
                                         </div>
                                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <b>{l s=$page.displayName mod='ps_themecusto'}</b>
+                                                <b>{$page.displayName}</b>
                                             </div>
                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 description">
-                                                {l s=$page.description mod='ps_themecusto'}
+                                                {$page.description}
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
                                                 <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}" target="_blank">
-                                                    {l s=$page.action|capitalize mod='ps_themecusto'}
+                                                    {$page.action|capitalize}
                                                 </a>
                                             </div>
                                         </div>

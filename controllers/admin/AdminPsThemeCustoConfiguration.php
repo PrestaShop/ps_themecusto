@@ -34,15 +34,24 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         $this->controller_quick_name = 'configuration';
         $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset' );
-        $this->moduleActionsNames = array('Uninstall', 'Install', 'Configure', 'Enable', 'Disable', 'Disable Mobile', 'Enable Mobile' ,'Reset');
+        $this->moduleActionsNames = array(
+            $this->l('Uninstall'),
+            $this->l('Install'),
+            $this->l('Configure'),
+            $this->l('Enable'),
+            $this->l('Disable'),
+            $this->l('Disable Mobile'),
+            $this->l('Enable Mobile'),
+            $this->l('Reset')
+        );
         $this->categoryList = array(
-            'menu'              => 'Menu',
-            'slider'            => 'Slider',
-            'home_products'     => 'Home Products',
-            'block_text'         => 'Text block',
-            'banner'            => 'Banner',
-            'social_newsletter' => 'Social &  Newsletter',
-            'footer'            => 'Footer'
+            'menu'              => $this->l('Menu'),
+            'slider'            => $this->l('Slider'),
+            'home_products'     => $this->l('Home Products'),
+            'block_text'        => $this->l('Text block'),
+            'banner'            => $this->l('Banner'),
+            'social_newsletter' => $this->l('Social &  Newsletter'),
+            'footer'            => $this->l('Footer')
         );
     }
 
@@ -57,9 +66,18 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aList = array(
             'menu' => array(
                 'pages' => array(
-                    'AdminCategories' => array('Create and manage Product Categories', 'Create here a full range of categories and subcategories to classify your products and manage your catalog easily.'),
-                    'AdminCmsContent' => array('Create content pages', 'Add and manage your content pages (CMS pages : Terms and conditions of use, Our stores, About us, etc.) as you want. '),
-                    'AdminManufacturers' => array('Create Brands and Suppliers pages', 'This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                    'AdminCategories' => array(
+                        $this->l('Create and manage Product Categories'),
+                        $this->l('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.')
+                    ),
+                    'AdminCmsContent' => array(
+                        $this->l('Create content pages'),
+                        $this->l('Add and manage your content pages (CMS pages : Terms and conditions of use, Our stores, About us, etc.) as you want.')
+                    ),
+                    'AdminManufacturers' => array(
+                        $this->l('Create Brands and Suppliers pages'),
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.')
+                    ),
                 ),
                 'modules' => array(
                     'ps_mainmenu' => 22321,
@@ -97,7 +115,10 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'footer' => array(
                 'pages' => array(
-                    'AdminStores' => array('Shop details', 'Display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
+                    'AdminStores' => array(
+                        $this->l('Shop details'),
+                        $this->l('Display additional information about your store or how to contact you to make it easy for your customers to reach you.')
+                    ),
                 ),
                 'modules' => array(
                     'ps_linklist' => 24360

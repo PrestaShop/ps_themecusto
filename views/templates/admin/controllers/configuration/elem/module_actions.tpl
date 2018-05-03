@@ -55,7 +55,7 @@
                     <div data-action="{$action}" data-module_name="{$module.name}" data-module_displayname="{$module.displayName}">
                         {if $action eq 'uninstall' || $action eq 'disable' || $action eq 'reset'}
                         <button type="button" class="dropdown-item module_action_menu_{$action}" data-confirm_modal="module-modal-confirm-{$module.name}-{$action}" data-toggle="modal" data-target="#moduleActionModal">
-                            {l s=$moduleActionsNames.$key|capitalize mod='ps_themecusto'}
+                            {$moduleActionsNames.$key|capitalize}
                         </button>
                         {else if $action eq 'configure'}
                         <a class="dropdown-item module_action_menu_configure" href="{$module.actions_url.configure}" target="_blank">
@@ -63,7 +63,7 @@
                         </a>
                         {else}
                         <button type="button" class="dropdown-item module_action_menu_{$action}">
-                            {l s=$moduleActionsNames.$key|capitalize mod='ps_themecusto'}
+                            {$moduleActionsNames.$key|capitalize}
                         </button>
                         {/if}
 
