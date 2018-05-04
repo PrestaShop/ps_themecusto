@@ -308,7 +308,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
                         $zip->deleteName($sRealPathFile);
                         $zip->addFromString($sRealPathFile, $sIndexPhpFile);
                     }
-                } elseif (preg_match($sPattern, $sSubject) && $bReturn === true){
+                } elseif (preg_match($sPattern, $sSubject)){
                     $zip->close();
                     return false;
                 }

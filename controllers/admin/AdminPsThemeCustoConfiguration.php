@@ -287,13 +287,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                                     /* For a module coming from outside. It will be downloaded and installed */
                                     file_put_contents(_PS_MODULE_DIR_.basename($sModuleName).'.zip', Tools::addonsRequest('module', array('id_module' => $iModuleId)));
                                     if (Tools::ZipExtract(_PS_MODULE_DIR_.basename($sModuleName).'.zip', _PS_MODULE_DIR_)) {
-                                        unlink(_PS_MODULE_DIR_.basename($sModuleName).'.zip');
+                                        @unlink(_PS_MODULE_DIR_.basename($sModuleName).'.zip');
+                                        include_once(_PS_MODULE_DIR_.basename($sModuleName).'/'.basename($sModuleName).'.php');
+                                        $oModuleInstance = new $sModuleName();
+                                        $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, false);
+                                        unset($oModuleInstance);
                                     }
-                                    include_once(_PS_MODULE_DIR_.basename($sModuleName).'/'.basename($sModuleName).'.php');
-
-                                    $oModuleInstance = new $sModuleName();
-                                    $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($oModuleInstance, false);
-                                    unset($oModuleInstance);
                                 }
                             }
                         }
