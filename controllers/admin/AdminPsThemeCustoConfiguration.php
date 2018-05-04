@@ -332,6 +332,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             }
             $aModule['installed'] = 1;
         } else {
+            $aModule['can_configure'] = false;
             $aModule['url_active'] = $this->l('install');
             $aModule['installed'] = 0;
         }
