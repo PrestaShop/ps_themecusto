@@ -33,7 +33,7 @@ $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_ded40f2a77c3
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_a39a7bb20b87c1e818ff2d321d612c23'] = 'Créer des catégories de produits';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_60328687faec0cab8613aa9d796cc0fe'] = 'Créez un ensemble de catégories et sous-catégories pour classer vos produits et les gérer en toute simplicité.';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_a03facafa0612fe501fc66292d6510d7'] = 'Créer des pages de contenu';
-$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_b8ce593f93c55fff44b166aa2d395deb'] = 'Ajoutez et gérez vos pages de contenu "CMS" (CGV, Livraison, A propos, etc.) comme vous le souhaitez.';
+$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_b8ce593f93c55fff44b166aa2d395deb'] = 'Ajoutez et gérez vos pages de contenu CMS (CGV, Livraison, A propos, etc.) comme vous le souhaitez.';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_c5a358d061895cc982600e71b9947a2e'] = 'Créer des pages Marques et Fournisseurs';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_60daf439ec64a846c2b5d13e6e7b1dda'] = 'Cette page vous permet de créer et de gérer vos pages Marques et/ou Fournisseurs.';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_7cd5fa3f9e9e911c6b60b9044436d227'] = 'Détails de la boutique';
