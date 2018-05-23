@@ -30,19 +30,38 @@ if (!defined('_PS_VERSION_')) {
 
 class ps_themecusto extends Module
 {
+    public $author_address;
+    public $bootstrap;
+    public $controller_name;
+    public $front_controller = array();
+    public $template_dir;
+    public $js_path;
+    public $css_path;
+    public $img_path;
+    public $logo_path;
+    public $module_path;
+    public $ready;
+
     public function __construct()
     {
         $this->name = 'ps_themecusto';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'PrestaShop';
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
         $this->bootstrap = true;
 
         parent::__construct();
-        $this->controller_name = array( 'AdminPsThemeCustoAdvanced','AdminPsThemeCustoConfiguration');
-        $this->front_controller =  array( $this->context->link->getAdminLink($this->controller_name[0]),
-                                          $this->context->link->getAdminLink($this->controller_name[1]));
+        $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
+        if (!defined('PS_INSTALLATION_IN_PROGRESS')) {
+            if (!$this->context instanceof Context) {
+                throw new PrestaShopException("Undefined context");
+            }
+            $this->front_controller = array(
+                $this->context->link->getAdminLink($this->controller_name[0]),
+                $this->context->link->getAdminLink($this->controller_name[1]),
+            );
+        }
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
@@ -77,7 +96,6 @@ class ps_themecusto extends Module
     /**
      * uninstall()
      *
-     * @param none
      * @return bool
      */
     public function uninstall()
@@ -86,11 +104,10 @@ class ps_themecusto extends Module
         if (parent::uninstall() &&
             $this->uninstallTabList()) {
             return true;
-        } else {
-            $this->_errors[] = $this->l('There was an error during the uninstall. Please contact us through Addons website');
-            return false;
         }
-        return parent::uninstall();
+
+        $this->_errors[] = $this->l('There was an error during the uninstall. Please contact us through Addons website');
+        return false;
     }
 
     /**
@@ -140,7 +157,7 @@ class ps_themecusto extends Module
         $themesTab->save();
 
         /* We install all the tabs from this module */
-        $tab = new tab();
+        $tab = new Tab();
         $aTabs = $this->assignTabList();
         foreach ($aTabs as $aValue) {
             $tab->active = 1;
@@ -166,7 +183,6 @@ class ps_themecusto extends Module
     /**
      * uninstall tab
      *
-     * @param none
      * @return bool
      */
     public function uninstallTabList()
@@ -200,9 +216,6 @@ class ps_themecusto extends Module
 
     /**
      * set JS and CSS media
-     *
-     * @param none
-     * @return none
      */
     public function setMedia($aJsDef, $aJs, $aCss)
     {
@@ -216,7 +229,6 @@ class ps_themecusto extends Module
 
     /**
     * check if the employee has the right to use this admin controller
-    * @param none
     * @return bool
     */
     public function hasEditRight()
