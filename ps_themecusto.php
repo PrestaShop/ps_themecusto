@@ -30,17 +30,17 @@ if (!defined('_PS_VERSION_')) {
 
 class ps_themecusto extends Module
 {
-    private $author_address;
-    private $bootstrap;
-    private $controller_name;
-    private $front_controller;
-    private $template_dir;
-    private $js_path;
-    private $css_path;
-    private $img_path;
-    private $logo_path;
-    private $module_path;
-    private $ready;
+    public $author_address;
+    public $bootstrap;
+    public $controller_name;
+    public $front_controller = array();
+    public $template_dir;
+    public $js_path;
+    public $css_path;
+    public $img_path;
+    public $logo_path;
+    public $module_path;
+    public $ready;
 
     public function __construct()
     {
@@ -53,10 +53,15 @@ class ps_themecusto extends Module
 
         parent::__construct();
         $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
-        $this->front_controller = array(
-            $this->context->link->getAdminLink($this->controller_name[0]),
-            $this->context->link->getAdminLink($this->controller_name[1]),
-        );
+        if (!defined('PS_INSTALLATION_IN_PROGRESS')) {
+            if (!$this->context instanceof Context) {
+                throw new PrestaShopException("Undefined context");
+            }
+            $this->front_controller = array(
+                $this->context->link->getAdminLink($this->controller_name[0]),
+                $this->context->link->getAdminLink($this->controller_name[1]),
+            );
+        }
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
