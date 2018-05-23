@@ -30,6 +30,18 @@ if (!defined('_PS_VERSION_')) {
 
 class ps_themecusto extends Module
 {
+    private $author_address;
+    private $bootstrap;
+    private $controller_name;
+    private $front_controller;
+    private $template_dir;
+    private $js_path;
+    private $css_path;
+    private $img_path;
+    private $logo_path;
+    private $module_path;
+    private $ready;
+
     public function __construct()
     {
         $this->name = 'ps_themecusto';
@@ -40,9 +52,11 @@ class ps_themecusto extends Module
         $this->bootstrap = true;
 
         parent::__construct();
-        $this->controller_name = array( 'AdminPsThemeCustoAdvanced','AdminPsThemeCustoConfiguration');
-        $this->front_controller =  array( $this->context->link->getAdminLink($this->controller_name[0]),
-                                          $this->context->link->getAdminLink($this->controller_name[1]));
+        $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
+        $this->front_controller = array(
+            $this->context->link->getAdminLink($this->controller_name[0]),
+            $this->context->link->getAdminLink($this->controller_name[1]),
+        );
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
@@ -77,7 +91,6 @@ class ps_themecusto extends Module
     /**
      * uninstall()
      *
-     * @param none
      * @return bool
      */
     public function uninstall()
@@ -86,11 +99,10 @@ class ps_themecusto extends Module
         if (parent::uninstall() &&
             $this->uninstallTabList()) {
             return true;
-        } else {
-            $this->_errors[] = $this->l('There was an error during the uninstall. Please contact us through Addons website');
-            return false;
         }
-        return parent::uninstall();
+
+        $this->_errors[] = $this->l('There was an error during the uninstall. Please contact us through Addons website');
+        return false;
     }
 
     /**
@@ -140,7 +152,7 @@ class ps_themecusto extends Module
         $themesTab->save();
 
         /* We install all the tabs from this module */
-        $tab = new tab();
+        $tab = new Tab();
         $aTabs = $this->assignTabList();
         foreach ($aTabs as $aValue) {
             $tab->active = 1;
@@ -166,7 +178,6 @@ class ps_themecusto extends Module
     /**
      * uninstall tab
      *
-     * @param none
      * @return bool
      */
     public function uninstallTabList()
@@ -200,9 +211,6 @@ class ps_themecusto extends Module
 
     /**
      * set JS and CSS media
-     *
-     * @param none
-     * @return none
      */
     public function setMedia($aJsDef, $aJs, $aCss)
     {
@@ -216,7 +224,6 @@ class ps_themecusto extends Module
 
     /**
     * check if the employee has the right to use this admin controller
-    * @param none
     * @return bool
     */
     public function hasEditRight()
