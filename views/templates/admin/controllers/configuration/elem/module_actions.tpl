@@ -19,15 +19,15 @@
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-padding general-action" data-module_name="{$module.name}" data-action="{$module.url_active }" data-module_displayname="{$module.displayName}">
             {if $module.url_active == 'configure'}
             <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}">
-                {l s=$module.url_active|capitalize mod='ps_themecusto'}
+                {l s='Configure' mod='ps_themecusto'}
             </a>
             {elseif $module.url_active == 'disable' }
             <button type="button" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}" data-toggle="modal" data-target="#moduleActionModal">
-                {l s=$module.url_active|capitalize mod='ps_themecusto'}
+                {l s='Disable' mod='ps_themecusto'}
             </button>
             {else}
             <button type="button" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}" >
-                {l s=$module.url_active|capitalize mod='ps_themecusto'}
+                {l s='Enable' mod='ps_themecusto'}
             </button>
             {/if}
         </div>
@@ -55,7 +55,13 @@
                     <div data-action="{$action}" data-module_name="{$module.name}" data-module_displayname="{$module.displayName}">
                         {if $action eq 'uninstall' || $action eq 'disable' || $action eq 'reset'}
                         <button type="button" class="dropdown-item module_action_menu_{$action}" data-confirm_modal="module-modal-confirm-{$module.name}-{$action}" data-toggle="modal" data-target="#moduleActionModal">
-                            {$moduleActionsNames.$key|capitalize}
+                            {if $action eq 'uninstall'}
+                                {l s='Uninstall' mod='ps_themecusto'}
+                            {elseif $action eq 'disable'}
+                                {l s='Disable' mod='ps_themecusto'}
+                            {elseif $action eq 'reset'}
+                                {l s='Reset' mod='ps_themecusto'}
+                            {/if}
                         </button>
                         {else if $action eq 'configure'}
                         <a class="dropdown-item module_action_menu_configure" href="{$module.actions_url.configure}">
@@ -63,7 +69,13 @@
                         </a>
                         {else}
                         <button type="button" class="dropdown-item module_action_menu_{$action}">
-                            {$moduleActionsNames.$key|capitalize}
+                            {if $action eq 'enable'}
+                                {l s='Enable' mod='ps_themecusto'}
+                            {elseif $action eq 'enable_mobile'}
+                                {l s='Enable mobile' mod='ps_themecusto'}
+                            {elseif $action eq 'disable_mobile'}
+                                {l s='Disable mobile' mod='ps_themecusto'}
+                            {/if}
                         </button>
                         {/if}
 
@@ -75,7 +87,7 @@
     {else}
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding general-action" data-module_name="{$module.name}" data-action="{$module.url_active }" data-module_displayname="{$module.displayName}">
             <button type="button" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" data-confirm_modal="module-modal-confirm-{$module.name}-{$module.url_active}" >
-                {l s=$module.url_active|capitalize mod='ps_themecusto'}
+                {l s='Install' mod='ps_themecusto'}
             </button>
         </div>
     {/if}

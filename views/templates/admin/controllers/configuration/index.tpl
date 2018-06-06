@@ -71,7 +71,7 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
                                                 <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}" target="_blank">
-                                                    {$page.action|capitalize}
+                                                    {l s='Configure' mod='ps_themecusto'}
                                                 </a>
                                             </div>
                                         </div>
