@@ -18,7 +18,7 @@
     {if $module.url_active != 'install'}
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 no-padding general-action" data-module_name="{$module.name}" data-action="{$module.url_active }" data-module_displayname="{$module.displayName}">
             {if $module.url_active == 'configure'}
-            <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}" target="_blank">
+            <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button module_action_menu_{$module.url_active}" href="{$module.actions_url.configure}">
                 {l s=$module.url_active|capitalize mod='ps_themecusto'}
             </a>
             {elseif $module.url_active == 'disable' }
@@ -58,7 +58,7 @@
                             {$moduleActionsNames.$key|capitalize}
                         </button>
                         {else if $action eq 'configure'}
-                        <a class="dropdown-item module_action_menu_configure" href="{$module.actions_url.configure}" target="_blank">
+                        <a class="dropdown-item module_action_menu_configure" href="{$module.actions_url.configure}">
                             {l s='Configure' mod='ps_themecusto'}
                         </a>
                         {else}
