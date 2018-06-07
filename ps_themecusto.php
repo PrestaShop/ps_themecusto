@@ -62,6 +62,10 @@ class ps_themecusto extends Module
                 $this->context->link->getAdminLink($this->controller_name[1]),
             );
         }
+        $this->ps_versions_compliancy = array(
+            'min' => '1.7',
+            'max' => _PS_VERSION_
+        );
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
         $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
