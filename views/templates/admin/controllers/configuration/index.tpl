@@ -29,7 +29,7 @@
                 </p>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <a href="{$themeConfiguratorUrl}" target="_blank" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='ps_themecusto'}</a>
+                <a href="{$themeConfiguratorUrl}" class="btn btn-primary btn-lg btn-block" rel="noopener">{l s='Configure' mod='ps_themecusto'}</a>
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
                                                 {$page.description}
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
-                                                <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}" target="_blank">
+                                                <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}">
                                                     {l s='Configure' mod='ps_themecusto'}
                                                 </a>
                                             </div>
@@ -115,7 +115,7 @@
                                         {l s='You can install a module for this section from our Modules Selection' mod='ps_themecusto'}
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
-                                        <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$modulesPage}" target="_blank">
+                                        <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$modulesPage}" >
                                             {l s='See modules selection' mod='ps_themecusto'}
                                         </a>
                                     </div>
@@ -127,7 +127,7 @@
                 {/foreach}
                 <div class="row">
                     <div class="col-lg-4 col-lg-offset-8">
-                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}#theme_modules" target="_blank">{l s='See all theme\'s modules' mod='ps_themecusto'}</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}#theme_modules">{l s='See all theme\'s modules' mod='ps_themecusto'}</a>
                     </div>
                 </div>
             </div>
