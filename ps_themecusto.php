@@ -45,7 +45,7 @@ class ps_themecusto extends Module
     public function __construct()
     {
         $this->name = 'ps_themecusto';
-        $this->version = '1.0.3';
+        $this->version = '1.0.4';
         $this->author = 'PrestaShop';
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
@@ -125,7 +125,6 @@ class ps_themecusto extends Module
                 'class'     => $this->controller_name[1],
                 'active'    => true,
                 'position'  => 2,
-                'name'      => $this->l('Homepage Configuration'),
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             ),
@@ -133,10 +132,30 @@ class ps_themecusto extends Module
                 'class'     => $this->controller_name[0],
                 'active'    => true,
                 'position'  => 3,
-                'name'      => $this->l('Advanced Customization'),
                 'id_parent' => $themesTab->id_parent,
                 'module'    => $this->name,
             )
+        );
+    }
+
+    /**
+     * Get all tab names by lang ISO
+     */
+    public function getTabNameByLangISO()
+    {
+        return array(
+            $this->controller_name[1] => array(
+                'fr'    => 'Configuration page d\'accueil',
+                'en'    => 'Homepage Configuration',
+                'es'    => 'Configuración página de inicio',
+                'it'    => 'Configurazione homepage',
+            ),
+            $this->controller_name[0] => array(
+                'fr'    => 'Personnalisation avancée',
+                'en'    => 'Advanced Customization',
+                'es'    => 'Personalización avanzada',
+                'it'    => 'Personalizzazione avanzata',
+            ),
         );
     }
 
@@ -163,13 +182,15 @@ class ps_themecusto extends Module
         /* We install all the tabs from this module */
         $tab = new Tab();
         $aTabs = $this->assignTabList();
+        $aTabsNameByLang = $this->getTabNameByLangISO();
+
         foreach ($aTabs as $aValue) {
             $tab->active = 1;
             $tab->class_name = $aValue['class'];
             $tab->name = array();
 
             foreach (Language::getLanguages(true) as $lang) {
-                $tab->name[$lang['id_lang']] =  $aValue['name'];
+                $tab->name[$lang['id_lang']] =  $aTabsNameByLang[$aValue['class']][$lang['iso_code']];
             }
 
             $tab->id_parent = $aValue['id_parent'];
