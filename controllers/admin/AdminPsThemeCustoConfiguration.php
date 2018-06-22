@@ -324,6 +324,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['id_module'] = $oModuleInstance->id;
         $aModule['active'] = $oModuleInstance->active;
 
+        
+
         if ($bIsInstalled === true) {
             $aModule['can_configure'] = (method_exists($oModuleInstance, 'getContent'))? true : false;
             if (method_exists($oModuleInstance, 'getContent')) {
@@ -334,7 +336,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $aModule['installed'] = 1;
         } else {
             $aModule['can_configure'] = false;
-            $aModule['url_active'] = $this->l('install');
+            $aModule['url_active'] = 'install';
             $aModule['installed'] = 0;
         }
 
