@@ -238,6 +238,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
         $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
         $aModule['can_configure'] = (method_exists($oModule, 'getContent'))? true : false;
+        $aModule['enable_mobile'] = (int)Db::getInstance()->getValue('SELECT enable_device FROM '._DB_PREFIX_.'module_shop WHERE id_module = '.(int)$oModule->id);
+
         unset($oModule);
 
         $this->context->smarty->assign(array(
@@ -322,6 +324,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['id_module'] = $oModuleInstance->id;
         $aModule['active'] = $oModuleInstance->active;
 
+        
+
         if ($bIsInstalled === true) {
             $aModule['can_configure'] = (method_exists($oModuleInstance, 'getContent'))? true : false;
             if (method_exists($oModuleInstance, 'getContent')) {
@@ -332,10 +336,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $aModule['installed'] = 1;
         } else {
             $aModule['can_configure'] = false;
-            $aModule['url_active'] = $this->l('install');
+            $aModule['url_active'] = 'install';
             $aModule['installed'] = 0;
         }
 
+        $aModule['enable_mobile'] = (int)Db::getInstance()->getValue('SELECT enable_device FROM '._DB_PREFIX_.'module_shop WHERE id_module = '.(int)$oModuleInstance->id);
         $aModule['name'] = $oModuleInstance->name;
         $aModule['displayName'] = $oModuleInstance->displayName;
         $aModule['description'] = $oModuleInstance->description;

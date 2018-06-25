@@ -45,8 +45,6 @@
                     && !($module.url_active eq 'disable' && $action eq 'enable')
                     && !($module.url_active eq 'disable' && $action eq 'configure')
                     && !(!$module.can_configure && $action eq 'configure')
-                    && !(($module.active eq 3 || $module.active eq 0) && $action eq 'disable_mobile')
-                    && !(($module.active eq 7 || $module.active eq 1 || $module.active eq 0) && $action eq 'enable_mobile')
                     && !($action eq 'install')
                     && !($action eq 'uninstall' && $is_ps_ready)
                     && !($action eq 'install' && $is_ps_ready)
@@ -68,17 +66,20 @@
                             {l s='Configure' mod='ps_themecusto'}
                         </a>
                         {else}
-                        <button type="button" class="dropdown-item module_action_menu_{$action}">
                             {if $action eq 'enable'}
-                                {l s='Enable' mod='ps_themecusto'}
-                            {elseif $action eq 'enable_mobile'}
-                                {l s='Enable mobile' mod='ps_themecusto'}
-                            {elseif $action eq 'disable_mobile'}
-                                {l s='Disable mobile' mod='ps_themecusto'}
+                                <button type="button" class="dropdown-item module_action_menu_{$action}">
+                                    {l s='Enable' mod='ps_themecusto'}
+                                </button>
+                            {elseif ($module.enable_mobile eq 7 || $module.enable_mobile eq 1 || $module.enable_mobile eq 0) && $action eq 'disable_mobile'}
+                                <button type="button" class="dropdown-item module_action_menu_{$action}">
+                                    {l s='Disable mobile' mod='ps_themecusto'}
+                                </button>
+                            {elseif ($module.enable_mobile eq 3 || $module.enable_mobile eq 0) && $action eq 'enable_mobile'}
+                                <button type="button" class="dropdown-item module_action_menu_{$action}">
+                                    {l s='Enable mobile' mod='ps_themecusto'}
+                                </button>
                             {/if}
-                        </button>
                         {/if}
-
                     </div>
                 </li>
                 {/if}
