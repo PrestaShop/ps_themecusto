@@ -62,6 +62,10 @@
         </div>
         <div class="row row-buttons">
             <div class="col-lg-3">
+                <div class="alert alert-danger download_child_theme_error" role="alert">
+                    <b>{l s='An error occured' mod='ps_themecusto'}</b>
+                    <p class="alert-text">{l s='Please check that you have the rights to write to the folders /app/cache/ and /themes/' mod='ps_themecusto'}</p>
+                </div>
                 <div class="btn btn-primary btn-lg btn-block" rel="noopener" id="download_child_theme">
                     {l s='Download theme' mod='ps_themecusto'}
                 </div>

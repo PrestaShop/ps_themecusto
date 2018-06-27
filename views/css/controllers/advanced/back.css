@@ -59,6 +59,10 @@
 #psthemecusto .alert {
     margin-top: 1.5rem;
 }
+#psthemecusto .download_child_theme_error {
+    margin-top: 0;
+    display: none;
+}
 #psthemecusto .row.row-buttons .btn{
     white-space: initial !important;
 }

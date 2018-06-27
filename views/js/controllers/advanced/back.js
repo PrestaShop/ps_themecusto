@@ -44,7 +44,12 @@ $(document).ready(function() {
             success : function(data) {
                 $('.js-loader').hide();
                 $('#download_child_theme').fadeIn();
-                window.location = data;
+                $('.download_child_theme_error').hide();
+                if (!data) {
+                    $('.download_child_theme_error').show();
+                } else {
+                    window.location = data;
+                }
             }
         });
     });
