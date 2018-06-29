@@ -77,7 +77,7 @@ class ps_themecusto extends Module
         $this->img_path = $this->_path.'views/img/';
         $this->logo_path = $this->_path.'logo.png';
         $this->module_path = dirname(__FILE__);
-        $this->ready = (getenv('PLATEFORM') === 'PSREADY')? true : true;
+        $this->ready = (getenv('PLATEFORM') === 'PSREADY')? true : false;
     }
 
     /**

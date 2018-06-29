@@ -304,7 +304,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             if (!isset($aModuleFinalList[$sSegmentName])) {
                 $aModuleFinalList[$sSegmentName] = null;
             }
-            uasort($aModuleFinalList[$sSegmentName]['modules'], array($this, 'sortArrayInstalledModulesFirst'));
+            if (is_array($aModuleFinalList[$sSegmentName]['modules'])) {
+                uasort($aModuleFinalList[$sSegmentName]['modules'], array($this, 'sortArrayInstalledModulesFirst'));
+            }
         }
 
         return $aModuleFinalList;
