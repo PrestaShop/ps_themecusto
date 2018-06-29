@@ -72,7 +72,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     ),
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
-                        $this->l('Add and manage your content pages (CMS pages : Terms and conditions of use, Our stores, About us, etc.) as you want.')
+                        $this->l('Add and manage your content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc.) as you want.')
                     ),
                     'AdminManufacturers' => array(
                         $this->l('Create Brands and Suppliers pages'),
