@@ -190,7 +190,12 @@ class ps_themecusto extends Module
             $tab->name = array();
 
             foreach (Language::getLanguages(true) as $lang) {
-                $tab->name[$lang['id_lang']] =  $aTabsNameByLang[$aValue['class']][$lang['iso_code']];
+                if (isset($aTabsNameByLang[$aValue['class']][$lang['iso_code']])) {
+                    $sIsoCode = $lang['iso_code'];
+                } else {
+                    $sIsoCode = 'en';
+                }
+                $tab->name[$lang['id_lang']] =  $aTabsNameByLang[$aValue['class']][$sIsoCode];
             }
 
             $tab->id_parent = $aValue['id_parent'];
