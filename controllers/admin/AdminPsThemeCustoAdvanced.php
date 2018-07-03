@@ -201,9 +201,15 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $bUploadIsClean = self::processCheckFiles($sZipPath, $this->sandbox_path.rand());
 
         if (!$bUploadIsClean) {
+            if ($this->module->ready) {
+                $sMessageUploadNotClean = $this->l('Only CSS, YML and PNG files are accepted in the ZIP');
+            } else {
+                $sMessageUploadNotClean = $this->l('There is some PHP files in your ZIP');
+            }
+
             $aReturn = array(
                 'state'     => 0,
-                'message'   => $this->l('Only CSS, YML and PNG files are accepted in the ZIP')
+                'message'   => $sMessageUploadNotClean
             );
             die(Tools::jsonEncode($aReturn));
         }
@@ -248,7 +254,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         if (!$this->module->hasEditRight()) {
             return $this->l("You do not have permission to edit this.");
-        }
+        } 
 
         switch ($aChildThemeReturned['error']) {
             case UPLOAD_ERR_OK:
@@ -372,7 +378,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         if ($this->module->ready) {
             $bCleanFiles = self::checkContentsForReady($sZipSource, $sSandboxPath);
         } else {
-            $bCleanFiles = true;
+            $bCleanFiles = self::getDirPhpContents($sZipSource, $sSandboxPath);
         }
 
         self::recursiveDelete($sSandboxPath);
@@ -381,13 +387,13 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     }
 
     /**
-     * We check if there is some PHP files
+     * We check if there is unvalid files
      *
      * @param string $sZipSource
      * @param string $sSandboxPath
      * @return bool
     */
-    public function checkContentsForReady($sZipSource, $sSandboxPath)
+    private function checkContentsForReady($sZipSource, $sSandboxPath)
     {
         $sPatternGeneral = '#[.\-\/](css|yml|png)#';
         $sPatternPHP = '#[.\-\/](php)#';
@@ -402,8 +408,10 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         foreach ($files as $file) {
             if (!$file->isDir()) {
                 $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
-                if (!preg_match($sPatternGeneral, $sSubject)) {
-                    if (preg_match($sPatternPHP, $sSubject) && $file->getFilename() === 'index.php') {
+                $bFileIsValid = (bool)preg_match($sPatternGeneral, $sSubject);
+                if (!$bFileIsValid) {
+                    $bIsPHPfile = (bool)preg_match($sPatternPHP, $sSubject);
+                    if ($bIsPHPfile && $file->getFilename() === 'index.php') {
                         $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
                         $zip->deleteName($sRealPathFile);
                         $zip->addFromString($sRealPathFile, $sIndexPhpFile);
@@ -412,6 +420,42 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
                         return false;
                     }
                 } 
+            }
+        }
+        $zip->close();
+
+        return true;
+    }
+
+    /**
+     * We check if there is some PHP files
+     *
+     * @param string $sSandboxPath
+     * @param string $sSandboxPath
+     * @return bool
+    */
+    private function getDirPhpContents($sZipSource, $sSandboxPath)
+    {
+        $sPattern = '#[.\-\/](php)#';
+        $sIndexPhpFile = Tools::getDefaultIndexContent();
+
+        $zip = new ZipArchive;
+        $it = new RecursiveDirectoryIterator($sSandboxPath, RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
+        $zip->open($sZipSource);
+
+        foreach ($files as $file) {
+            if (!$file->isDir()) {
+                $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
+                if ($file->getFilename() === 'index.php') {
+                        $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
+                        $zip->deleteName($sRealPathFile);
+                        $zip->addFromString($sRealPathFile, $sIndexPhpFile);
+                } elseif (preg_match($sPattern, $sSubject)){
+                    $zip->close();
+                    return false;
+                }
             }
         }
         $zip->close();
