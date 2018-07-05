@@ -76,7 +76,7 @@ class ps_themecusto extends Module
         $this->css_path = $this->_path.'views/css/';
         $this->img_path = $this->_path.'views/img/';
         $this->logo_path = $this->_path.'logo.png';
-        $this->module_path = dirname(__FILE__);
+        $this->module_path = $this->local_path;
         $this->ready = (getenv('PLATEFORM') === 'PSREADY')? true : false;
     }
 
@@ -267,7 +267,7 @@ class ps_themecusto extends Module
             (int)Context::getContext()->cookie->profile,
             (int)Tab::getIdFromClassName($this->controller_name[0])
         );
-        return (bool)$result['edit'];
+        return (bool) $result['edit'];
     }
 
 }

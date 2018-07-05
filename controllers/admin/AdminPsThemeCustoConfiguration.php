@@ -180,7 +180,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     public function ajaxProcessUpdateModule()
     {
         if (!$this->module->hasEditRight()) {
-            die($this->l("You do not have permission to edit this."));
+            die($this->l('You do not have permission to edit this.'));
         }
 
         $iModuleId      = (int)Tools::getValue('id_module');

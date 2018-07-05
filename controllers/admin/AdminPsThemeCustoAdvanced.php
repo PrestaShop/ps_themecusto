@@ -253,7 +253,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function processUploadFileChild($aChildThemeReturned, $dest)
     {
         if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
+            return $this->l('You do not have permission to edit this.');
         } 
 
         switch ($aChildThemeReturned['error']) {
@@ -370,7 +370,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function processCheckFiles($sZipSource, $sSandboxPath)
     {
         if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
+            return $this->l('You do not have permission to edit this.');
         }
 
         Tools::ZipExtract($sZipSource, $sSandboxPath);
@@ -408,9 +408,9 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         foreach ($files as $file) {
             if (!$file->isDir()) {
                 $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
-                $bFileIsValid = (bool)preg_match($sPatternGeneral, $sSubject);
+                $bFileIsValid = (bool) preg_match($sPatternGeneral, $sSubject);
                 if (!$bFileIsValid) {
-                    $bIsPHPfile = (bool)preg_match($sPatternPHP, $sSubject);
+                    $bIsPHPfile = (bool) preg_match($sPatternPHP, $sSubject);
                     if ($bIsPHPfile && $file->getFilename() === 'index.php') {
                         $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
                         $zip->deleteName($sRealPathFile);
@@ -472,7 +472,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function postProcessInstall($dest)
     {
         if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
+            return $this->l('You do not have permission to edit this.');
         }
 
         try {
