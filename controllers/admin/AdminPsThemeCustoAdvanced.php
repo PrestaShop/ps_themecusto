@@ -25,13 +25,16 @@
 **/
 
 use PrestaShop\PrestaShop\Core\Addon\Theme\ThemeManagerBuilder;
+use Symfony\Component\Finder\Finder;
 
 class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 {
     public function __construct()
     {
         parent::__construct();
-
+        
+        $this->skeleton_name = 'childtheme_skeleton';
+        $this->childtheme_skeleton = $this->module->module_path.'/src/'.$this->skeleton_name.'.zip';
         $this->sandbox_path = _PS_CACHE_DIR_.'sandbox/';
         $this->controller_quick_name = 'advanced';
         $this->theme_manager = (new ThemeManagerBuilder($this->context, Db::getInstance()))->build();
@@ -60,7 +63,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],
             'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[0],
             'default_error_upload'                  => $this->l('An error occured, please check your zip file'),
-            'file_not_valid'                        => $this->l('The file must be a ZIP file (.zip)'),
+            'file_not_valid'                        => $this->l('The file is not valid.'),
         );
         $aJs = array(
             $this->module->js_path.'/controllers/'.$this->controller_quick_name.'/back.js',
@@ -80,18 +83,100 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     */
     public function ajaxProcessDownloadChildTheme()
     {
-        global $kernel;
+        $bPrepareChildtheme = self::prepareChildTheme(_THEME_NAME_, _PS_THEME_DIR_);
 
-        if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
+        if (!$bPrepareChildtheme) {
+            die(false);
         }
 
-        $exporter = $kernel->getContainer()->get('prestashop.core.addon.theme.exporter');
-        $path = $exporter->export($this->context->shop->theme);
-        $aPath = array_reverse(explode('/', $path));
-        $sThemeZipPath = $this->module->ps_uri.'/themes/'.$aPath[0];
+        $bCreateChildTheme = self::createChildTheme(_THEME_NAME_);
 
-        die($sThemeZipPath);
+        if (!$bCreateChildTheme) {
+            die(false);
+        }
+
+        die(self::getChildTheme(_THEME_NAME_, _PS_ROOT_DIR_));
+    }
+
+    /**
+     * Prepare the child theme
+     *
+     * @param string $sParentThemeName
+     * @param string $sParentThemeDir
+     * @return bool
+    */
+    private function prepareChildTheme($sParentThemeName, $sParentThemeDir)
+    {
+        Tools::ZipExtract($this->childtheme_skeleton, $this->sandbox_path);
+
+        $aStringToReplace = array(
+            '{childtheme_parent}' => $sParentThemeName,
+            '{childtheme_name}' => 'child_'.$sParentThemeName,
+            '{childtheme_description}' => 'Child theme of '.$sParentThemeName.'\'s theme'
+        );
+
+        $sChildThemeConfigPath = $this->sandbox_path.'/'.$this->skeleton_name.'/config/theme.yml';
+
+        $sConfigFile = @file_get_contents($sChildThemeConfigPath);
+
+        foreach ($aStringToReplace as $sSearchElement => $sReplace) {
+            $sConfigFile = str_replace($sSearchElement, $sReplace, $sConfigFile);
+        }
+
+        $bPutContents = @file_put_contents($sChildThemeConfigPath, $sConfigFile);
+
+        if (!$bPutContents) {
+            return false;
+        }
+
+        $bCopyFile = @copy($sParentThemeDir.'/preview.png', $this->sandbox_path.'/'.$this->skeleton_name.'/preview.png');
+
+        if (!$bCopyFile) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Create the child theme
+     *
+     * @param string $sParentThemeName
+     * @param string $dest
+     * @return bool
+    */
+    private function createChildTheme($sParentThemeName)
+    {
+        $sChildThemeFolderName = 'child_'.$sParentThemeName;
+
+        $oZip = new ZipArchive;
+        $oZip->open($this->sandbox_path.'/'.$sChildThemeFolderName.'.zip', ZipArchive::CREATE);
+        $fileList = Finder::create()
+            ->files()
+            ->in($this->sandbox_path.'/'.$this->skeleton_name.'/');
+
+        foreach ($fileList as $file) {
+            $oZip->addFile($file->getRealpath(), $sChildThemeFolderName.'/'.$file->getRelativePathName());
+        }  
+        
+        return $oZip->close();
+    }
+
+    /**
+     * Move the ZIP archive into Theme's folder and unlink all the files in sandbox
+     *
+     * @param string $sParentThemeName
+     * @return string
+    */
+    private function getChildTheme($sParentThemeName, $sPrestashopRootDir)
+    {
+        $sChildThemeZipName = 'child_'.$sParentThemeName.'.zip';
+
+        @rename($this->sandbox_path.'/'.$sChildThemeZipName, $sPrestashopRootDir.'/themes/'.$sChildThemeZipName);
+
+        self::recursiveDelete($this->sandbox_path.$this->skeleton_name);
+
+        return $this->module->ps_uri.'/themes/'.$sChildThemeZipName;
     }
 
     /**
@@ -116,9 +201,15 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $bUploadIsClean = self::processCheckFiles($sZipPath, $this->sandbox_path.rand());
 
         if (!$bUploadIsClean) {
+            if ($this->module->ready) {
+                $sMessageUploadNotClean = $this->l('Only CSS, YML and PNG files are accepted in the ZIP');
+            } else {
+                $sMessageUploadNotClean = $this->l('There is some PHP files in your ZIP');
+            }
+
             $aReturn = array(
                 'state'     => 0,
-                'message'   => $this->l('There is some PHP files in your ZIP')
+                'message'   => $sMessageUploadNotClean
             );
             die(Tools::jsonEncode($aReturn));
         }
@@ -152,11 +243,18 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         die(Tools::jsonEncode($aReturn));
     }
 
+    /**
+     * Check upload file on upload
+     *
+     * @param array $aChildThemeReturned
+     * @param string $dest
+     * @return string $dest
+     */
     public function processUploadFileChild($aChildThemeReturned, $dest)
     {
         if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
-        }
+            return $this->l('You do not have permission to edit this.');
+        } 
 
         switch ($aChildThemeReturned['error']) {
             case UPLOAD_ERR_OK:
@@ -272,26 +370,72 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function processCheckFiles($sZipSource, $sSandboxPath)
     {
         if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
+            return $this->l('You do not have permission to edit this.');
         }
 
         Tools::ZipExtract($sZipSource, $sSandboxPath);
-        $bCleanFiles = self::getDirPhpContents($sZipSource, $sSandboxPath);
+
+        if ($this->module->ready) {
+            $bCleanFiles = self::checkContentsForReady($sZipSource, $sSandboxPath);
+        } else {
+            $bCleanFiles = self::getDirPhpContents($sZipSource, $sSandboxPath);
+        }
+
         self::recursiveDelete($sSandboxPath);
 
         return $bCleanFiles;
     }
 
     /**
+     * We check if there is unvalid files
+     *
+     * @param string $sZipSource
+     * @param string $sSandboxPath
+     * @return bool
+    */
+    private function checkContentsForReady($sZipSource, $sSandboxPath)
+    {
+        $sPatternGeneral = '#[.\-\/](css|yml|png)#';
+        $sPatternPHP = '#[.\-\/](php)#';
+        $sIndexPhpFile = Tools::getDefaultIndexContent();
+
+        $zip = new ZipArchive;
+        $it = new RecursiveDirectoryIterator($sSandboxPath, RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
+        $zip->open($sZipSource);
+
+        foreach ($files as $file) {
+            if (!$file->isDir()) {
+                $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
+                $bFileIsValid = (bool) preg_match($sPatternGeneral, $sSubject);
+                if (!$bFileIsValid) {
+                    $bIsPHPfile = (bool) preg_match($sPatternPHP, $sSubject);
+                    if ($bIsPHPfile && $file->getFilename() === 'index.php') {
+                        $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
+                        $zip->deleteName($sRealPathFile);
+                        $zip->addFromString($sRealPathFile, $sIndexPhpFile);
+                    } else {
+                        $zip->close();
+                        return false;
+                    }
+                } 
+            }
+        }
+        $zip->close();
+
+        return true;
+    }
+
+    /**
      * We check if there is some PHP files
      *
      * @param string $sSandboxPath
-     * @param reference array $sSandboxPath
+     * @param string $sSandboxPath
      * @return bool
     */
-    public function getDirPhpContents($sZipSource, $sSandboxPath)
+    private function getDirPhpContents($sZipSource, $sSandboxPath)
     {
-        $files = scandir($sSandboxPath);
         $sPattern = '#[.\-\/](php)#';
         $sIndexPhpFile = Tools::getDefaultIndexContent();
 
@@ -299,23 +443,23 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $it = new RecursiveDirectoryIterator($sSandboxPath, RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
 
+        $zip->open($sZipSource);
+
         foreach ($files as $file) {
             if (!$file->isDir()) {
                 $sSubject = $file->getFilename().self::processCheckMimeType($file->getRealPath());
                 if ($file->getFilename() === 'index.php') {
-                    if ($zip->open($sZipSource)) {
                         $sRealPathFile = str_replace($sSandboxPath."/", '', $file->getRealPath());
                         $zip->deleteName($sRealPathFile);
                         $zip->addFromString($sRealPathFile, $sIndexPhpFile);
-                    }
                 } elseif (preg_match($sPattern, $sSubject)){
                     $zip->close();
                     return false;
                 }
             }
         }
-
         $zip->close();
+
         return true;
     }
 
@@ -328,7 +472,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function postProcessInstall($dest)
     {
         if (!$this->module->hasEditRight()) {
-            return $this->l("You do not have permission to edit this.");
+            return $this->l('You do not have permission to edit this.');
         }
 
         try {

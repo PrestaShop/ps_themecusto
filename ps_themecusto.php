@@ -45,7 +45,7 @@ class ps_themecusto extends Module
     public function __construct()
     {
         $this->name = 'ps_themecusto';
-        $this->version = '1.0.5';
+        $this->version = '1.0.6';
         $this->author = 'PrestaShop';
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
@@ -76,7 +76,7 @@ class ps_themecusto extends Module
         $this->css_path = $this->_path.'views/css/';
         $this->img_path = $this->_path.'views/img/';
         $this->logo_path = $this->_path.'logo.png';
-        $this->module_path = $this->_path;
+        $this->module_path = $this->local_path;
         $this->ready = (getenv('PLATEFORM') === 'PSREADY')? true : false;
     }
 
@@ -190,7 +190,12 @@ class ps_themecusto extends Module
             $tab->name = array();
 
             foreach (Language::getLanguages(true) as $lang) {
-                $tab->name[$lang['id_lang']] =  $aTabsNameByLang[$aValue['class']][$lang['iso_code']];
+                if (isset($aTabsNameByLang[$aValue['class']][$lang['iso_code']])) {
+                    $sIsoCode = $lang['iso_code'];
+                } else {
+                    $sIsoCode = 'en';
+                }
+                $tab->name[$lang['id_lang']] =  $aTabsNameByLang[$aValue['class']][$sIsoCode];
             }
 
             $tab->id_parent = $aValue['id_parent'];
@@ -262,7 +267,7 @@ class ps_themecusto extends Module
             (int)Context::getContext()->cookie->profile,
             (int)Tab::getIdFromClassName($this->controller_name[0])
         );
-        return (bool)$result['edit'];
+        return (bool) $result['edit'];
     }
 
 }

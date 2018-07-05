@@ -72,7 +72,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     ),
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
-                        $this->l('Add and manage your content pages (CMS pages : Terms and conditions of use, Our stores, About us, etc.) as you want.')
+                        $this->l('Add and manage your content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc.) as you want.')
                     ),
                     'AdminManufacturers' => array(
                         $this->l('Create Brands and Suppliers pages'),
@@ -180,7 +180,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     public function ajaxProcessUpdateModule()
     {
         if (!$this->module->hasEditRight()) {
-            die($this->l("You do not have permission to edit this."));
+            die($this->l('You do not have permission to edit this.'));
         }
 
         $iModuleId      = (int)Tools::getValue('id_module');
@@ -304,7 +304,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             if (!isset($aModuleFinalList[$sSegmentName])) {
                 $aModuleFinalList[$sSegmentName] = null;
             }
-            uasort($aModuleFinalList[$sSegmentName]['modules'], array($this, 'sortArrayInstalledModulesFirst'));
+            if (is_array($aModuleFinalList[$sSegmentName]['modules'])) {
+                uasort($aModuleFinalList[$sSegmentName]['modules'], array($this, 'sortArrayInstalledModulesFirst'));
+            }
         }
 
         return $aModuleFinalList;

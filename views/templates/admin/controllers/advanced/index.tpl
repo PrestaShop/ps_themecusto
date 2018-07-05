@@ -62,6 +62,10 @@
         </div>
         <div class="row row-buttons">
             <div class="col-lg-3">
+                <div class="alert alert-danger download_child_theme_error" role="alert">
+                    <b>{l s='An error occurred' mod='ps_themecusto'}</b>
+                    <p class="alert-text">{l s='Please check that you have the rights to write to the folders /app/cache/ and /themes/' mod='ps_themecusto'}</p>
+                </div>
                 <div class="btn btn-primary btn-lg btn-block" rel="noopener" id="download_child_theme">
                     {l s='Download theme' mod='ps_themecusto'}
                 </div>
@@ -70,7 +74,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-lg-push-1">
-                <a href="https://developers.prestashop.com/themes/smarty/parent-child-feature.html" class="link-child btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='ps_themecusto'} <i class="icon-external-link"></i></a>
+                <a href="https://devdocs.prestashop.com/1.7/themes/reference/template_inheritance/parent_child_feature/" class="link-child btn btn-outline-secondary btn-lg btn-block" rel="noopener" target="_blank">{l s='How to use parents/child themes' mod='ps_themecusto'} <i class="icon-external-link"></i></a>
             </div>
             <div class="col-lg-3 col-lg-push-2">
                 <a href="#" class="btn btn-primary btn-lg btn-block" rel="noopener" data-toggle="modal" data-target="#upload-child-modal" >{l s='Upload child theme' mod='ps_themecusto'}</a>
@@ -78,7 +82,11 @@
         </div>
         <div class="alert alert-info col-lg-12" role="alert">
             <b>{l s='Information' mod='ps_themecusto'}</b>
-            <p class="alert-text">{l s='By using this method you can override the CSS and html of your theme, and add analytics tags. You are not allowed to add new modules.' mod='ps_themecusto'}</p>
+            {if $is_ps_ready}
+                <p class="alert-text">{l s='By using this method you can only override the CSS of your theme.' mod='ps_themecusto'}</p>
+            {else}
+                <p class="alert-text">{l s='By using this method you can override the CSS and html of your theme, and add analytics tags.' mod='ps_themecusto'}</p>
+            {/if}
             <p class="alert-text">{l s='Make sure you zip your edited theme files directly to the root of your child theme\'s folder before uploading it.' mod='ps_themecusto'}</p>
             <p class="alert-text">{l s='Once uploaded, the child theme will be available in your Theme & Logo section' mod='ps_themecusto'}</p>
         </div>
