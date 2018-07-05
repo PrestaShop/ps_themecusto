@@ -171,9 +171,9 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     private function getChildTheme($sParentThemeName, $sPrestashopRootDir)
     {
         $sChildThemeZipName = 'child_'.$sParentThemeName.'.zip';
-       
-        @copy($this->sandbox_path.'/'.$sChildThemeZipName, $sPrestashopRootDir.'/themes/'.$sChildThemeZipName);
-        @unlink($this->sandbox_path.'/'.$sChildThemeZipName);
+
+        @rename($this->sandbox_path.'/'.$sChildThemeZipName, $sPrestashopRootDir.'/themes/'.$sChildThemeZipName);
+
         self::recursiveDelete($this->sandbox_path.$this->skeleton_name);
 
         return $this->module->ps_uri.'/themes/'.$sChildThemeZipName;
