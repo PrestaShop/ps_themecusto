@@ -142,10 +142,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         if (Module::isInstalled('ps_mbo')) {
             $selectionModulePage = $this->context->link->getAdminLink('AdminPsMboModule');
         } else {
-            $selectionModulePage = $this->context->link->getAdminLink('AdminModulesCatalog', true, array('route' => 'admin_module_catalog'));
+            $selectionModulePage = $this->context->link->getAdminLink('AdminModulesCatalog');
         }
-        
-        $installedModulePage = $this->context->link->getAdminLink('AdminModulesCatalog', true, array('route' => 'admin_module_manage'));
+        $installedModulePage = $this->context->link->getAdminLink('AdminModulesManage');
 
         $aListToConfigure = $this->getListToConfigure();
         $this->context->smarty->assign(array(
