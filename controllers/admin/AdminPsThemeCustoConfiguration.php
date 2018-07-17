@@ -139,6 +139,14 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     {
         parent::initContent();
 
+        if (Module::isInstalled('ps_mbo')) {
+            $selectionModulePage = $this->context->link->getAdminLink('AdminPsMboModule');
+        } else {
+            $selectionModulePage = $this->context->link->getAdminLink('AdminModulesCatalog', true, array('route' => 'admin_module_catalog'));
+        }
+        
+        $installedModulePage = $this->context->link->getAdminLink('AdminModulesCatalog', true, array('route' => 'admin_module_manage'));
+
         $aListToConfigure = $this->getListToConfigure();
         $this->context->smarty->assign(array(
             'enable'                => $this->module->active,
@@ -148,7 +156,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'iconConfiguration'     => $this->module->img_path.'/controllers/configuration/icon_configurator.png',
             'listCategories'        => $this->categoryList,
             'elementsList'          => $this->setFinalList($aListToConfigure),
-            'modulesPage'           => $this->context->link->getAdminLink('AdminModulesSf', true, array('route' => 'admin_module_manage')),
+            'selectionModulePage'   => $selectionModulePage,
+            'installedModulePage'   => $installedModulePage,
             'moduleImgUri'          => $this->module->img_path.'/controllers/configuration/',
             'moduleActions'         => $this->aModuleActions,
             'moduleActionsNames'    => $this->moduleActionsNames,
