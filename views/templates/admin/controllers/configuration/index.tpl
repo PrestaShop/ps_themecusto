@@ -115,7 +115,7 @@
                                         {l s='You can install a module for this section from our Modules Selection' mod='ps_themecusto'}
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
-                                        <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$modulesPage}" >
+                                        <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$selectionModulePage}" >
                                             {l s='See modules selection' mod='ps_themecusto'}
                                         </a>
                                     </div>
@@ -127,7 +127,7 @@
                 {/foreach}
                 <div class="row">
                     <div class="col-lg-4 col-lg-offset-8">
-                        <a class="btn btn-primary btn-lg btn-block" href="{$modulesPage}#theme_modules">{l s='See all theme\'s modules' mod='ps_themecusto'}</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="{$installedModulePage}#theme_modules">{l s='See all theme\'s modules' mod='ps_themecusto'}</a>
                     </div>
                 </div>
             </div>
