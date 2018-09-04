@@ -187,7 +187,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      */
     public function ajaxProcessUploadChildTheme()
     {
-        $aChildThemeReturned = Tools::fileAttachment('file');
+        $aChildThemeReturned = Tools::fileAttachment('file');        
         $sZipPath = self::processUploadFileChild($aChildThemeReturned, $this->sandbox_path.$aChildThemeReturned['rename']);
         $bZipFormat = self::processCheckZipFormat($sZipPath);
         if (!$bZipFormat) {
@@ -299,7 +299,69 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             return false;
         }
 
+        $bZipeFileIsValid = self::checkZipFile($aChildThemeReturned, $dest);
+
+        if (!$bZipeFileIsValid) {
+            $this->errors[] = $this->trans('Unknown error.', array(), 'Admin.Notifications.Error');
+            return false;
+        }
+
         return $dest;
+    }
+
+    /**
+     * Check zip file and modify it if necessary
+     *
+     * @param array $aChildThemeReturned
+     * @param string $sZipPath
+     * @return string
+     */
+    public function checkZipFile($aChildThemeReturned, $sZipPath)
+    {
+        $bZipIsOk = true;
+        $oZip = new ZipArchive;
+        $oZip->open($sZipPath);
+
+        for ($i = 0; $i < $oZip->numFiles; $i++)
+        {
+            $aZipElement  = explode('/', $oZip->getNameIndex($i));
+            $aHaveRootFolder[$i] = count($aZipElement);
+            /* If we get 1 we can stop it because the zip architecture is valid */
+            if ($aHaveRootFolder[$i] == 1) {
+                break;
+            }
+        }
+
+        /* 
+            if 1 : There is no root foler
+            if no 1 : There is root folder
+            The zip file has a root folder ? We must remove it 
+        */
+        if (!in_array(1, $aHaveRootFolder)) {
+            $oZip->extractTo($this->sandbox_path);
+            $oZip->close();
+            @unlink($sZipPath);
+            $aFolderName = explode('.zip', $aChildThemeReturned['name']);
+            $sFolderName = $aFolderName[0];
+            $oZipCreate = new ZipArchive;
+            $oZipCreate->open($this->sandbox_path.'/'.$aChildThemeReturned['rename'], ZipArchive::CREATE);
+            $fileList = Finder::create()->in($this->sandbox_path.'/'.$sFolderName.'/');
+
+            foreach ($fileList as $file) {
+                if ($file->isDir()) {
+                    $oZipCreate->addEmptyDir($file->getRelativePathName());
+                } else {
+                    $oZipCreate->addFile($file->getRealpath(), ''.$file->getRelativePathName());
+                }
+            }
+
+            $bZipCreateClose = (bool)$oZipCreate->close();
+            $bRecursiveDelete = (bool)self::recursiveDelete($this->sandbox_path.'/'.$sFolderName.'/');
+
+            return $bZipCreateClose && $bRecursiveDelete;
+        } else {
+            return $oZip->close();
+        }
     }
 
     /**
@@ -340,7 +402,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $oZip = new ZipArchive;
         $oZip->open($sZipPath);
 
-        for($i = 0; $i < $oZip->numFiles; $i++)
+        for ($i = 0; $i < $oZip->numFiles; $i++)
         {
             $aZipElement  = array_filter(explode('/', $oZip->getNameIndex($i)));
             if (count($aZipElement) == 1) {
