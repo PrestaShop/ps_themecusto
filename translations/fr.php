@@ -39,7 +39,7 @@ $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_7cd5fa3f9e9e
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_c15614439ecc7d478eec1e4e12edc85b'] = 'Ajoutez des informations additionnelles sur votre boutique ou sur vos moyens de contact pour permettre à  vos clients de vous joindre plus facilement.';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_4b8a74f166975e0d8c67e68e0590ce10'] = 'L\'action sur le module a été correctement réalisée';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_80149ff14c961109480be108c06e80e9'] = 'L\'action sur le module a échoué';
-$_MODULE['<{ps_themecusto}prestashop>page_791d9c090acf71156d40d9c57157c77b'] = 'Le module $s a été désactivé';
+$_MODULE['<{ps_themecusto}prestashop>page_791d9c090acf71156d40d9c57157c77b'] = 'Le module %s a été désactivé';
 $_MODULE['<{ps_themecusto}prestashop>index_abccb80adfe3d53a54e87842d9334938'] = 'Personnalisation avancée';
 $_MODULE['<{ps_themecusto}prestashop>index_e1135a82239026c7b92d9e897d47d222'] = 'Vous pouvez modifier votre thème en utilisant la fonctionnalité thème parent/enfant';
 $_MODULE['<{ps_themecusto}prestashop>index_7ab2c451410ad06638de9434c52f65e6'] = 'Cette fonctionnalité s\'adresse uniquement aux utilisateurs avancés.';
