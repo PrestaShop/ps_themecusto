@@ -87,7 +87,6 @@
             {else}
                 <p class="alert-text">{l s='By using this method you can override the CSS and html of your theme, and add analytics tags.' mod='ps_themecusto'}</p>
             {/if}
-            <p class="alert-text">{l s='Make sure you zip your edited theme files directly to the root of your child theme\'s folder before uploading it.' mod='ps_themecusto'}</p>
             <p class="alert-text">{l s='Once uploaded, the child theme will be available in your Theme & Logo section' mod='ps_themecusto'}</p>
         </div>
         {include file="./elem/modal.tpl"}
