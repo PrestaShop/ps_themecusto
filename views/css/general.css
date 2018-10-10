@@ -96,6 +96,7 @@
     text-transform: initial;
     background-color: #25b9d7 !important;
     border-color: #25b9d7 !important;
+    white-space: pre-wrap;
 }
 #psthemecusto .btn.btn-primary:hover {
     background-color: #3ed2f0 !important;
