@@ -29,6 +29,9 @@
 /**
     GENERAL
 */
+body.adminpsthemecustoconfiguration { background-color: #fff }
+#psthemecusto .panel:first-child { border: none; }
+
 #psthemecusto .js-wireframe div {
     width: 92%;
 }

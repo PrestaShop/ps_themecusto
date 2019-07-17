@@ -66,9 +66,13 @@ $(document).ready(function() {
 
     $("#psthemecusto .js-wireframe div").hover(
         function() {
+            let name = $(this).data('module_name');
+            $('.module-list [data-module_name='+ name +']').addClass('active');
             $(this).find('.on-element').removeClass('displaynone');
             $(this).find('.out-element').addClass('displaynone');
         }, function() {
+            let name = $(this).data('module_name');
+            $('.module-list [data-module_name='+ name +']').removeClass('active');
             $(this).find('.on-element').addClass('displaynone');
             $(this).find('.out-element').removeClass('displaynone');
         }

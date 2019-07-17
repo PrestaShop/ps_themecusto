@@ -33,7 +33,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         parent::__construct();
 
         $this->controller_quick_name = 'configuration';
-        $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset' );
+        $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset');
         $this->moduleActionsNames = array(
             $this->l('Uninstall'),
             $this->l('Install'),
@@ -44,6 +44,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $this->l('Enable Mobile'),
             $this->l('Reset')
         );
+        
         $this->categoryList = array(
             'menu'              => $this->l('Menu'),
             'slider'            => $this->l('Slider'),
@@ -68,11 +69,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminCategories' => array(
                         $this->l('Create and manage Product Categories'),
-                        $this->l('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.')
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
                     ),
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
-                        $this->l('Add and manage your content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc.) as you want.')
+                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).')
                     ),
                     'AdminManufacturers' => array(
                         $this->l('Create Brands and Suppliers pages'),
@@ -85,7 +86,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'slider' => array(
                 'modules' => array(
-                    (($this->module->ready)? 'pshomeslider' : 'ps_imageslider') => (($this->module->ready)? 27562 : 22320)
+                    (($this->module->ready) ? 'pshomeslider' : 'ps_imageslider') => (($this->module->ready) ? 27562 : 22320)
                 ),
             ),
             'home_products' => array(
@@ -117,7 +118,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminStores' => array(
                         $this->l('Shop details'),
-                        $this->l('Display additional information about your store or how to contact you to make it easy for your customers to reach you.')
+                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.')
                     ),
                 ),
                 'modules' => array(
@@ -177,7 +178,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $this->module->setMedia($aJsDef, $aJs, $aCss);
         $this->setTemplate( $this->module->template_dir.'page.tpl');
     }
-
 
     /**
      * AJAX : Do a module action like Install, disable, enable ...
@@ -324,8 +324,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         $aModule['id_module'] = $oModuleInstance->id;
         $aModule['active'] = $oModuleInstance->active;
-
-
 
         if ($bIsInstalled === true) {
             $aModule['can_configure'] = (method_exists($oModuleInstance, 'getContent'))? true : false;

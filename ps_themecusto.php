@@ -120,6 +120,7 @@ class ps_themecusto extends Module
     public function assignTabList()
     {
         $themesTab = Tab::getInstanceFromClassName('AdminThemes');
+        
         return array(
             array(
                 'class'     => $this->controller_name[1],
@@ -258,9 +259,9 @@ class ps_themecusto extends Module
     }
 
     /**
-    * check if the employee has the right to use this admin controller
-    * @return bool
-    */
+     * check if the employee has the right to use this admin controller
+     * @return bool
+     */
     public function hasEditRight()
     {
         $result = Profile::getProfileAccess(
@@ -269,5 +270,4 @@ class ps_themecusto extends Module
         );
         return (bool) $result['edit'];
     }
-
 }
