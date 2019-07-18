@@ -44,7 +44,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $this->l('Enable Mobile'),
             $this->l('Reset')
         );
-        
+
         $this->categoryList = array(
             'menu'              => $this->l('Menu'),
             'slider'            => $this->l('Slider'),

@@ -44,7 +44,6 @@ body.adminpsthemecustoconfiguration { background-color: #fff }
     max-width: 100%;
 }
 #psthemecusto .js-wireframe div { cursor: pointer; }
-#psthemecusto .js-wireframe div .on-element{ display: none; opacity: 0; }
 #psthemecusto .js-wireframe div:hover .out-element,
 #psthemecusto .js-wireframe div.active .out-element{ display: none; }
 #psthemecusto .js-wireframe div:hover .on-element,

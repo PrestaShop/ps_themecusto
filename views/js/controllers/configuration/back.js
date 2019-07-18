@@ -78,6 +78,20 @@ $(document).ready(function() {
         }
     );
 
+    $("#psthemecusto .module-list div.configuration-rectangle").hover(
+        function() {
+            let name = $(this).find('.js-module-name').data('module_name');
+            let $rightSideElement = $('.js-wireframe [data-module_name='+ name +']');
+            $rightSideElement.find('.on-element').removeClass('displaynone');
+            $rightSideElement.find('.out-element').addClass('displaynone');
+        }, function() {
+            let name = $(this).find('.js-module-name').data('module_name');
+            let $rightSideElement = $('.js-wireframe [data-module_name='+ name +']');
+            $rightSideElement.find('.on-element').addClass('displaynone');
+            $rightSideElement.find('.out-element').removeClass('displaynone');
+        }
+    );
+
 });
 
 function resetActiveCategory()
