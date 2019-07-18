@@ -90,7 +90,7 @@
     BUTTON
 */
 #psthemecusto .btn {
-    border-radius: 0 !important;
+    border-radius: 0;
 }
 #psthemecusto .btn.btn-primary {
     text-transform: initial;

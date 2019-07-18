@@ -40,6 +40,9 @@ body.adminpsthemecustoconfiguration { background-color: #fff }
         width: 100%;
     }
 }
+@media screen and (max-width: 1024px) {
+    #psthemecusto { margin-top: 50px; }
+}
 #psthemecusto .js-wireframe img{
     max-width: 100%;
 }
@@ -228,3 +231,30 @@ button.dropdown-item {
 .material-icons.up{
     display: none;
 }
+#psthemecusto .panel .panel-heading {
+    font: 400 12px/1.42857 Open Sans,Helvetica,Arial,sans-serif!important;
+    padding-bottom: 50px;
+    border: none;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary:focus {
+    outline: none;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary {
+    color: #6C868E;
+    border-radius: 20px;
+    padding: 10px 20px!important;
+    background-color: #F5F7F7!important;
+    border-color: #F5F7F7!important;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary:hover,
+#content #psthemecusto .panel .panel-heading .btn.btn-primary.selected {
+    color: #363A41;
+    background-color: #F4FBFD!important;
+    border-color: #F4FBFD!important;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary.selected {
+    color: #FFFFFF;
+    background-color: #25b9d7!important;
+    border-color: #25b9d7!important;
+}
+

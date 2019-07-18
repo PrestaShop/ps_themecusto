@@ -26,6 +26,16 @@
 * to avoid any conflicts with others containers.
 */
 
+var onClickModal = function(event) {
+    $('#psthemecusto .btn.btn-primary').removeClass('selected');
+    $(this).addClass('selected');
+
+    $('#psthemecusto .modalCusto').addClass('hide');
+
+    let idModalName = $(this).data('id-modal');
+    $('#'+idModalName).removeClass('hide');
+};
+
 $(document).ready(function() {
     $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
         if ($(this).hasClass('active')) {
@@ -92,6 +102,7 @@ $(document).ready(function() {
         }
     );
 
+    $('#psthemecusto .btn.btn-primary').on('click', onClickModal);
 });
 
 function resetActiveCategory()
