@@ -32,7 +32,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->skeleton_name = 'childtheme_skeleton';
         $this->childtheme_skeleton = $this->module->module_path.'/src/'.$this->skeleton_name.'.zip';
         $this->sandbox_path = _PS_CACHE_DIR_.'sandbox/';
@@ -57,7 +57,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'bootstrap'         => 1,
             'configure_type'    => $this->controller_quick_name,
             'images'            => $this->module->img_path."/controllers/advanced/",
-            'is_ps_ready'       => $this->module->ready,
+            'isPsReady'       => $this->module->ready,
         ));
         $aJsDef = array(
             'admin_module_controller_psthemecusto'  => $this->module->controller_name[0],
@@ -157,8 +157,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         foreach ($fileList as $file) {
             $oZip->addFile($file->getRealpath(), $sChildThemeFolderName.'/'.$file->getRelativePathName());
-        }  
-        
+        }
+
         return $oZip->close();
     }
 
@@ -187,7 +187,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
      */
     public function ajaxProcessUploadChildTheme()
     {
-        $aChildThemeReturned = Tools::fileAttachment('file');        
+        $aChildThemeReturned = Tools::fileAttachment('file');
         $sZipPath = self::processUploadFileChild($aChildThemeReturned, $this->sandbox_path.$aChildThemeReturned['rename']);
         $bZipFormat = self::processCheckZipFormat($sZipPath);
         if (!$bZipFormat) {
@@ -254,7 +254,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         if (!$this->module->hasEditRight()) {
             return $this->l('You do not have permission to edit this.');
-        } 
+        }
 
         switch ($aChildThemeReturned['error']) {
             case UPLOAD_ERR_OK:
@@ -332,10 +332,10 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             }
         }
 
-        /* 
+        /*
             if 1 : There is no root foler
             if no 1 : There is root folder
-            The zip file has a root folder ? We must remove it 
+            The zip file has a root folder ? We must remove it
         */
         if (!in_array(1, $aHaveRootFolder)) {
             $oZip->extractTo($this->sandbox_path);
@@ -481,7 +481,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
                         $zip->close();
                         return false;
                     }
-                } 
+                }
             }
         }
         $zip->close();

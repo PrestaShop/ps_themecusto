@@ -29,15 +29,15 @@ class ThemeCustoRequests
     /**
      * Get all the modules by name
      *
-     * @param string $aModulesName
+     * @param string $moduleName
      * @return array $aModulesList
     */
-    public static function getModulesListByName($aModulesName)
+    public static function getModulesListByName($moduleName)
     {
         $sSql = '   SELECT m.id_module, m.name, ms.enable_device as active
                     FROM `'._DB_PREFIX_.'module` m
                     LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
-                    WHERE m.name IN ('.implode(', ', array_map('pSQL', $aModulesName)).')';
+                    WHERE m.name IN ('.implode(', ', array_map('pSQL', $moduleName)).')';
 
         $aModulesList = Db::getInstance()->executeS($sSql);
 

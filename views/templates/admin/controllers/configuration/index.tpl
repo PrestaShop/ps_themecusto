@@ -13,21 +13,21 @@
 * International Registered Trademark & Property of PrestaShop SA
 *}
 
-<div id="psthemecusto">
-    {if $is_ps_ready}
+<div id="psthemecusto" class="container-fluid">
+    {if $isPsReady}
         {include file="./ps_ready.tpl"}
     {/if}
 
     <div class="panel row">
-        <div class="row panel-heading text-center">
-            <button class="btn btn-primary btn-lg selected" data-id-modal="homepageModal">{l s='Homepage' mod='ps_themecusto'}</button>
-            <button class="btn btn-primary btn-lg" data-id-modal="categoryModal">{l s='Category page' mod='ps_themecusto'}</button>
+        <div class="panel-heading text-center">
+            <button class="btn btn-primary btn-lg" data-id-modal="homepageModal">{l s='Homepage' mod='ps_themecusto'}</button>
+            <button class="btn btn-primary btn-lg selected" data-id-modal="categoryModal">{l s='Category page' mod='ps_themecusto'}</button>
             <button class="btn btn-primary btn-lg" data-id-modal="productModal">{l s='Product page' mod='ps_themecusto'}</button>
         </div>
 
-        {include file="./homepage.tpl"}
-        {include file="./category.tpl"}
-        {include file="./product.tpl"}
+        {include file="./dropdownList.tpl" elementsList=$homePageList idModal='homepage' defaultModalClass='hide' }
+        {include file="./dropdownList.tpl" elementsList=$categoryPageList idModal='category' defaultModalClass=''}
+        {* {include file="./dropdownList.tpl" elementsList=$productPageList idModal=productModal defaultModalClass='hide'} *}
     </div>
 
     {include file="./elem/modal.tpl"}

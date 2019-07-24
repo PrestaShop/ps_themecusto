@@ -26,90 +26,13 @@
 * to avoid any conflicts with others containers.
 */
 
-var onClickModal = function(event) {
-    $('#psthemecusto .btn.btn-primary').removeClass('selected');
-    $(this).addClass('selected');
+// TODO: fix scope of dom elements (home,cat,prod)
+'use strict';
 
-    $('#psthemecusto .modalCusto').addClass('hide');
-
-    let idModalName = $(this).data('id-modal');
-    $('#'+idModalName).removeClass('hide');
-};
-
-$(document).ready(function() {
-    $(document).on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', function(){
-        if ($(this).hasClass('active')) {
-            resetActiveCategory();
-            $(this).removeClass('active');
-        } else {
-            resetActiveCategory();
-            setActiveCategory($(this));
-            $(this).addClass('active');
-        }
-    });
-
-    $(document).on('click', '#psthemecusto button', function(event) {
-        event.preventDefault();
-        let action = $(this).parent('div').data('action');
-        let name = $(this).parent('div').data('module_name');
-        let displayName = $(this).parent('div').data('module_displayname');
-        let url = $(this).parent('div').prop('action');
-        let id_module = $('.src_parent_'+name).data('id_module');
-
-        if (action == 'uninstall' || action == 'disable' || action == 'reset') {
-            $('.modal .action_available').hide();
-            $('.modal .'+action).show();
-            $('.modal .modal-footer a').prop('href', url).attr('data-name', name).attr('data-action', action);
-            $('.modal .module-displayname').html(displayName);
-        } else {
-            ajaxActionModule(action, id_module, name);
-        }
-    });
-
-    $(document).on('click', '.modal .modal-footer a', function(event) {
-        event.preventDefault();
-        let name = $(this).attr('data-name');
-        let action = $(this).attr('data-action');
-        let id_module = $('.src_parent_'+name).data('id_module');
-        ajaxActionModule(action, id_module, name);
-    });
-
-    $("#psthemecusto .js-wireframe div").hover(
-        function() {
-            let name = $(this).data('module_name');
-            $('.module-list [data-module_name='+ name +']').addClass('active');
-            $(this).find('.on-element').removeClass('displaynone');
-            $(this).find('.out-element').addClass('displaynone');
-        }, function() {
-            let name = $(this).data('module_name');
-            $('.module-list [data-module_name='+ name +']').removeClass('active');
-            $(this).find('.on-element').addClass('displaynone');
-            $(this).find('.out-element').removeClass('displaynone');
-        }
-    );
-
-    $("#psthemecusto .module-list div.configuration-rectangle").hover(
-        function() {
-            let name = $(this).find('.js-module-name').data('module_name');
-            let $rightSideElement = $('.js-wireframe [data-module_name='+ name +']');
-            $rightSideElement.find('.on-element').removeClass('displaynone');
-            $rightSideElement.find('.out-element').addClass('displaynone');
-        }, function() {
-            let name = $(this).find('.js-module-name').data('module_name');
-            let $rightSideElement = $('.js-wireframe [data-module_name='+ name +']');
-            $rightSideElement.find('.on-element').addClass('displaynone');
-            $rightSideElement.find('.out-element').removeClass('displaynone');
-        }
-    );
-
-    $('#psthemecusto .btn.btn-primary').on('click', onClickModal);
-});
-
-function resetActiveCategory()
-{
+let resetActiveCategory = function() {
     $('#psthemecusto .js-wireframe div').removeClass('active');
-    $('#psthemecusto .js-wireframe div .on-element').addClass('displaynone');
-    $('#psthemecusto .js-wireframe div .out-element').removeClass('displaynone');
+    $('#psthemecusto .js-wireframe div .on-element').addClass('hide');
+    $('#psthemecusto .js-wireframe div .out-element').removeClass('hide');
     $('#psthemecusto .js-module-name').removeClass('active');
     $('#psthemecusto .js-module-name').parent('.configuration-rectangle').removeClass('active');
     $('#psthemecusto .js-module-name').parent('.configuration-rectangle').find('.module-informations').slideUp();
@@ -117,12 +40,11 @@ function resetActiveCategory()
     $('#psthemecusto .configuration-rectangle-caret .material-icons.down').show();
 }
 
-function setActiveCategory(elem)
-{
+let setActiveCategory = function(elem) {
     let module = elem.data('module_name');
     $('.js-img-'+module).addClass('active');
-    $('.js-img-'+module+' .on-element').removeClass('displaynone');
-    $('.js-img-'+module+' .out-element').addClass('displaynone');
+    $('.js-img-'+module+' .on-element').removeClass('hide');
+    $('.js-img-'+module+' .out-element').addClass('hide');
     $('.js-title-'+module).addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
@@ -132,20 +54,23 @@ function setActiveCategory(elem)
     headHeight = $('.page-head.with-tabs').height();
     navHeight = $('#header_infos').height();
     topOffset = headHeight + navHeight;
+    parentConfigurationRectangleElement = $('.js-title-'+module).parent().first();
+
+    console.log(parentConfigurationRectangleElement);
     if (elem.hasClass('js-img-'+module)) {
-        $('html, body').animate({scrollTop: $('.js-title-'+module).offset().top-topOffset}, 1000);
+        $('html, body').animate({scrollTop: parentConfigurationRectangleElement.position().top - topOffset}, 1000);
     } else {
         if ($(window).innerWidth() > 991) {
-            $('html, body').animate({scrollTop: $('.js-img-'+module).offset().top-topOffset}, 1000);
+            $('html, body').animate({scrollTop: parentConfigurationRectangleElement.position().top - topOffset}, 1000);
         }
     }
 }
 
-function ajaxActionModule(action, id_module, name)
-{
+let ajaxActionModule = function(action, id_module, name) {
     if (typeof action != "undefined"
-    && typeof id_module != "undefined"
-    && typeof name != "undefined") {
+        && typeof id_module != "undefined"
+        && typeof name != "undefined"
+    ) {
         $.ajax({
             type: 'POST',
             url: admin_module_ajax_url_psthemecusto,
@@ -174,3 +99,92 @@ function ajaxActionModule(action, id_module, name)
         });
     }
 }
+
+let onClickModal = function(event) {
+    $('#psthemecusto .btn.btn-primary').removeClass('selected');
+    $(this).addClass('selected');
+
+    $('#psthemecusto .modalCusto').addClass('hide');
+
+    let idModalName = $(this).data('id-modal');
+    $('#'+idModalName).removeClass('hide');
+}
+
+let onClickButtonThemeCusto = function (event) {
+    event.preventDefault();
+    let action = $(this).parent('div').data('action');
+    let name = $(this).parent('div').data('module_name');
+    let displayName = $(this).parent('div').data('module_displayname');
+    let url = $(this).parent('div').prop('action');
+    let id_module = $('.src_parent_'+name).data('id_module');
+
+    if (action == 'uninstall' || action == 'disable' || action == 'reset') {
+        $('.modal .action_available').hide();
+        $('.modal .'+action).show();
+        $('.modal .modal-footer a').prop('href', url).attr('data-name', name).attr('data-action', action);
+        $('.modal .module-displayname').html(displayName);
+    } else {
+        ajaxActionModule(action, id_module, name);
+    }
+}
+
+let onClickWireframeDivORModuleName = function (event) {
+    if ($(this).hasClass('active')) {
+        resetActiveCategory();
+        $(this).removeClass('active');
+    } else {
+        resetActiveCategory();
+        setActiveCategory($(this));
+        $(this).addClass('active');
+    }
+}
+
+let onClickModalFooterLink = function (event) {
+    event.preventDefault();
+    let name = $(this).attr('data-name');
+    let action = $(this).attr('data-action');
+    let id_module = $('.src_parent_'+name).data('id_module');
+    ajaxActionModule(action, id_module, name);
+}
+
+$(document).ready(function() {
+    $(document)
+        .on('click', '#psthemecusto .btn.btn-primary', onClickModal)
+        .on('click', '.modal .modal-footer a', onClickModalFooterLink)
+        .on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', onClickWireframeDivORModuleName)
+        .on('click', '#psthemecusto button', onClickButtonThemeCusto);
+
+    $("#psthemecusto .js-wireframe div").hover(
+        function() {
+            let name = $(this).data('module_name');
+            console.log(name);
+            $('.module-list [data-module_name='+ name +']').addClass('active');
+            $(this).find('.on-element').removeClass('hide');
+            $(this).find('.out-element').addClass('hide');
+        }, function() {
+            let name = $(this).data('module_name');
+            if (!$('.module-list [data-module_name='+ name +']').parent().hasClass('active')) {
+                $('.module-list [data-module_name='+ name +']').removeClass('active');
+                $(this).find('.on-element').addClass('hide');
+                $(this).find('.out-element').removeClass('hide');
+            }
+        }
+    );
+
+    $("#psthemecusto .module-list div.configuration-rectangle").hover(
+        function() {
+            let name = $(this).find('.js-module-name').data('module_name');
+            let $rightSideElement = $('.js-wireframe [data-module_name='+ name +']');
+            $rightSideElement.find('.on-element').removeClass('hide');
+            $rightSideElement.find('.out-element').addClass('hide');
+        }, function() {
+            let name = $(this).find('.js-module-name').data('module_name');
+            if (!$(this).hasClass('active')) {
+                let $rightSideElement = $('.js-wireframe [data-module_name='+ name +']');
+                $rightSideElement.find('.on-element').addClass('hide');
+                $rightSideElement.find('.out-element').removeClass('hide');
+            }
+        }
+    );
+
+});

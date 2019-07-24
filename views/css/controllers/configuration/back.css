@@ -26,30 +26,40 @@
 * to avoid any conflicts with others containers.
 */
 
+/* Add boostrap no-gutter class */
+.no-gutter.row,
+.no-gutter.container,
+.no-gutter.container-fluid{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.no-gutter>[class^="col-"]{
+  padding-left: 0;
+  padding-right: 0;
+}
+
 /**
     GENERAL
 */
-body.adminpsthemecustoconfiguration { background-color: #fff }
-#psthemecusto .panel:first-child { border: none; }
-
-#psthemecusto .js-wireframe div {
-    width: 92%;
+body.adminpsthemecustoconfiguration {
+    background-color: #fff;
 }
-@media screen and (max-width: 991px) {
-    #psthemecusto .js-wireframe div {
-        width: 100%;
-    }
+#psthemecusto .modalCusto div.js-wireframe {
+    background-color: #D5D5D5;
 }
-@media screen and (max-width: 1024px) {
-    #psthemecusto { margin-top: 50px; }
+#psthemecusto .panel:first-child {
+    border: none;
 }
 #psthemecusto .js-wireframe img{
     max-width: 100%;
 }
-#psthemecusto .js-wireframe div { cursor: pointer; }
-#psthemecusto .js-wireframe div:hover .out-element,
-#psthemecusto .js-wireframe div.active .out-element{ display: none; }
-#psthemecusto .js-wireframe div:hover .on-element,
+#psthemecusto .js-wireframe div {
+    cursor: pointer;
+}
+#psthemecusto .js-wireframe div.active .out-element{
+    display: none;
+}
 #psthemecusto .js-wireframe div.active .on-element{
     display: block;
     opacity: 1;
