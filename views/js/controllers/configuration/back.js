@@ -51,12 +51,11 @@ let setActiveCategory = function(elem) {
     $('.js-title-'+module+' .material-icons.up').show();
     $('.js-title-'+module+' .material-icons.down').hide();
 
-    headHeight = $('.page-head.with-tabs').height();
-    navHeight = $('#header_infos').height();
-    topOffset = headHeight + navHeight;
-    parentConfigurationRectangleElement = $('.js-title-'+module).parent().first();
+    let headHeight = $('.page-head.with-tabs').height(),
+        navHeight = $('#header_infos').height(),
+        topOffset = headHeight + navHeight,
+        parentConfigurationRectangleElement = $('.js-title-'+module).parent().first();
 
-    console.log(parentConfigurationRectangleElement);
     if (elem.hasClass('js-img-'+module)) {
         $('html, body').animate({scrollTop: parentConfigurationRectangleElement.position().top - topOffset}, 1000);
     } else {
@@ -149,15 +148,14 @@ let onClickModalFooterLink = function (event) {
 
 $(document).ready(function() {
     $(document)
-        .on('click', '#psthemecusto .btn.btn-primary', onClickModal)
-        .on('click', '.modal .modal-footer a', onClickModalFooterLink)
-        .on('click', '#psthemecusto .js-wireframe div, #psthemecusto .js-module-name', onClickWireframeDivORModuleName)
-        .on('click', '#psthemecusto button', onClickButtonThemeCusto);
+        .on('click', "#psthemecusto .btn.btn-primary", onClickModal)
+        .on('click', ".modal .modal-footer a", onClickModalFooterLink)
+        .on('click', "#psthemecusto .js-wireframe div[class*='js-img-'], #psthemecusto .js-module-name", onClickWireframeDivORModuleName)
+        .on('click', "#psthemecusto button", onClickButtonThemeCusto);
 
-    $("#psthemecusto .js-wireframe div").hover(
+    $("#psthemecusto .js-wireframe div[class*='js-img-']").hover(
         function() {
             let name = $(this).data('module_name');
-            console.log(name);
             $('.module-list [data-module_name='+ name +']').addClass('active');
             $(this).find('.on-element').removeClass('hide');
             $(this).find('.out-element').addClass('hide');

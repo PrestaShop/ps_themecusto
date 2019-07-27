@@ -24,6 +24,8 @@
 * International Registered Trademark & Property of PrestaShop SA
 **/
 
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
+
 require(__DIR__.'../../../classes/ThemeCustoRequests.php');
 
 class AdminPsThemeCustoConfigurationController extends ModuleAdminController
@@ -46,16 +48,19 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         );
 
         $this->categoryList = array(
-            'menu'              => $this->l('Menu'),
-            'slider'            => $this->l('Slider'),
-            'home_products'     => $this->l('Home Products'),
-            'block_text'        => $this->l('Text block'),
-            'banner'            => $this->l('Banner'),
+            'menu'=> $this->l('Menu'),
+            'slider' => $this->l('Slider'),
+            'home_products' => $this->l('Home Products'),
+            'block_text' => $this->l('Text block'),
+            'banner' => $this->l('Banner'),
             'social_newsletter' => $this->l('Social &  Newsletter'),
-            'footer'            => $this->l('Footer'),
-            'categories'        => $this->l('Categories'),
+            'footer' => $this->l('Footer'),
+            'content' => $this->l('content'),
+            'categories' => $this->l('Categories'),
             'navigation_column' => $this->l('Navigation column'),
-            'content'           => $this->l('Content'),
+            'product_management' => $this->l('Product management'),
+            'product_detail' => $this->l('Product detail'),
+            'product_block' => $this->l('Product block'),
         );
     }
 
@@ -142,10 +147,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         return array(
             'menu' => array(
                 'pages' => array(
-                    'AdminCategories' => array(
-                        $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
-                    ),
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
                         $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).')
@@ -160,22 +161,25 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 ),
             ),
             'categories' => array(
-                'modules' => array(
-                    $this->module->ready ? 'pshomeslider' : 'ps_imageslider' => $this->module->ready ? 27562 : 22320
+                'pages' => array(
+                    'AdminCategories' => array(
+                        $this->l('Create and manage Product Categories'),
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                    ),
                 ),
             ),
             'navigation_column' => array(
                 'modules' => array(
-                    'ps_featuredproducts' => 22319,
-                    'ps_bestsellers' => 24566,
-                    'ps_newproducts' => 24671,
-                    'ps_specials' => 24672,
-
+                    'ps_categorytree' => 22314,
+                    'ps_facetedsearch' => 23867,
                 ),
             ),
             'content' => array(
-                'modules' => array(
-                    'ps_customtext' => 22317,
+                'sfRoutePages' => array(
+                    'admin_product_preferences' => array(
+                        $this->l('Create and manage Product Categories'),
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                    ),
                 ),
             ),
             'social_newsletter' => array(
@@ -226,12 +230,25 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'ps_mainmenu' => 22321,
                 ),
             ),
-            'categories' => array(
-                'modules' => array(
-                    $this->module->ready ? 'pshomeslider' : 'ps_imageslider' => $this->module->ready ? 27562 : 22320
+            'product_management' => array(
+                'sfRoutePages' => array(
+                    'admin_product_catalog' => array(
+                        $this->l('Create and manage Product catalog'),
+                        $this->l('description')
+                    ),
+                    'admin_stock_overview' => array(
+                        $this->l('Affichage des quantités et de la disponibilité en stock'),
+                        $this->l('description')
+                    ),
+                ),
+                'pages' => array(
+                    'AdminAttributesGroups' => array(
+                        $this->l('Create and manage Product attributes'),
+                        $this->l('description')
+                    ),
                 ),
             ),
-            'navigation_column' => array(
+            'product_detail' => array(
                 'modules' => array(
                     'ps_featuredproducts' => 22319,
                     'ps_bestsellers' => 24566,
@@ -240,7 +257,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
                 ),
             ),
-            'content' => array(
+            'product_block' => array(
                 'modules' => array(
                     'ps_customtext' => 22317,
                 ),
@@ -418,6 +435,14 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->l($aPage[1]);
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->l('Configure');
                     }
+                } else if ($sType == 'sfRoutePages') {
+                    $container = SymfonyContainer::getInstance();
+                    foreach ($aElementsList as $sController => $aPage) {
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->l($aPage[0]);
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['url'] = $container->get('router')->generate($sController);
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->l($aPage[1]);
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->l('Configure');
+                    }
                 } else {
                     foreach ($aElementsList as $sModuleName => $iModuleId) {
                         if (!in_array($sModuleName, $modulesOnDisk)) {
@@ -440,7 +465,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             if (!isset($aModuleFinalList[$sSegmentName])) {
                 $aModuleFinalList[$sSegmentName] = null;
             }
-            if (is_array($aModuleFinalList[$sSegmentName]['modules'])) {
+            if (isset($aModuleFinalList[$sSegmentName]['modules']) && is_array($aModuleFinalList[$sSegmentName]['modules'])) {
                 uasort($aModuleFinalList[$sSegmentName]['modules'], array($this, 'sortArrayInstalledModulesFirst'));
             }
         }

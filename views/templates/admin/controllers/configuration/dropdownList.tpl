@@ -23,6 +23,31 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 module-informations">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                                {* handle icon specifics *}
+                                                <i class="icon-cogs"></i>
+                                            </div>
+                                            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <b>{$page.displayName}</b>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 description">
+                                                    {$page.description}
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 general-action">
+                                                    <a class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-radius-right btn btn-primary-reverse btn-outline-primary light-button" href="{$page.url}">
+                                                        {l s='Configure' mod='ps_themecusto'}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {/foreach}
+                            {else if $type == 'sfRoutePages'}
+                                {foreach from=$elements item=page}
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 module-informations">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                                {* handle icon specifics *}
                                                 <i class="icon-cogs"></i>
                                             </div>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">

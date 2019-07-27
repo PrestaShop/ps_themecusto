@@ -18,25 +18,17 @@
         <img class="out-element" src="{$moduleImgUri}/wireframe/commons/menu.jpg"/>
         <img class="on-element hide" src="{$moduleImgUri}/wireframe/commons/menu_hover.jpg"/>
     </div>
-    <div class="col-xs-12" >
-        <div class="row no-gutter">
-            <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3 js-img-navigation_column" data-module_name="navigation_column">
-                <img class="out-element" src="{$moduleImgUri}/wireframe/category/navigation-column.jpg"/>
-                <img class="on-element hide" src="{$moduleImgUri}/wireframe/category/navigation-column_hover.jpg"/>
-            </div>
-            <div class="col-lg-9 col-xs-9 col-md-9 col-sm-9">
-                <div class="row no-gutter">
-                    <div class="col-xs-12 js-img-categories" data-module_name="categories">
-                        <img class="out-element" src="{$moduleImgUri}/wireframe/category/category.jpg"/>
-                        <img class="on-element hide" src="{$moduleImgUri}/wireframe/category/category_hover.jpg"/>
-                    </div>
-                    <div class="col-xs-12 js-img-content" data-module_name="content">
-                        <img class="out-element" src="{$moduleImgUri}/wireframe/category/content.jpg"/>
-                        <img class="on-element hide" src="{$moduleImgUri}/wireframe/category/content_hover.jpg"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="col-xs-12 js-img-product_management" data-module_name="product_management">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/product/product_mgmt.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/product/product_mgmt_hover.jpg"/>
+    </div>
+    <div class="col-xs-12 js-img-product_detail" data-module_name="product_detail">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/product/product_detail.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/product/product_detail_hover.jpg"/>
+    </div>
+    <div class="col-xs-12 js-img-product_block" data-module_name="product_block">
+        <img class="out-element" src="{$moduleImgUri}/wireframe/product/products_block.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/product/products_block_hover.jpg"/>
     </div>
     <div class="col-xs-12 js-img-social_newsletter" data-module_name="social_newsletter">
         <img class="out-element" src="{$moduleImgUri}/wireframe/commons/newsletter.jpg"/>

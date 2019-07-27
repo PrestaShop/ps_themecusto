@@ -13,10 +13,10 @@
 * International Registered Trademark & Property of PrestaShop SA
 *}
 
-<div class="row js-wireframe">
+<div class="row js-wireframe no-gutter">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-menu" data-module_name="menu">
-        <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/menu.jpg"/>
-        <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/menu_hover.jpg"/>
+        <img class="out-element" src="{$moduleImgUri}/wireframe/commons/menu.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/commons/menu_hover.jpg"/>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-slider" data-module_name="slider">
         <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/slider.jpg"/>
@@ -27,8 +27,8 @@
         <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/home_products_hover.jpg"/>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-block_text" data-module_name="block_text">
-        <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/bloc_text.jpg"/>
-        <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/bloc_text_hover.jpg"/>
+        <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/block_text.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/block_text_hover.jpg"/>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-home_products" data-module_name="home_products">
         <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/home_products2.jpg"/>
@@ -39,11 +39,11 @@
         <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/banner_hover.jpg"/>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-social_newsletter" data-module_name="social_newsletter">
-        <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/newsletter.jpg"/>
-        <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/newsletter_hover.jpg"/>
+        <img class="out-element" src="{$moduleImgUri}/wireframe/commons/newsletter.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/commons/newsletter_hover.jpg"/>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-img-footer" data-module_name="footer">
-        <img class="out-element" src="{$moduleImgUri}/wireframe/homepage/footer.jpg"/>
-        <img class="on-element hide" src="{$moduleImgUri}/wireframe/homepage/footer_hover.jpg"/>
+        <img class="out-element" src="{$moduleImgUri}/wireframe/commons/footer.jpg"/>
+        <img class="on-element hide" src="{$moduleImgUri}/wireframe/commons/footer_hover.jpg"/>
     </div>
 </div>
