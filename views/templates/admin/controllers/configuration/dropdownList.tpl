@@ -31,9 +31,13 @@
                                                     <img src="{$moduleImgUri}manage_attributes_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'AdminManufacturers'}
                                                     <img src="{$moduleImgUri}brands_page_feature.png" class="img-fluid module-logo">
+                                                {else if $page.name == 'AdminProducts'}
+                                                    <img src="{$moduleImgUri}manage_catalog_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'admin_product_catalog'}
                                                     <img src="{$moduleImgUri}manage_catalog_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'admin_stock_overview'}
+                                                    <img src="{$moduleImgUri}display_stock_feature.png" class="img-fluid module-logo">
+                                                {else if $page.name == 'AdminStockManagement'}
                                                     <img src="{$moduleImgUri}display_stock_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'AdminStores'}
                                                     <img src="{$moduleImgUri}shop_ino_link_feature.png" class="img-fluid module-logo">

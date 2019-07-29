@@ -24,8 +24,6 @@
 * International Registered Trademark & Property of PrestaShop SA
 **/
 
-use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
-
 require(__DIR__.'../../../classes/ThemeCustoRequests.php');
 
 class AdminPsThemeCustoConfigurationController extends ModuleAdminController
@@ -34,6 +32,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     {
         parent::__construct();
 
+        $this->isPsVersion174 = (bool)version_compare(_PS_VERSION_, '1.7.4', '>=');
         $this->controller_quick_name = 'configuration';
         $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset');
         $this->moduleActionsNames = array(
@@ -144,6 +143,25 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     */
     public function getCategoryListConfiguration()
     {
+        if ($this->isPsVersion174) {
+            $category = array(
+                'sfRoutePages' => array(
+                    'admin_product_preferences' => array(
+                        $this->l('Create and manage Product Categories'),
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                    ),
+                ),
+            );
+        } else {
+            $category = array(
+                'pages' => array(
+                    'AdminCategories' => array(
+                        $this->l('Create and manage Product Categories'),
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                    ),
+                ),
+            );
+        }
 
         return array(
             'menu' => array(
@@ -175,14 +193,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'ps_facetedsearch' => 23867,
                 ),
             ),
-            'content' => array(
-                'sfRoutePages' => array(
-                    'admin_product_preferences' => array(
-                        $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
-                    ),
-                ),
-            ),
+            'content' => $category,
             'social_newsletter' => array(
                 'modules' => array(
                     'ps_emailsubscription'  => 22318,
@@ -212,6 +223,44 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     */
     public function getProductListConfiguration()
     {
+        if ($this->isPsVersion174) {
+            $product = array(
+                'sfRoutePages' => array(
+                    'admin_product_catalog' => array(
+                        $this->l('Create and manage Product catalog'),
+                        $this->l('description')
+                    ),
+                    'admin_stock_overview' => array(
+                        $this->l('Affichage des quantités et de la disponibilité en stock'),
+                        $this->l('description')
+                    ),
+                ),
+                'pages' => array(
+                    'AdminAttributesGroups' => array(
+                        $this->l('Create and manage Product attributes'),
+                        $this->l('description')
+                    ),
+                ),
+            );
+        } else {
+            $product = array(
+                'pages' => array(
+                    'AdminAttributesGroups' => array(
+                        $this->l('Create and manage Product attributes'),
+                        $this->l('description')
+                    ),
+                    'AdminProducts' => array(
+                        $this->l('Create and manage Product catalog'),
+                        $this->l('description')
+                    ),
+                    'AdminStockManagement' => array(
+                        $this->l('Affichage des quantités et de la disponibilité en stock'),
+                        $this->l('description')
+                    ),
+                ),
+            );
+        }
+
         return array(
             'menu' => array(
                 'pages' => array(
@@ -232,24 +281,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'ps_mainmenu' => 22321,
                 ),
             ),
-            'product_management' => array(
-                'sfRoutePages' => array(
-                    'admin_product_catalog' => array(
-                        $this->l('Create and manage Product catalog'),
-                        $this->l('description')
-                    ),
-                    'admin_stock_overview' => array(
-                        $this->l('Affichage des quantités et de la disponibilité en stock'),
-                        $this->l('description')
-                    ),
-                ),
-                'pages' => array(
-                    'AdminAttributesGroups' => array(
-                        $this->l('Create and manage Product attributes'),
-                        $this->l('description')
-                    ),
-                ),
-            ),
+            'product_management' => $product,
             'product_detail' => array(
                 'modules' => array(
                     'blockreassurance' => 22312,
@@ -346,10 +378,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             die($this->l('You do not have permission to edit this.'));
         }
 
-        $iModuleId      = (int)Tools::getValue('id_module');
         $sModuleName    = pSQL(Tools::getValue('module_name'));
         $sModuleAction  = pSQL(Tools::getValue('action_module'));
-        $oModule        = Module::getInstanceByName($sModuleName);
         $oModule        = Module::getInstanceByName($sModuleName);
         $sUrlActive     = $oModule->isEnabled($oModule->name) ? 'configure' : 'enable';
 
@@ -435,7 +465,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->l('Configure');
                     }
                 } else if ($sType == 'sfRoutePages') {
-                    $container = SymfonyContainer::getInstance();
+                    $container = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
                     foreach ($aElementsList as $sController => $aPage) {
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['name'] = $sController;
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->l($aPage[0]);
