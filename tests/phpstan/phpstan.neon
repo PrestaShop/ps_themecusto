@@ -3,9 +3,6 @@ parameters:
 	paths:
 		- classes
 		- controllers
-		- ps_checkout.php
-	ignoreErrors:
-		- '#Access to an undefined property ps_checkout::\$confirmUninstall\.#'
-		- '#Access to an undefined property ps_checkout::\$bootstrap\.#'
+		- ps_themecusto.php
 
-	level: 1
+	level: 7
