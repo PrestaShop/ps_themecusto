@@ -23,7 +23,6 @@
 * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 * International Registered Trademark & Property of PrestaShop SA
 **/
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -41,6 +40,7 @@ class ps_themecusto extends Module
     public $logo_path;
     public $module_path;
     public $ready;
+    public $ps_uri;
 
     public function __construct()
     {
@@ -55,34 +55,35 @@ class ps_themecusto extends Module
         $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
         if (!defined('PS_INSTALLATION_IN_PROGRESS')) {
             if (!$this->context instanceof Context) {
-                throw new PrestaShopException("Undefined context");
+                throw new PrestaShopException('Undefined context');
             }
             $this->front_controller = array(
                 $this->context->link->getAdminLink($this->controller_name[0]),
                 $this->context->link->getAdminLink($this->controller_name[1]),
             );
-        };
+        }
 
         $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
 
         $this->displayName = $this->l('Theme Customization');
         $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
-        $this->template_dir = '../../../../modules/'.$this->name.'/views/templates/admin/';
-        $this->ps_uri = (Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true)).__PS_BASE_URI__;
+        $this->template_dir = '../../../../modules/' . $this->name . '/views/templates/admin/';
+        $this->ps_uri = (Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true)) . __PS_BASE_URI__;
 
         // Settings paths
-        $this->js_path  = $this->_path.'views/js/';
-        $this->css_path = $this->_path.'views/css/';
-        $this->img_path = $this->_path.'views/img/';
-        $this->logo_path = $this->_path.'logo.png';
+        $this->js_path = $this->_path . 'views/js/';
+        $this->css_path = $this->_path . 'views/css/';
+        $this->img_path = $this->_path . 'views/img/';
+        $this->logo_path = $this->_path . 'logo.png';
         $this->module_path = $this->local_path;
-        $this->ready = (getenv('PLATEFORM') === 'PSREADY')? true : false;
+        $this->ready = (getenv('PLATEFORM') === 'PSREADY') ? true : false;
     }
 
     /**
      * install()
      *
      * @param none
+     *
      * @return bool
      */
     public function install()
@@ -92,6 +93,7 @@ class ps_themecusto extends Module
             return true;
         } else {
             $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
+
             return false;
         }
     }
@@ -110,6 +112,7 @@ class ps_themecusto extends Module
         }
 
         $this->_errors[] = $this->l('There was an error during the uninstall. Please contact us through Addons website');
+
         return false;
     }
 
@@ -122,19 +125,19 @@ class ps_themecusto extends Module
 
         return array(
             array(
-                'class'     => $this->controller_name[1],
-                'active'    => true,
-                'position'  => 2,
+                'class' => $this->controller_name[1],
+                'active' => true,
+                'position' => 2,
                 'id_parent' => $themesTab->id_parent,
-                'module'    => $this->name,
+                'module' => $this->name,
             ),
             array(
-                'class'     => $this->controller_name[0],
-                'active'    => true,
-                'position'  => 3,
+                'class' => $this->controller_name[0],
+                'active' => true,
+                'position' => 3,
                 'id_parent' => $themesTab->id_parent,
-                'module'    => $this->name,
-            )
+                'module' => $this->name,
+            ),
         );
     }
 
@@ -145,33 +148,34 @@ class ps_themecusto extends Module
     {
         return array(
             $this->controller_name[1] => array(
-                'fr'    => 'Configuration page d\'accueil',
-                'en'    => 'Homepage Configuration',
-                'es'    => 'Configuración página de inicio',
-                'it'    => 'Configurazione homepage',
+                'fr' => 'Configuration page d\'accueil',
+                'en' => 'Homepage Configuration',
+                'es' => 'Configuración página de inicio',
+                'it' => 'Configurazione homepage',
             ),
             $this->controller_name[0] => array(
-                'fr'    => 'Personnalisation avancée',
-                'en'    => 'Advanced Customization',
-                'es'    => 'Personalización avanzada',
-                'it'    => 'Personalizzazione avanzata',
+                'fr' => 'Personnalisation avancée',
+                'en' => 'Advanced Customization',
+                'es' => 'Personalización avanzada',
+                'it' => 'Personalizzazione avanzata',
             ),
         );
     }
 
     /**
      * Install all admin tab
-     * @return boolean
+     *
+     * @return bool
      */
     public function installTabList()
     {
         /* First, we clone the tab "Theme & Logo" to redefined it correctly
             Without that, we can't have tabs in this section */
         $themesTab = Tab::getInstanceFromClassName('AdminThemes');
-        $newTab = clone($themesTab);
+        $newTab = clone $themesTab;
         $newTab->id = 0;
         $newTab->id_parent = $themesTab->id_parent;
-        $newTab->class_name = $themesTab->class_name.'Parent';
+        $newTab->class_name = $themesTab->class_name . 'Parent';
         $newTab->save();
         // Second save in order to get the proper position (add() resets it)
         $newTab->position = 0;
@@ -183,6 +187,7 @@ class ps_themecusto extends Module
         $tab = new Tab();
         $aTabs = $this->assignTabList();
         $aTabsNameByLang = $this->getTabNameByLangISO();
+        $result = false;
 
         foreach ($aTabs as $aValue) {
             $tab->active = 1;
@@ -195,7 +200,7 @@ class ps_themecusto extends Module
                 } else {
                     $sIsoCode = 'en';
                 }
-                $tab->name[$lang['id_lang']] =  $aTabsNameByLang[$aValue['class']][$sIsoCode];
+                $tab->name[$lang['id_lang']] = $aTabsNameByLang[$aValue['class']][$sIsoCode];
             }
 
             $tab->id_parent = $aValue['id_parent'];
@@ -207,7 +212,7 @@ class ps_themecusto extends Module
             }
         }
 
-        return ($result);
+        return $result;
     }
 
     /**
@@ -218,8 +223,10 @@ class ps_themecusto extends Module
     public function uninstallTabList()
     {
         $aTabs = $this->assignTabList();
+        $result = false;
+
         foreach ($aTabs as $aValue) {
-            $id_tab = (int)Tab::getIdFromClassName($aValue['class']);
+            $id_tab = (int) Tab::getIdFromClassName($aValue['class']);
             if ($id_tab) {
                 $tab = new Tab($id_tab);
                 if (Validate::isLoadedObject($tab)) {
@@ -241,6 +248,7 @@ class ps_themecusto extends Module
         /* saving again for changing position to 0 */
         $themesTab->position = 0;
         $themesTab->save();
+
         return $result;
     }
 
@@ -251,22 +259,24 @@ class ps_themecusto extends Module
     {
         Media::addJsDef($aJsDef);
 
-        array_push($aCss, $this->css_path."general.css");
-        array_push($aJs, $this->js_path."general.js");
+        array_push($aCss, $this->css_path . 'general.css');
+        array_push($aJs, $this->js_path . 'general.js');
         $this->context->controller->addCSS($aCss);
         $this->context->controller->addJS($aJs);
     }
 
     /**
      * check if the employee has the right to use this admin controller
+     *
      * @return bool
      */
     public function hasEditRight()
     {
         $result = Profile::getProfileAccess(
-            (int)Context::getContext()->cookie->profile,
-            (int)Tab::getIdFromClassName($this->controller_name[0])
+            (int) Context::getContext()->cookie->profile,
+            (int) Tab::getIdFromClassName($this->controller_name[0])
         );
+
         return (bool) $result['edit'];
     }
 }

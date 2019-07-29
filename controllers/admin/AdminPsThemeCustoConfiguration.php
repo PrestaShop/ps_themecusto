@@ -24,15 +24,21 @@
 * International Registered Trademark & Property of PrestaShop SA
 **/
 
-require(__DIR__.'../../../classes/ThemeCustoRequests.php');
+require _PS_MODULE_DIR_.'ps_themecusto/vendor/autoload.php';
 
 class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 {
+    public $isPsVersion174;
+    public $controller_quick_name;
+    public $aModuleActions;
+    public $moduleActionsNames;
+    public $categoryList;
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->isPsVersion174 = (bool)version_compare(_PS_VERSION_, '1.7.4', '>=');
+        $this->isPsVersion174 = (bool) version_compare(_PS_VERSION_, '1.7.4', '>=');
         $this->controller_quick_name = 'configuration';
         $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset');
         $this->moduleActionsNames = array(
@@ -43,11 +49,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $this->l('Disable'),
             $this->l('Disable Mobile'),
             $this->l('Enable Mobile'),
-            $this->l('Reset')
+            $this->l('Reset'),
         );
 
         $this->categoryList = array(
-            'menu'=> $this->l('Menu'),
+            'menu' => $this->l('Menu'),
             'slider' => $this->l('Slider'),
             'home_products' => $this->l('Home Products'),
             'block_text' => $this->l('Text block'),
@@ -67,8 +73,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      * Get homepage list of modules to show
      *
      * @param none
+     *
      * @return array
-    */
+     */
     public function getHomepageListConfiguration()
     {
         return array(
@@ -76,15 +83,15 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminCategories' => array(
                         $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
-                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).')
+                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
                     ),
                     'AdminManufacturers' => array(
                         $this->l('Create Brands and Suppliers pages'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.')
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
                 'modules' => array(
@@ -93,7 +100,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'slider' => array(
                 'modules' => array(
-                    $this->module->ready ? 'pshomeslider' : 'ps_imageslider' => $this->module->ready ? 27562 : 22320
+                    $this->module->ready ? 'pshomeslider' : 'ps_imageslider' => $this->module->ready ? 27562 : 22320,
                 ),
             ),
             'home_products' => array(
@@ -102,7 +109,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'ps_bestsellers' => 24566,
                     'ps_newproducts' => 24671,
                     'ps_specials' => 24672,
-
                 ),
             ),
             'block_text' => array(
@@ -117,7 +123,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'social_newsletter' => array(
                 'modules' => array(
-                    'ps_emailsubscription'  => 22318,
+                    'ps_emailsubscription' => 22318,
                     'ps_socialfollow' => 22323,
                 ),
             ),
@@ -125,11 +131,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminStores' => array(
                         $this->l('Shop details'),
-                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.')
+                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                     ),
                 ),
                 'modules' => array(
-                    'ps_linklist' => 24360
+                    'ps_linklist' => 24360,
                 ),
             ),
         );
@@ -139,8 +145,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      * Get category list of modules to show
      *
      * @param none
+     *
      * @return array
-    */
+     */
     public function getCategoryListConfiguration()
     {
         if ($this->isPsVersion174) {
@@ -148,7 +155,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'sfRoutePages' => array(
                     'admin_product_preferences' => array(
                         $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                 ),
             );
@@ -157,7 +164,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminCategories' => array(
                         $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                 ),
             );
@@ -168,11 +175,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
-                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).')
+                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
                     ),
                     'AdminManufacturers' => array(
                         $this->l('Create Brands and Suppliers pages'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.')
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
                 'modules' => array(
@@ -183,7 +190,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminCategories' => array(
                         $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                 ),
             ),
@@ -196,7 +203,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'content' => $category,
             'social_newsletter' => array(
                 'modules' => array(
-                    'ps_emailsubscription'  => 22318,
+                    'ps_emailsubscription' => 22318,
                     'ps_socialfollow' => 22323,
                 ),
             ),
@@ -204,12 +211,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminStores' => array(
                         $this->l('Shop details'),
-                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.')
+                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                     ),
                 ),
                 'modules' => array(
                     'blockreassurance' => 22312,
-                    'ps_linklist' => 24360
+                    'ps_linklist' => 24360,
                 ),
             ),
         );
@@ -219,8 +226,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      * Get product list of modules to show
      *
      * @param none
+     *
      * @return array
-    */
+     */
     public function getProductListConfiguration()
     {
         if ($this->isPsVersion174) {
@@ -228,17 +236,17 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'sfRoutePages' => array(
                     'admin_product_catalog' => array(
                         $this->l('Create and manage Product catalog'),
-                        $this->l('description')
+                        $this->l('description'),
                     ),
                     'admin_stock_overview' => array(
                         $this->l('Affichage des quantités et de la disponibilité en stock'),
-                        $this->l('description')
+                        $this->l('description'),
                     ),
                 ),
                 'pages' => array(
                     'AdminAttributesGroups' => array(
                         $this->l('Create and manage Product attributes'),
-                        $this->l('description')
+                        $this->l('description'),
                     ),
                 ),
             );
@@ -247,15 +255,15 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminAttributesGroups' => array(
                         $this->l('Create and manage Product attributes'),
-                        $this->l('description')
+                        $this->l('description'),
                     ),
                     'AdminProducts' => array(
                         $this->l('Create and manage Product catalog'),
-                        $this->l('description')
+                        $this->l('description'),
                     ),
                     'AdminStockManagement' => array(
                         $this->l('Affichage des quantités et de la disponibilité en stock'),
-                        $this->l('description')
+                        $this->l('description'),
                     ),
                 ),
             );
@@ -266,15 +274,15 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminCategories' => array(
                         $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.')
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                     'AdminCmsContent' => array(
                         $this->l('Create content pages'),
-                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).')
+                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
                     ),
                     'AdminManufacturers' => array(
                         $this->l('Create Brands and Suppliers pages'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.')
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
                 'modules' => array(
@@ -294,7 +302,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'social_newsletter' => array(
                 'modules' => array(
-                    'ps_emailsubscription'  => 22318,
+                    'ps_emailsubscription' => 22318,
                     'ps_socialfollow' => 22323,
                 ),
             ),
@@ -302,11 +310,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'pages' => array(
                     'AdminStores' => array(
                         $this->l('Shop details'),
-                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.')
+                        $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                     ),
                 ),
                 'modules' => array(
-                    'ps_linklist' => 24360
+                    'ps_linklist' => 24360,
                 ),
             ),
         );
@@ -314,10 +322,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
     /**
      * Initialize the content by adding Boostrap and loading the TPL
-     *
-     * @param none
-     * @return none
-    */
+     */
     public function initContent()
     {
         parent::initContent();
@@ -334,54 +339,55 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $productListToConfigure = $this->getProductListConfiguration();
 
         $this->context->smarty->assign(array(
-            'enable'                => $this->module->active,
-            'moduleName'            => $this->module->displayName,
-            'bootstrap'             => 1,
-            'configure_type'        => $this->controller_quick_name,
-            'iconConfiguration'     => $this->module->img_path.'/controllers/configuration/icon_configurator.png',
-            'listCategories'        => $this->categoryList,
-            'homePageList'          => $this->setFinalList($homepageListToConfigure),
-            'categoryPageList'      => $this->setFinalList($categoryListToConfigure),
-            'productPageList'       => $this->setFinalList($productListToConfigure),
-            'selectionModulePage'   => $selectionModulePage,
-            'installedModulePage'   => $installedModulePage,
-            'moduleImgUri'          => $this->module->img_path.'/controllers/configuration/',
-            'moduleActions'         => $this->aModuleActions,
-            'moduleActionsNames'    => $this->moduleActionsNames,
-            'themeConfiguratorUrl'  => $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => 'ps_themeconfigurator')),
-            'isPsReady'             => $this->module->ready,
-            'ps_uri'                => $this->module->ps_uri
+            'enable' => $this->module->active,
+            'moduleName' => $this->module->displayName,
+            'bootstrap' => 1,
+            'configure_type' => $this->controller_quick_name,
+            'iconConfiguration' => $this->module->img_path . '/controllers/configuration/icon_configurator.png',
+            'listCategories' => $this->categoryList,
+            'homePageList' => $this->setFinalList($homepageListToConfigure),
+            'categoryPageList' => $this->setFinalList($categoryListToConfigure),
+            'productPageList' => $this->setFinalList($productListToConfigure),
+            'selectionModulePage' => $selectionModulePage,
+            'installedModulePage' => $installedModulePage,
+            'moduleImgUri' => $this->module->img_path . '/controllers/configuration/',
+            'moduleActions' => $this->aModuleActions,
+            'moduleActionsNames' => $this->moduleActionsNames,
+            'themeConfiguratorUrl' => $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => 'ps_themeconfigurator')),
+            'isPsReady' => $this->module->ready,
+            'ps_uri' => $this->module->ps_uri,
         ));
 
         $aJsDef = array(
-            'admin_module_controller_psthemecusto'  => $this->module->controller_name[1],
-            'admin_module_ajax_url_psthemecusto'    => $this->module->front_controller[1],
-            'module_action_sucess'                  => $this->l('Action on the module successfully completed'),
-            'module_action_failed'                  => $this->l('Action on module failed'),
+            'admin_module_controller_psthemecusto' => $this->module->controller_name[1],
+            'admin_module_ajax_url_psthemecusto' => $this->module->front_controller[1],
+            'module_action_sucess' => $this->l('Action on the module successfully completed'),
+            'module_action_failed' => $this->l('Action on module failed'),
         );
-        $jsPath = array($this->module->js_path.'/controllers/'.$this->controller_quick_name.'/back.js');
-        $cssPath = array($this->module->css_path.'/controllers/'.$this->controller_quick_name.'/back.css');
+        $jsPath = array($this->module->js_path . '/controllers/' . $this->controller_quick_name . '/back.js');
+        $cssPath = array($this->module->css_path . '/controllers/' . $this->controller_quick_name . '/back.css');
 
         $this->module->setMedia($aJsDef, $jsPath, $cssPath);
-        $this->setTemplate($this->module->template_dir.'page.tpl');
+        $this->setTemplate($this->module->template_dir . 'page.tpl');
     }
 
     /**
      * AJAX : Do a module action like Install, disable, enable ...
      *
      * @param null
+     *
      * @return mixed int | tpl
-    */
+     */
     public function ajaxProcessUpdateModule()
     {
         if (!$this->module->hasEditRight()) {
             die($this->l('You do not have permission to edit this.'));
         }
 
-        $sModuleName    = pSQL(Tools::getValue('module_name'));
-        $sModuleAction  = pSQL(Tools::getValue('action_module'));
-        $oModule        = Module::getInstanceByName($sModuleName);
-        $sUrlActive     = $oModule->isEnabled($oModule->name) ? 'configure' : 'enable';
+        $sModuleName = pSQL(Tools::getValue('module_name'));
+        $sModuleAction = pSQL(Tools::getValue('action_module'));
+        $oModule = Module::getInstanceByName($sModuleName);
+        $sUrlActive = $oModule->isEnabled($oModule->name) ? 'configure' : 'enable';
 
         switch ($sModuleAction) {
             case 'uninstall':
@@ -431,24 +437,25 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
         $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModule->name));
         $aModule['can_configure'] = method_exists($oModule, 'getContent') ? true : false;
-        $aModule['enable_mobile'] = (int)Db::getInstance()->getValue('SELECT enable_device FROM '._DB_PREFIX_.'module_shop WHERE id_module = '.(int)$oModule->id);
+        $aModule['enable_mobile'] = (int) Db::getInstance()->getValue('SELECT enable_device FROM ' . _DB_PREFIX_ . 'module_shop WHERE id_module = ' . (int) $oModule->id);
 
         $this->context->smarty->assign(array(
-            'module'                => $aModule,
-            'moduleActions'         => $this->aModuleActions,
-            'moduleActionsNames'    => $this->moduleActionsNames,
-            'isPsReady'             => $this->module->ready,
+            'module' => $aModule,
+            'moduleActions' => $this->aModuleActions,
+            'moduleActionsNames' => $this->moduleActionsNames,
+            'isPsReady' => $this->module->ready,
         ));
 
-        $this->ajaxDie($this->context->smarty->fetch(__DIR__.'/../../views/templates/admin/controllers/'.$this->controller_quick_name.'/elem/module_actions.tpl'));
+        $this->ajaxDie($this->context->smarty->fetch(__DIR__ . '/../../views/templates/admin/controllers/' . $this->controller_quick_name . '/elem/module_actions.tpl'));
     }
 
     /**
      * get list to show
      *
      * @param array $aList
-     * @return none
-    */
+     *
+     * @return array
+     */
     public function setFinalList($aList)
     {
         $modulesOnDisk = Module::getModulesDirOnDisk();
@@ -464,7 +471,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->l($aPage[1]);
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->l('Configure');
                     }
-                } else if ($sType == 'sfRoutePages') {
+                } elseif ($sType == 'sfRoutePages') {
                     $container = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
                     foreach ($aElementsList as $sController => $aPage) {
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['name'] = $sController;
@@ -480,9 +487,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                                 continue;
                             }
                             /* For a module coming from outside. It will be downloaded and installed */
-                            $length = file_put_contents(_PS_MODULE_DIR_.basename($sModuleName).'.zip', Tools::addonsRequest('module', array('id_module' => $iModuleId)));
-                            if (!empty($length) && Tools::ZipExtract(_PS_MODULE_DIR_.basename($sModuleName).'.zip', _PS_MODULE_DIR_)) {
-                                unlink(_PS_MODULE_DIR_.basename($sModuleName).'.zip');
+                            $length = file_put_contents(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip', Tools::addonsRequest('module', array('id_module' => $iModuleId)));
+                            if (!empty($length) && Tools::ZipExtract(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip', _PS_MODULE_DIR_)) {
+                                unlink(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip');
                             } else {
                                 continue;
                             }
@@ -508,8 +515,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      *
      * @param object $oModuleInstance
      * @param bool $bIsInstalled
+     *
      * @return array $aModule
-    */
+     */
     public function setModuleFinalList($oModuleInstance, $bIsInstalled)
     {
         $aModule = array();
@@ -518,11 +526,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['active'] = $oModuleInstance->active;
 
         if ($bIsInstalled === true) {
-            $aModule['can_configure'] = (method_exists($oModuleInstance, 'getContent'))? true : false;
+            $aModule['can_configure'] = (method_exists($oModuleInstance, 'getContent')) ? true : false;
             if (method_exists($oModuleInstance, 'getContent')) {
-                $aModule['url_active'] = $this->l(($oModuleInstance->active? 'configure' : 'enable'));
+                $aModule['url_active'] = $this->l(($oModuleInstance->active ? 'configure' : 'enable'));
             } else {
-                $aModule['url_active'] = $this->l(($oModuleInstance->active? 'disable' : 'enable'));
+                $aModule['url_active'] = $this->l(($oModuleInstance->active ? 'disable' : 'enable'));
             }
             $aModule['installed'] = 1;
         } else {
@@ -531,12 +539,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $aModule['installed'] = 0;
         }
 
-        $aModule['enable_mobile'] = (int)Db::getInstance()->getValue('SELECT enable_device FROM '._DB_PREFIX_.'module_shop WHERE id_module = '.(int)$oModuleInstance->id);
+        $aModule['enable_mobile'] = (int) Db::getInstance()->getValue('SELECT enable_device FROM ' . _DB_PREFIX_ . 'module_shop WHERE id_module = ' . (int) $oModuleInstance->id);
         $aModule['name'] = $oModuleInstance->name;
         $aModule['displayName'] = $oModuleInstance->displayName;
         $aModule['description'] = $oModuleInstance->description;
-        $aModule['controller_name'] = (isset($oModuleInstance->controller_name)? $oModuleInstance->controller_name : '');
-        $aModule['logo'] = '/modules/'.$oModuleInstance->name.'/logo.png';
+        $aModule['controller_name'] = (isset($oModuleInstance->controller_name) ? $oModuleInstance->controller_name : '');
+        $aModule['logo'] = '/modules/' . $oModuleInstance->name . '/logo.png';
         $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, array('configure' => $oModuleInstance->name));
 
         return $aModule;
@@ -547,8 +555,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      *
      * @param array $a
      * @param array $b
+     *
      * @return bool
-    */
+     */
     public function sortArrayInstalledModulesFirst($a, $b)
     {
         return strcmp($b['installed'], $a['installed']);

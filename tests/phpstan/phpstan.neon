@@ -5,4 +5,4 @@ parameters:
 		- controllers
 		- ps_themecusto.php
 
-	level: 7
+	level: 1
