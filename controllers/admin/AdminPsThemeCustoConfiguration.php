@@ -144,6 +144,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     */
     public function getCategoryListConfiguration()
     {
+
         return array(
             'menu' => array(
                 'pages' => array(
@@ -196,6 +197,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     ),
                 ),
                 'modules' => array(
+                    'blockreassurance' => 22312,
                     'ps_linklist' => 24360
                 ),
             ),
@@ -250,11 +252,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ),
             'product_detail' => array(
                 'modules' => array(
-                    'ps_featuredproducts' => 22319,
-                    'ps_bestsellers' => 24566,
-                    'ps_newproducts' => 24671,
-                    'ps_specials' => 24672,
-
+                    'blockreassurance' => 22312,
                 ),
             ),
             'product_block' => array(
@@ -430,6 +428,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             foreach ($aElementListByType as $sType => $aElementsList) {
                 if ($sType == 'pages') {
                     foreach ($aElementsList as $sController => $aPage) {
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['name'] = $sController;
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->l($aPage[0]);
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['url'] = $this->context->link->getAdminLink($sController);
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->l($aPage[1]);
@@ -438,6 +437,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 } else if ($sType == 'sfRoutePages') {
                     $container = SymfonyContainer::getInstance();
                     foreach ($aElementsList as $sController => $aPage) {
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['name'] = $sController;
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->l($aPage[0]);
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['url'] = $container->get('router')->generate($sController);
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->l($aPage[1]);

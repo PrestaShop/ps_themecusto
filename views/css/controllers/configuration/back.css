@@ -38,6 +38,10 @@
   padding-left: 0;
   padding-right: 0;
 }
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
 
 /**
     GENERAL
@@ -91,7 +95,7 @@ body.adminpsthemecustoconfiguration {
     transition: border-color .2s;
 }
 #psthemecusto .configuration-rectangle .module-logo {
-    width: 30px;
+    width: 40px;
     max-width: 100%;
 }
 #psthemecusto .configuration-rectangle .form-action-button-container {
@@ -128,9 +132,6 @@ body.adminpsthemecustoconfiguration {
 }
 #psthemecusto .configuration-rectangle .module-informations {
     display: none;
-    /* padding-top: 25px;
-    padding-right: 25px;
-    padding-left: 25px; */
     padding-top: 1.2vw;
     padding-right: 1.2vw;
     padding-left: 1.2vw;

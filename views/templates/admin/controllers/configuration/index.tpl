@@ -13,7 +13,7 @@
 * International Registered Trademark & Property of PrestaShop SA
 *}
 
-<div id="psthemecusto" class="container-fluid">
+<div id="psthemecusto" class="container-fluid clearfix">
     {if $isPsReady}
         {include file="./ps_ready.tpl"}
     {/if}

@@ -26,7 +26,6 @@
 * to avoid any conflicts with others containers.
 */
 
-// TODO: fix scope of dom elements (home,cat,prod)
 'use strict';
 
 let resetActiveCategory = function() {
@@ -51,18 +50,12 @@ let setActiveCategory = function(elem) {
     $('.js-title-'+module+' .material-icons.up').show();
     $('.js-title-'+module+' .material-icons.down').hide();
 
-    let headHeight = $('.page-head.with-tabs').height(),
-        navHeight = $('#header_infos').height(),
-        topOffset = headHeight + navHeight,
-        parentConfigurationRectangleElement = $('.js-title-'+module).parent().first();
+    setTimeout(() => {
+        // TODO: dirty fix
+        // wait for new position of active
+        $('html, body').animate({scrollTop: $('.configuration-rectangle.active').position().top}, 1000);
+    }, 500);
 
-    if (elem.hasClass('js-img-'+module)) {
-        $('html, body').animate({scrollTop: parentConfigurationRectangleElement.position().top - topOffset}, 1000);
-    } else {
-        if ($(window).innerWidth() > 991) {
-            $('html, body').animate({scrollTop: parentConfigurationRectangleElement.position().top - topOffset}, 1000);
-        }
-    }
 }
 
 let ajaxActionModule = function(action, id_module, name) {
