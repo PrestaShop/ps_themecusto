@@ -50,11 +50,11 @@ let setActiveCategory = function(elem) {
     $('.js-title-'+module+' .material-icons.up').show();
     $('.js-title-'+module+' .material-icons.down').hide();
 
+    // TODO: dirty fix
+    // wait for new position of active
     setTimeout(() => {
-        // TODO: dirty fix
-        // wait for new position of active
         $('html, body').animate({scrollTop: $('.configuration-rectangle.active').position().top}, 1000);
-    }, 500);
+    }, 300);
 
 }
 
@@ -92,7 +92,9 @@ let ajaxActionModule = function(action, id_module, name) {
     }
 }
 
-let onClickModal = function(event) {
+let onClickModalBtn = function(event) {
+    resetActiveCategory();
+
     $('#psthemecusto .btn.btn-primary').removeClass('selected');
     $(this).addClass('selected');
 
@@ -100,6 +102,15 @@ let onClickModal = function(event) {
 
     let idModalName = $(this).data('id-modal');
     $('#'+idModalName).removeClass('hide');
+    let element = $('#'+idModalName+' .js-module-name')[0];
+
+    if (idModalName == 'categoryModal') {
+        element = $('#'+idModalName+' .js-title-categories')[0];
+    } else if (idModalName == 'productModal') {
+        element = $('#'+idModalName+' .js-title-product_management')[0];
+    }
+
+    setActiveCategory($(element));
 }
 
 let onClickButtonThemeCusto = function (event) {
@@ -141,10 +152,13 @@ let onClickModalFooterLink = function (event) {
 
 $(document).ready(function() {
     $(document)
-        .on('click', "#psthemecusto .btn.btn-primary", onClickModal)
+        .on('click', "#psthemecusto .btn.btn-primary", onClickModalBtn)
         .on('click', ".modal .modal-footer a", onClickModalFooterLink)
         .on('click', "#psthemecusto .js-wireframe div[class*='js-img-'], #psthemecusto .js-module-name", onClickWireframeDivORModuleName)
         .on('click', "#psthemecusto button", onClickButtonThemeCusto);
+
+    let element = $('.js-module-name')[0];
+    setActiveCategory($(element));
 
     $("#psthemecusto .js-wireframe div[class*='js-img-']").hover(
         function() {

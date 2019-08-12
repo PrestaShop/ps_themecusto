@@ -68,16 +68,13 @@ body.adminpsthemecustoconfiguration {
     display: block;
     opacity: 1;
 }
-#psthemecusto .module-list {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 186px;
+
+.sticky {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 210px;
 }
-@media screen and (max-width: 991px) {
-    #psthemecusto .module-list {
-        margin-top: 25px;
-    }
-}
+
 #psthemecusto .configuration-rectangle {
     border-left: 4px solid #dcdcdc;
     margin-bottom: 25px;
@@ -254,6 +251,7 @@ button.dropdown-item {
     color: #6C868E;
     border-radius: 20px;
     padding: 10px 20px!important;
+    margin: 0px 8px;
     background-color: #F5F7F7!important;
     border-color: #F5F7F7!important;
 }

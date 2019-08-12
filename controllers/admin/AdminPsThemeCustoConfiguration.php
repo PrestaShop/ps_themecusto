@@ -23,12 +23,11 @@
 * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 * International Registered Trademark & Property of PrestaShop SA
 **/
-
-require _PS_MODULE_DIR_.'ps_themecusto/vendor/autoload.php';
+require _PS_MODULE_DIR_ . 'ps_themecusto/vendor/autoload.php';
 
 class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 {
-    public $isPsVersion174;
+    public $isPsVersion174Plus;
     public $controller_quick_name;
     public $aModuleActions;
     public $moduleActionsNames;
@@ -38,7 +37,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     {
         parent::__construct();
 
-        $this->isPsVersion174 = (bool) version_compare(_PS_VERSION_, '1.7.4', '>=');
+        $this->isPsVersion174Plus = (bool) version_compare(_PS_VERSION_, '1.7.4', '>=');
         $this->controller_quick_name = 'configuration';
         $this->aModuleActions = array('uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset');
         $this->moduleActionsNames = array(
@@ -150,23 +149,30 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      */
     public function getCategoryListConfiguration()
     {
-        if ($this->isPsVersion174) {
+        if ($this->isPsVersion174Plus) {
             $category = array(
                 'sfRoutePages' => array(
                     'admin_product_preferences' => array(
-                        $this->l('Create and manage Product Categories'),
+                        $this->l('Sort Filter and number of products per page'),
                         $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                 ),
             );
+            $footerModules = array(
+                'ps_linklist' => 24360,
+                'ps_sharebuttons' => 22322,
+            );
         } else {
             $category = array(
                 'pages' => array(
-                    'AdminCategories' => array(
-                        $this->l('Create and manage Product Categories'),
+                    'AdminPPreferences' => array(
+                        $this->l('Sort Filter and number of products per page'),
                         $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
                 ),
+            );
+            $footerModules = array(
+                'ps_sharebuttons' => 22322,
             );
         }
 
@@ -214,10 +220,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                     ),
                 ),
-                'modules' => array(
-                    'blockreassurance' => 22312,
-                    'ps_linklist' => 24360,
-                ),
+                'modules' => $footerModules,
             ),
         );
     }
@@ -231,41 +234,48 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      */
     public function getProductListConfiguration()
     {
-        if ($this->isPsVersion174) {
-            $product = array(
+        if ($this->isPsVersion174Plus) {
+            $productManagement = array(
                 'sfRoutePages' => array(
                     'admin_product_catalog' => array(
                         $this->l('Create and manage Product catalog'),
-                        $this->l('description'),
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
-                    'admin_stock_overview' => array(
+                    'admin_product_preferences' => array(
                         $this->l('Affichage des quantités et de la disponibilité en stock'),
-                        $this->l('description'),
+                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
                     ),
                 ),
                 'pages' => array(
                     'AdminAttributesGroups' => array(
                         $this->l('Create and manage Product attributes'),
-                        $this->l('description'),
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
             );
+            $productDetailsModules = array(
+                'blockreassurance' => 22312,
+                'ps_sharebuttons' => 22322,
+            );
         } else {
-            $product = array(
+            $productManagement = array(
                 'pages' => array(
                     'AdminAttributesGroups' => array(
                         $this->l('Create and manage Product attributes'),
-                        $this->l('description'),
+                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
                     ),
-                    'AdminProducts' => array(
-                        $this->l('Create and manage Product catalog'),
-                        $this->l('description'),
+                    'AdminPPreferences' => array(
+                        $this->l('Affichage des quantités et de la disponibilité en stock'),
+                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
                     ),
                     'AdminStockManagement' => array(
-                        $this->l('Affichage des quantités et de la disponibilité en stock'),
-                        $this->l('description'),
+                        $this->l('Create and manage Product attributes'),
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
+            );
+            $productDetailsModules = array(
+                'ps_sharebuttons' => 22322,
             );
         }
 
@@ -289,15 +299,15 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                     'ps_mainmenu' => 22321,
                 ),
             ),
-            'product_management' => $product,
+            'product_management' => $productManagement,
             'product_detail' => array(
-                'modules' => array(
-                    'blockreassurance' => 22312,
-                ),
+                'modules' => $productDetailsModules,
             ),
             'product_block' => array(
                 'modules' => array(
-                    'ps_customtext' => 22317,
+                    'ps_categoryproducts' => 24588,
+                    'ps_viewedproduct' => 24674,
+                    'ps_crossselling' => 11345,
                 ),
             ),
             'social_newsletter' => array(
