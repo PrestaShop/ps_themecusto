@@ -24,9 +24,9 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                                 {if $page.name == 'AdminCategories'}
-                                                    <img src="{$moduleImgUri}cms_page_feature.png" class="img-fluid module-logo">
-                                                {else if $page.name == 'AdminCmsContent'}
                                                     <img src="{$moduleImgUri}category_page_feature.png" class="img-fluid module-logo">
+                                                {else if $page.name == 'AdminCmsContent'}
+                                                    <img src="{$moduleImgUri}cms_page_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'AdminAttributesGroups'}
                                                     <img src="{$moduleImgUri}manage_attributes_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'AdminManufacturers'}
@@ -69,9 +69,9 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                                 {if $page.name == 'AdminCategories'}
-                                                    <img src="{$moduleImgUri}cms_page_feature.png" class="img-fluid module-logo">
-                                                {else if $page.name == 'AdminCmsContent'}
                                                     <img src="{$moduleImgUri}category_page_feature.png" class="img-fluid module-logo">
+                                                {else if $page.name == 'AdminCmsContent'}
+                                                    <img src="{$moduleImgUri}cms_page_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'AdminAttributesGroups'}
                                                     <img src="{$moduleImgUri}manage_attributes_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'AdminManufacturers'}
@@ -83,11 +83,10 @@
                                                 {else if $page.name == 'AdminStores'}
                                                     <img src="{$moduleImgUri}shop_ino_link_feature.png" class="img-fluid module-logo">
                                                 {else if $page.name == 'admin_product_preferences'}
-                                                    <img src="{$moduleImgUri}display_products_feature.png" class="img-fluid module-logo">
+                                                    <img src="{$moduleImgUri}display_stock_feature.png" class="img-fluid module-logo">
                                                 {else}
                                                     <i class="icon-cogs"></i>
                                                 {/if}
-
                                             </div>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -124,7 +123,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 {/foreach}
                             {/if}

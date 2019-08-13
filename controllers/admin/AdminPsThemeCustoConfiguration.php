@@ -77,6 +77,17 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
      */
     public function getHomepageListConfiguration()
     {
+        if ($this->isPsVersion174Plus) {
+            $footerModules = array(
+                'blockreassurance' => 22312,
+                'ps_linklist' => 24360,
+            );
+        } else {
+            $footerModules = array(
+                'ps_linklist' => 24360,
+            );
+        }
+
         return array(
             'menu' => array(
                 'pages' => array(
@@ -127,14 +138,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 ),
             ),
             'footer' => array(
+                'modules' => $footerModules,
                 'pages' => array(
                     'AdminStores' => array(
                         $this->l('Shop details'),
                         $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                     ),
-                ),
-                'modules' => array(
-                    'ps_linklist' => 24360,
                 ),
             ),
         );
@@ -159,6 +168,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 ),
             );
             $footerModules = array(
+                'blockreassurance' => 22312,
                 'ps_linklist' => 24360,
                 'ps_sharebuttons' => 22322,
             );
@@ -172,6 +182,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 ),
             );
             $footerModules = array(
+                'ps_linklist' => 24360,
                 'ps_sharebuttons' => 22322,
             );
         }
@@ -214,13 +225,13 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 ),
             ),
             'footer' => array(
+                'modules' => $footerModules,
                 'pages' => array(
                     'AdminStores' => array(
                         $this->l('Shop details'),
                         $this->l('This page allows you to display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
                     ),
                 ),
-                'modules' => $footerModules,
             ),
         );
     }
@@ -307,7 +318,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'modules' => array(
                     'ps_categoryproducts' => 24588,
                     'ps_viewedproduct' => 24674,
-                    'ps_crossselling' => 11345,
+                    'ps_crossselling' => 24696,
                 ),
             ),
             'social_newsletter' => array(
