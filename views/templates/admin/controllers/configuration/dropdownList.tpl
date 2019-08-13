@@ -1,11 +1,11 @@
 <div id="{$idModal}Modal" class="modalCusto clearfix {$defaultModalClass}">
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6 col-xs-12">
         {include file="./elem/wireframe_{$idModal}.tpl"}
     </div>
-    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 sticky">
+    <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6 col-xs-12 sticky">
         <div class="row">
-            <div class="col-lg-1 col-md-1 col-sm-0"></div>
-            <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 module-list">
+            <div class="col-xl-1 col-lg-1 col-md-0 col-sm-0"></div>
+            <div class="col-xl-11 col-lg-12 col-md-12 col-sm-12 col-xs-12 module-list">
                 {foreach from=$elementsList key=categoryname item=categories name=cat}
                     <div class="row configuration-rectangle">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
