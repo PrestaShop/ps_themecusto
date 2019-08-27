@@ -41,21 +41,23 @@ let resetActiveCategory = function() {
 
 let setActiveCategory = function(elem) {
     let module = elem.data('module_name');
+    let $moduleInformations = $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations');
     $('.js-img-'+module).addClass('active');
     $('.js-img-'+module+' .on-element').removeClass('hide');
     $('.js-img-'+module+' .out-element').addClass('hide');
     $('.js-title-'+module).addClass('active');
     $('.js-title-'+module).parent('.configuration-rectangle').addClass('active');
-    $('.js-title-'+module).parent('.configuration-rectangle').find('.module-informations').slideDown();
-    $('.js-title-'+module+' .material-icons.up').show();
-    $('.js-title-'+module+' .material-icons.down').hide();
+    $moduleInformations.slideDown();
 
-    // TODO: dirty fix
-    // wait for new position of active
-    setTimeout(() => {
-        $('html, body').animate({scrollTop: $('.configuration-rectangle.active').position().top}, 1000);
+    let checkIfAnimIsDone = setInterval(function() {
+        if ($moduleInformations.last().is(':visible')) {
+            clearInterval(checkIfAnimIsDone);
+            $('html, body').animate({scrollTop: $('.configuration-rectangle.active').position().top}, 1000);
+        }
     }, 300);
 
+    $('.js-title-'+module+' .material-icons.up').show();
+    $('.js-title-'+module+' .material-icons.down').hide();
 }
 
 let ajaxActionModule = function(action, id_module, name) {
