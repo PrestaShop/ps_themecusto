@@ -14,7 +14,7 @@ install:
 
 script:
   # PHP syntax check
-  - bash -c '! (find . -name "*.php" ! -path "./vendor/*" -print0 | xargs -0 -n1 -P4 php -l | grep "Parse error")'
+  - find . -type f -name '*.php' ! -path "./vendor/*" ! -path "./tests/*" -exec php -l -n {} \; | (! grep -v "No syntax errors detected")
   # PHP cs fixer
   - vendor/bin/php-cs-fixer fix --no-interaction --dry-run --diff --using-cache=no --diff-format udiff
   # PHP Stan
@@ -23,3 +23,28 @@ script:
       docker exec -ti temp-ps rm -rf /var/www/html/modules/ps_themecusto;
       docker run --rm --volumes-from temp-ps -v $PWD:/var/www/html/modules/ps_themecusto -e _PS_ROOT_DIR_=/var/www/html --workdir=/var/www/html/modules/ps_themecusto quetzacoalt/phpstan analyse --configuration=/var/www/html/modules/ps_themecusto/tests/phpstan/phpstan.neon;
     fi
+
+before_deploy:
+  # Composer
+  - composer install --no-dev -o
+  # Cleanup
+  - rm -f .php_cs.*
+  - rm -f .travis.yml
+  - rm -f composer.*
+  - rm -f .gitignore
+  - rm -rf .git
+  - rm -rf tests
+  - mkdir -p /tmp/build/ps_themecusto
+  - mv * /tmp/build/ps_themecusto
+  - pushd /tmp/build
+  - zip /tmp/build/ps_themecusto.zip -r ps_themecusto/
+  - popd
+
+deploy:
+  provider: releases
+  api_key: ${travis_api_key}
+  file: "/tmp/build/ps_themecusto.zip"
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
