@@ -34,11 +34,9 @@ before_deploy:
   - rm -f .gitignore
   - rm -rf .git
   - rm -rf tests
-  - mkdir -p /tmp/build/ps_themecusto
-  - mv * /tmp/build/ps_themecusto
-  - pushd /tmp/build
-  - zip /tmp/build/ps_themecusto.zip -r ps_themecusto/
-  - popd
+  - pushd $TRAVIS_BUILD_DIR/..
+  - mkdir /tmp/build
+  - zip /tmp/build/$(ls | head -1).zip -r $(ls | head -1)/
 
 deploy:
   provider: releases
