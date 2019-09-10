@@ -92,16 +92,16 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'menu' => array(
                 'pages' => array(
                     'AdminCategories' => array(
-                        $this->l('Create and manage Product Categories'),
+                        $this->l('Categories'),
                         $this->l('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.'),
                     ),
                     'AdminCmsContent' => array(
-                        $this->l('Create content pages'),
-                        $this->l('Create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
+                        $this->l('Content pages'),
+                        $this->l('Add and manage your content pages to make your store interesting and trustworthy.'),
                     ),
                     'AdminManufacturers' => array(
-                        $this->l('Create Brands and Suppliers pages'),
-                        $this->l('Create and manage your Brands and/or Suppliers pages.'),
+                        $this->l('Brands & Suppliers'),
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
                 'modules' => array(
@@ -172,6 +172,24 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'ps_linklist' => 24360,
                 'ps_sharebuttons' => 22322,
             );
+
+            $menu = array(
+                'sfRoutePages' => array(
+                    'admin_product_preferences' => array(
+                        $this->l('Pagination'),
+                        $this->l('Set the numbers of products you want to display per page and how.'),
+                    ),
+                ),
+                'pages' => array(
+                    'AdminManufacturers' => array(
+                        $this->l('Brands & Suppliers'),
+                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                    ),
+                ),
+                'modules' => array(
+                    'ps_mainmenu' => 22321,
+                ),
+            );
         } else {
             $category = array(
                 'pages' => array(
@@ -185,24 +203,26 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'ps_linklist' => 24360,
                 'ps_sharebuttons' => 22322,
             );
-        }
 
-        return array(
-            'menu' => array(
+            $menu = array(
                 'pages' => array(
-                    'AdminCmsContent' => array(
-                        $this->l('Content pages'),
-                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
+                    'AdminPPreferences' => array(
+                        $this->l('Pagination'),
+                        $this->l('Set the numbers of products you want to display per page and how.'),
                     ),
                     'AdminManufacturers' => array(
-                        $this->l('Brands and Suppliers pages'),
+                        $this->l('Brands & Suppliers'),
                         $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
                 'modules' => array(
                     'ps_mainmenu' => 22321,
                 ),
-            ),
+            );
+        }
+
+        return array(
+            'menu' => $menu,
             'categories' => array(
                 'pages' => array(
                     'AdminCategories' => array(
@@ -249,12 +269,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $productManagement = array(
                 'sfRoutePages' => array(
                     'admin_product_catalog' => array(
-                        $this->l('Product catalog'),
-                        $this->l('Create or manage products in your catalog.'),
+                        $this->l('Catalog'),
+                        $this->l('Access your list of products to manage your catalog efficiently.'),
                     ),
-                    'admin_product_preferences' => array(
-                        $this->l('Quantities and stock availability'),
-                        $this->l('Choose the way you display quantities and stock availability on your product page.'),
+                    'admin_stock_overview' => array(
+                        $this->l('Stock'),
+                        $this->l('Manage your stock and edit product quantities right here.'),
                     ),
                 ),
                 'pages' => array(
@@ -270,6 +290,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             );
         } else {
             $productManagement = array(
+                'sfRoutePages' => array(
+                    'admin_product_catalog' => array(
+                        $this->l('Catalog'),
+                        $this->l('Access your list of products to manage your catalog efficiently.'),
+                    ),
+                ),
                 'pages' => array(
                     'AdminAttributesGroups' => array(
                         $this->l('Product attributes'),
@@ -280,8 +306,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $this->l('Choose the way you display quantities and stock availability on your product page.'),
                     ),
                     'AdminStockManagement' => array(
-                        $this->l('Create and manage Product attributes'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                        $this->l('Stock'),
+                        $this->l('Manage your stock and edit product quantities right here.'),
                     ),
                 ),
             );
@@ -294,15 +320,15 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'menu' => array(
                 'pages' => array(
                     'AdminCategories' => array(
-                        $this->l('Create and manage Product Categories'),
-                        $this->l('This page allows you to create a full range of Categories and Subcategories to classify your products and manage your catalog easily.'),
+                        $this->l('Categories'),
+                        $this->l('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.'),
                     ),
                     'AdminCmsContent' => array(
-                        $this->l('Create content pages'),
-                        $this->l('This page allows you to create and manage your Content pages (CMS pages: Terms and conditions of use, Our stores, About us, etc).'),
+                        $this->l('Content pages'),
+                        $this->l('Add and manage your content pages to make your store interesting and trustworthy.'),
                     ),
                     'AdminManufacturers' => array(
-                        $this->l('Create Brands and Suppliers pages'),
+                        $this->l('Brands & Suppliers'),
                         $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
                     ),
                 ),
