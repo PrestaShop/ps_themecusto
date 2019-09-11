@@ -100,8 +100,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $this->l('Add and manage your content pages to make your store interesting and trustworthy.'),
                     ),
                     'AdminManufacturers' => array(
-                        $this->l('Brands & Suppliers'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                        $this->l('Brands and Suppliers'),
+                        $this->l('Manage both your brands and suppliers at the same place !'),
                     ),
                 ),
                 'modules' => array(
@@ -162,28 +162,25 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $category = array(
                 'sfRoutePages' => array(
                     'admin_product_preferences' => array(
-                        $this->l('Filter and number of products per page'),
-                        $this->l('Choose how many products you display on each page and your filter and order by default.'),
+                        $this->l('Pagination'),
+                        $this->l('Set the numbers of products you want to display per page and how.'),
                     ),
                 ),
             );
             $footerModules = array(
                 'blockreassurance' => 22312,
                 'ps_linklist' => 24360,
-                'ps_sharebuttons' => 22322,
             );
 
             $menu = array(
-                'sfRoutePages' => array(
-                    'admin_product_preferences' => array(
-                        $this->l('Pagination'),
-                        $this->l('Set the numbers of products you want to display per page and how.'),
-                    ),
-                ),
                 'pages' => array(
+                    'AdminCmsContent' => array(
+                        $this->l('Content pages'),
+                        $this->l('Add and manage your content pages to make your store interesting and trustworthy.'),
+                    ),
                     'AdminManufacturers' => array(
-                        $this->l('Brands & Suppliers'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                        $this->l('Brands and Suppliers'),
+                        $this->l('Manage both your brands and suppliers at the same place !'),
                     ),
                 ),
                 'modules' => array(
@@ -194,25 +191,24 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $category = array(
                 'pages' => array(
                     'AdminPPreferences' => array(
-                        $this->l('Filter and number of products per page'),
-                        $this->l('Choose how many products you display on each page and your filter and order by default.'),
+                        $this->l('Pagination'),
+                        $this->l('Set the numbers of products you want to display per page and how.'),
                     ),
                 ),
             );
             $footerModules = array(
                 'ps_linklist' => 24360,
-                'ps_sharebuttons' => 22322,
             );
 
             $menu = array(
                 'pages' => array(
-                    'AdminPPreferences' => array(
-                        $this->l('Pagination'),
-                        $this->l('Set the numbers of products you want to display per page and how.'),
+                    'AdminCmsContent' => array(
+                        $this->l('Content pages'),
+                        $this->l('Add and manage your content pages to make your store interesting and trustworthy.'),
                     ),
                     'AdminManufacturers' => array(
-                        $this->l('Brands & Suppliers'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                        $this->l('Brands and Suppliers'),
+                        $this->l('Manage both your brands and suppliers at the same place !'),
                     ),
                 ),
                 'modules' => array(
@@ -328,8 +324,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         $this->l('Add and manage your content pages to make your store interesting and trustworthy.'),
                     ),
                     'AdminManufacturers' => array(
-                        $this->l('Brands & Suppliers'),
-                        $this->l('This page allows you to create and manage your Brands and/or Suppliers pages.'),
+                        $this->l('Brands and Suppliers'),
+                        $this->l('Manage both your brands and suppliers at the same place !'),
                     ),
                 ),
                 'modules' => array(

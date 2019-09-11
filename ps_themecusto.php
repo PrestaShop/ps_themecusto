@@ -148,10 +148,10 @@ class ps_themecusto extends Module
     {
         return array(
             $this->controller_name[1] => array(
-                'fr' => 'Configuration de pages',
-                'en' => 'Configuration of pages',
-                'es' => 'Configuracion de paginas',
-                'it' => 'Configurazione delle pagine',
+                'fr' => 'Pages Configuration',
+                'en' => 'Pages Configuration',
+                'es' => 'Paginas configuracion',
+                'it' => 'Pagine configurazione',
             ),
             $this->controller_name[0] => array(
                 'fr' => 'Personnalisation avancée',
