@@ -30,6 +30,7 @@
 
 let resetActiveCategory = function() {
     $('#psthemecusto .js-wireframe div').removeClass('active');
+    $('#psthemecusto .js-wireframe div .hover-element').addClass('hide');
     $('#psthemecusto .js-wireframe div .on-element').addClass('hide');
     $('#psthemecusto .js-wireframe div .out-element').removeClass('hide');
     $('#psthemecusto .js-module-name').removeClass('active');
@@ -166,14 +167,22 @@ $(document).ready(function() {
         function() {
             let name = $(this).data('module_name');
             $('.module-list [data-module_name='+ name +']').addClass('active');
-            $(this).find('.on-element').removeClass('hide');
+            $(this).find('.on-element').addClass('hide');
             $(this).find('.out-element').addClass('hide');
+            $(this).find('.hover-element').removeClass('hide');
         }, function() {
             let name = $(this).data('module_name');
+
             if (!$('.module-list [data-module_name='+ name +']').parent().hasClass('active')) {
                 $('.module-list [data-module_name='+ name +']').removeClass('active');
+                $(this).find('.hover-element').addClass('hide');
                 $(this).find('.on-element').addClass('hide');
                 $(this).find('.out-element').removeClass('hide');
+            } else {
+                $('.module-list [data-module_name='+ name +']').addClass('active');
+                $(this).find('.hover-element').addClass('hide');
+                $(this).find('.on-element').removeClass('hide');
+                $(this).find('.out-element').addClass('hide');
             }
         }
     );
