@@ -64,7 +64,7 @@ body.adminpsthemecustoconfiguration {
 #psthemecusto .js-wireframe div.active .out-element{
     display: none;
 }
-#psthemecusto .js-wireframe div.active .on-element{
+#psthemecusto .js-wireframe div.active .active-element{
     display: block;
     opacity: 1;
 }
