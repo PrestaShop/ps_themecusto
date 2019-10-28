@@ -155,7 +155,7 @@ let onClickModalFooterLink = function (event) {
 
 $(document).ready(function() {
     $(document)
-        .on('click', "#psthemecusto .btn.btn-primary", onClickModalBtn)
+        .on('click', "#psthemecusto .panel-heading .btn.btn-primary", onClickModalBtn)
         .on('click', ".modal .modal-footer a", onClickModalFooterLink)
         .on('click', "#psthemecusto .js-wireframe div[class*='js-img-'], #psthemecusto .js-module-name", onClickWireframeDivORModuleName)
         .on('click', "#psthemecusto button", onClickButtonThemeCusto);
