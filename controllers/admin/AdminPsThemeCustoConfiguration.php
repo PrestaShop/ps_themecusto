@@ -284,6 +284,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'blockreassurance' => 22312,
                 'ps_sharebuttons' => 22322,
             );
+            if (version_compare(_PS_VERSION_, '1.7.6', '>=')) {
+                $productDetailsModules['productcomments'] = 9144;
+            }
         } else {
             $productManagement = array(
                 'sfRoutePages' => array(
