@@ -90,21 +90,27 @@
     BUTTON
 */
 #psthemecusto .btn {
-    border-radius: 0 !important;
+    border-radius: 0;
 }
 #psthemecusto .btn.btn-primary {
     text-transform: initial;
     background-color: #25b9d7 !important;
     border-color: #25b9d7 !important;
-    white-space: pre-wrap;
 }
 #psthemecusto .btn.btn-primary:hover {
     background-color: #3ed2f0 !important;
     border-color: #3ed2f0 !important;
 }
-/**
-    OTHER
-*/
-.displaynone {
-    display: none;
+
+.redBG{
+    background-color: red;
+}
+.greenBG{
+    background-color: green;
+}
+.blueBG{
+    background-color: blue;
+}
+.yellowBG{
+    background-color: yellow;
 }

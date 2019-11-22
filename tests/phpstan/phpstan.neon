@@ -1,0 +1,8 @@
+parameters:
+	bootstrap: tests/phpstan/bootstrap.php
+	paths:
+		- classes
+		- controllers
+		- ps_themecusto.php
+
+	level: 1

@@ -26,39 +26,55 @@
 * to avoid any conflicts with others containers.
 */
 
+/* Add boostrap no-gutter class */
+.no-gutter.row,
+.no-gutter.container,
+.no-gutter.container-fluid{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.no-gutter>[class^="col-"]{
+  padding-left: 0;
+  padding-right: 0;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
 /**
     GENERAL
 */
-#psthemecusto .js-wireframe div {
-    width: 92%;
+body.adminpsthemecustoconfiguration {
+    background-color: #fff;
 }
-@media screen and (max-width: 991px) {
-    #psthemecusto .js-wireframe div {
-        width: 100%;
-    }
+#psthemecusto .modalCusto div.js-wireframe {
+    background-color: #D5D5D5;
+}
+#psthemecusto .panel:first-child {
+    border: none;
 }
 #psthemecusto .js-wireframe img{
     max-width: 100%;
 }
-#psthemecusto .js-wireframe div { cursor: pointer; }
-#psthemecusto .js-wireframe div .on-element{ display: none; opacity: 0; }
-#psthemecusto .js-wireframe div:hover .out-element,
-#psthemecusto .js-wireframe div.active .out-element{ display: none; }
-#psthemecusto .js-wireframe div:hover .on-element,
-#psthemecusto .js-wireframe div.active .on-element{
+#psthemecusto .js-wireframe div {
+    cursor: pointer;
+}
+#psthemecusto .js-wireframe div.active .out-element{
+    display: none;
+}
+#psthemecusto .js-wireframe div.active .active-element{
     display: block;
     opacity: 1;
 }
-#psthemecusto .module-list {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 186px;
+
+.sticky {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 210px;
 }
-@media screen and (max-width: 991px) {
-    #psthemecusto .module-list {
-        margin-top: 25px;
-    }
-}
+
 #psthemecusto .configuration-rectangle {
     border-left: 4px solid #dcdcdc;
     margin-bottom: 25px;
@@ -76,7 +92,7 @@
     transition: border-color .2s;
 }
 #psthemecusto .configuration-rectangle .module-logo {
-    width: 30px;
+    width: 40px;
     max-width: 100%;
 }
 #psthemecusto .configuration-rectangle .form-action-button-container {
@@ -113,9 +129,6 @@
 }
 #psthemecusto .configuration-rectangle .module-informations {
     display: none;
-    /* padding-top: 25px;
-    padding-right: 25px;
-    padding-left: 25px; */
     padding-top: 1.2vw;
     padding-right: 1.2vw;
     padding-left: 1.2vw;
@@ -226,3 +239,31 @@ button.dropdown-item {
 .material-icons.up{
     display: none;
 }
+#psthemecusto .panel .panel-heading {
+    font: 400 12px/1.42857 Open Sans,Helvetica,Arial,sans-serif!important;
+    padding-bottom: 50px;
+    border: none;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary:focus {
+    outline: none;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary {
+    color: #6C868E;
+    border-radius: 20px;
+    padding: 10px 20px!important;
+    margin: 0px 8px;
+    background-color: #F5F7F7!important;
+    border-color: #F5F7F7!important;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary:hover,
+#content #psthemecusto .panel .panel-heading .btn.btn-primary.selected {
+    color: #363A41;
+    background-color: #F4FBFD!important;
+    border-color: #F4FBFD!important;
+}
+#content #psthemecusto .panel .panel-heading .btn.btn-primary.selected {
+    color: #FFFFFF;
+    background-color: #25b9d7!important;
+    border-color: #25b9d7!important;
+}
+
