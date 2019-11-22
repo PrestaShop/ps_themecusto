@@ -77,7 +77,7 @@ $(document).ready(function() {
     });
 
     Dropzone.options.importDropzone = {
-        acceptedFiles: 'application/zip',
+        acceptedFiles: 'application/zip,application/x-zip-compressed,application/x-zip',
         maxFiles: 1,
         maxFilesize: 50, // File size in Mb
         dictDefaultMessage: '',
