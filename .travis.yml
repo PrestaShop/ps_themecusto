@@ -1,0 +1,48 @@
+language: php
+services: docker
+
+php:
+  - 5.6
+  - 7.2
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - composer install
+
+script:
+  # PHP syntax check
+  - find . -type f -name '*.php' ! -path "./vendor/*" ! -path "./tests/*" -exec php -l -n {} \; | (! grep -v "No syntax errors detected")
+  # PHP cs fixer
+  - vendor/bin/php-cs-fixer fix --no-interaction --dry-run --diff --using-cache=no --diff-format udiff
+  # PHP Stan
+  - if [ ${TRAVIS_PHP_VERSION:0:2} == "7." ]; then
+      docker run -tid --rm -v ps-volume:/var/www/html --name temp-ps prestashop/prestashop:1.7;
+      docker exec -ti temp-ps rm -rf /var/www/html/modules/ps_themecusto;
+      docker run --rm --volumes-from temp-ps -v $PWD:/var/www/html/modules/ps_themecusto -e _PS_ROOT_DIR_=/var/www/html --workdir=/var/www/html/modules/ps_themecusto quetzacoalt/phpstan analyse --configuration=/var/www/html/modules/ps_themecusto/tests/phpstan/phpstan.neon;
+    fi
+
+before_deploy:
+  # Composer
+  - composer install --no-dev -o
+  # Cleanup
+  - rm -f .php_cs.*
+  - rm -f .travis.yml
+  - rm -f composer.*
+  - rm -f .gitignore
+  - rm -rf .git
+  - rm -rf tests
+  - pushd $TRAVIS_BUILD_DIR/..
+  - mkdir /tmp/build
+  - zip /tmp/build/$(ls | head -1).zip -r $(ls | head -1)/
+
+deploy:
+  provider: releases
+  api_key: ${travis_api_key}
+  file: "/tmp/build/ps_themecusto.zip"
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true

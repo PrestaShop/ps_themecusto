@@ -22,7 +22,7 @@
             <div class="col-ld-12">
                 <p>{l s='You can edit your theme sheet by using the Parent/Child theme feature' mod='ps_themecusto'}:</p>
             </div>
-            {if $is_ps_ready}
+            {if $isPsReady}
             <div class="alert alert-warning" role="alert">
                 <b>{l s='Advanced use only.' mod='ps_themecusto'}</b>
                 <p class="alert-text">
@@ -82,7 +82,7 @@
         </div>
         <div class="alert alert-info col-lg-12" role="alert">
             <b>{l s='Information' mod='ps_themecusto'}</b>
-            {if $is_ps_ready}
+            {if $isPsReady}
                 <p class="alert-text">{l s='By using this method you can only override the CSS of your theme.' mod='ps_themecusto'}</p>
             {else}
                 <p class="alert-text">{l s='By using this method you can override the CSS and html of your theme, and add analytics tags.' mod='ps_themecusto'}</p>

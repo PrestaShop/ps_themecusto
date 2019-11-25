@@ -23,41 +23,38 @@
 * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 * International Registered Trademark & Property of PrestaShop SA
 **/
-
 class ThemeCustoRequests
 {
     /**
      * Get all the modules by name
      *
-     * @param string $aModulesName
-     * @return array $aModulesList
-    */
-    public static function getModulesListByName($aModulesName)
+     * @param string $moduleName
+     *
+     * @return array|false|PDOStatement|resource|null
+     */
+    public static function getModulesListByName($moduleName)
     {
-        $sSql = '   SELECT m.id_module, m.name, ms.enable_device as active
-                    FROM `'._DB_PREFIX_.'module` m
-                    LEFT JOIN `'._DB_PREFIX_.'module_shop` ms ON m.id_module = ms.id_module
-                    WHERE m.name IN ('.implode(', ', array_map('pSQL', $aModulesName)).')';
+        $sqlQuery = '   SELECT m.id_module, m.name, ms.enable_device as active
+                    FROM `' . _DB_PREFIX_ . 'module` m
+                    LEFT JOIN `' . _DB_PREFIX_ . 'module_shop` ms ON m.id_module = ms.id_module
+                    WHERE m.name = "' . pSQL($moduleName) . '"';
 
-        $aModulesList = Db::getInstance()->executeS($sSql);
-
-        return $aModulesList;
+        return Db::getInstance()->executeS($sqlQuery);
     }
 
     /**
      * Get the device status of a module
      *
-     * @param int $iModuleId
-     * @return int $iModuleStatus
-    */
-    public static function getModuleDeviceStatus($iModuleId)
+     * @param int $moduleId
+     *
+     * @return string|false|null
+     */
+    public static function getModuleDeviceStatus($moduleId)
     {
-        $sSql = '   SELECT ms.enable_device as active
-                    FROM `'._DB_PREFIX_.'module_shop` ms
-                    WHERE ms.id_module = '.(int)$iModuleId;
+        $sqlQuery = '   SELECT ms.enable_device as active
+                        FROM `' . _DB_PREFIX_ . 'module_shop` ms
+                        WHERE ms.id_module = ' . (int) $moduleId;
 
-        $iModuleStatus = Db::getInstance()->getValue($sSql);
-
-        return $iModuleStatus;
+        return Db::getInstance()->getValue($sqlQuery);
     }
 }

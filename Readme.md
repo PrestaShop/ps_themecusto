@@ -3,6 +3,7 @@
 ## About
 
 Easily configure and customize your homepage’s theme and main native modules.
+This module is only compatible with PrestaShop 1.7 and more.
 
 ## Contributing
 
