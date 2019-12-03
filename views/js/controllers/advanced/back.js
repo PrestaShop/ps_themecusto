@@ -56,7 +56,7 @@ $(document).ready(function() {
 
     $('body').on('click', '.module-import-start-select-manual', function(event, manual_select) {
         event.preventDefault();
-        $('#importDropzone').trigger( "click" );
+        $('#importDropzone').trigger('click');
     });
 
     $('body').on('click', '.module-import-failure-details-action', function() {
@@ -75,52 +75,50 @@ $(document).ready(function() {
         $('.module-import-failure').hide();
         $('.module-import-success').hide();
     });
-
-    Dropzone.options.importDropzone = {
-        acceptedFiles: 'application/zip,application/x-zip-compressed,application/x-zip',
-        maxFiles: 1,
-        maxFilesize: 50, // File size in Mb
-        dictDefaultMessage: '',
-        hiddenInputContainer: '#importDropzone',
-        init: function() {
-            var self = this;
-            self.on("addedfile", function(file) {
-                $('.module-import-start').hide();
-                $('.module-import-failure-details').html(file_not_valid);
-            });
-        },
-
-        sending: function sending() {
-            $('.modal .loader').show();
-            $('.module-import-start').hide();
-            $('.module-import-failure').hide();
-            $('.module-import-success').hide();
-        },
-        success: function(file, response){
-            if (response.length == 0) {
-                response = '{"state":0, "message":"'+default_error_upload+'"}';
-            }
-            let treatment = JSON.parse(response);
-
-            $('.modal .loader').hide();
-            $('.modal .module-import-failure-details').hide();
-            switch (treatment.state) {
-                case 0:
-                    $('.module-import-failure').show();
-                    $('.module-import-failure-details').html(treatment.message);
-                break;
-                case 1:
-                    $('.module-import-success').show();
-                    $('.module-import-success-msg').html(treatment.message);
-                break;
-            }
-            this.removeAllFiles();
-        },
-        error: function(file, response){
-            $('.modal .loader').hide();
-            $('.module-import-failure').show();
-        }
-    };
-
 });
 
+Dropzone.options.importDropzone = {
+    acceptedFiles: 'application/zip,application/x-zip-compressed,application/x-zip',
+    maxFiles: 1,
+    maxFilesize: 50, // File size in Mb
+    dictDefaultMessage: '',
+    hiddenInputContainer: '#importDropzone',
+    init: function() {
+        var self = this;
+        self.on("addedfile", function(file) {
+            $('.module-import-start').hide();
+            $('.module-import-failure-details').html(file_not_valid);
+        });
+    },
+
+    sending: function sending() {
+        $('.modal .loader').show();
+        $('.module-import-start').hide();
+        $('.module-import-failure').hide();
+        $('.module-import-success').hide();
+    },
+    success: function(file, response){
+        if (response.length == 0) {
+            response = '{"state":0, "message":"'+default_error_upload+'"}';
+        }
+        let treatment = JSON.parse(response);
+
+        $('.modal .loader').hide();
+        $('.modal .module-import-failure-details').hide();
+        switch (treatment.state) {
+            case 0:
+                $('.module-import-failure').show();
+                $('.module-import-failure-details').html(treatment.message);
+                break;
+            case 1:
+                $('.module-import-success').show();
+                $('.module-import-success-msg').html(treatment.message);
+                break;
+        }
+        this.removeAllFiles();
+    },
+    error: function(file, response){
+        $('.modal .loader').hide();
+        $('.module-import-failure').show();
+    }
+};

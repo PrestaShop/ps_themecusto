@@ -69,8 +69,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'file_not_valid' => $this->l('The file is not valid.'),
         );
         $aJs = array(
-            $this->module->js_path . '/controllers/' . $this->controller_quick_name . '/back.js',
             $this->module->js_path . '/controllers/' . $this->controller_quick_name . '/dropzone.js',
+            $this->module->js_path . '/controllers/' . $this->controller_quick_name . '/back.js',
         );
         $aCss = array($this->module->css_path . '/controllers/' . $this->controller_quick_name . '/back.css');
         $this->module->setMedia($aJsDef, $aJs, $aCss);
