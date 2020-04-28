@@ -29,12 +29,12 @@ $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_7ef25f7b93ad
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_6ff29916f99fff9d2494d28e721ae77e'] = 'Banner';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_189b43cdd11a8e8db346c4d4885c7fed'] = 'Social & Newsletter';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_ded40f2a77c30efc6062db0cbd857746'] = 'Footer';
-$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_a39a7bb20b87c1e818ff2d321d612c23'] = 'Crea e gestisci Categorie prodotti';
+$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_af1b98adf7f686b84cd0b443e022b7a0'] = 'Crea e gestisci Categorie prodotti';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_60328687faec0cab8613aa9d796cc0fe'] = 'Crea una lista completa di categorie e sottocategorie per classificare i tuoi prodotti e gestire in modo semplice il tuo catalogo.';
-$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_a03facafa0612fe501fc66292d6510d7'] = 'Crea pagine di contenuto';
-$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_81b5e93faa3b91bac0e79fda6865f8f3'] = 'Aggiungi e gestisci pagine di contenuto (pagine CMS: Termini e condizioni d\'uso, I nostri negozi, Chi siamo ecc.) come preferisci.';
-$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_c5a358d061895cc982600e71b9947a2e'] = 'Crea pagine di Marchi e Fornitori';
-$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_60daf439ec64a846c2b5d13e6e7b1dda'] = 'Questa pagina ti consente di creare e gestire le tue pagine su Marchi e/o Fornitori.';
+$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_8b12d77641baf3ee673f6508bde7b707'] = 'Crea pagine di contenuto';
+$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_3c0d599de9d0dcab37829c7eb7f8e522'] = 'Aggiungi e gestisci pagine di contenuto (pagine CMS: Termini e condizioni d\'uso, I nostri negozi, Chi siamo ecc.) come preferisci.';
+$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_d928b386dd4043c0a72c435eb1cfffa7'] = 'Crea pagine di Marchi e Fornitori';
+$_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_f5f52d2a02db811858558a879a352e54'] = 'Questa pagina ti consente di creare e gestire le tue pagine su Marchi e/o Fornitori.';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_7cd5fa3f9e9e911c6b60b9044436d227'] = 'Dettagli negozio';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_c15614439ecc7d478eec1e4e12edc85b'] = 'Visualizza informazioni aggiuntive sul tuo negozio o fai sapere ai tuoi clienti come possono contattarti.';
 $_MODULE['<{ps_themecusto}prestashop>adminpsthemecustoconfiguration_4b8a74f166975e0d8c67e68e0590ce10'] = 'Azione sul modulo completata con successo';
