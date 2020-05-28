@@ -7,9 +7,10 @@ This module is only compatible with PrestaShop 1.7 and more.
 
 ## Multistore compatibility
 
-This module is compatible with the multistore :heavy_check_mark: <br/>
-It can be configured differently from one store to another.<br/>
-It can be activated on one store and deactivated on another
+This module is compatible with multistore ✔
+
+- It can be configured differently from one store to another.
+- It can be activated on one store and deactivated on another
 
 ## Reporting issues
 
