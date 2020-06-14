@@ -17,8 +17,8 @@
     "require": {
         "php": ">=5.3.2"
     },
-    "require-dev": {
-        "prestashop/php-coding-standards": "dev-master"
+        "require-dev": {
+        "prestashop/php-dev-tools": "^3.4"
     },
     "autoload": {
         "classmap": [
