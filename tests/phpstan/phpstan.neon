@@ -1,8 +1,15 @@
-parameters:
-	bootstrap: tests/phpstan/bootstrap.php
-	paths:
-		- classes
-		- controllers
-		- ps_themecusto.php
+includes:
+	- %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
 
-	level: 1
+parameters:
+  paths:
+    # From PHPStan 0.12, paths to check are relative to the neon file
+    - ../../ps_themecusto.php
+    - ../../classes/
+    - ../../controllers/
+  ignoreErrors:
+    - '#Access to an undefined property Cookie::\$profile.#'
+    - '#Call to method assign\(\) on an unknown class Smarty_Data#'
+    - '#Property TabCore::\$name \(string\) does not accept array.#'
+  reportUnmatchedIgnoredErrors: false
+  level: 5
