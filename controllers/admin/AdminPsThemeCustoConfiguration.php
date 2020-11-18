@@ -395,7 +395,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'moduleImgUri' => $this->getModule()->img_path . '/controllers/configuration/',
             'moduleActions' => $this->aModuleActions,
             'moduleActionsNames' => $this->moduleActionsNames,
-            'themeConfiguratorUrl' => $this->context->link->getAdminLink('AdminModules', true, false, ['configure' => 'ps_themeconfigurator']),
+            'themeConfiguratorUrl' => $this->context->link->getAdminLink(
+                'AdminModules',
+                true,
+                false,
+                ['configure' => 'ps_themeconfigurator']
+            ),
             'isPsReady' => $this->getModule()->ready,
             'ps_uri' => $this->getModule()->ps_uri,
         ]);
