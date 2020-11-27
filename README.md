@@ -2,7 +2,7 @@
 
 ## About
 
-Easily configure and customize your homepage’s theme and main native modules.
+Easily build your homepage: access the main front office modules and quickly configure them.
 This module is only compatible with PrestaShop 1.7 and more.
 
 ## Multistore compatibility
