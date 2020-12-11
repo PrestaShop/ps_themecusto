@@ -426,7 +426,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     public function ajaxProcessUpdateModule()
     {
         if (!$this->getModule()->hasEditRight()) {
-            die($this->l('You do not have permission to edit this.'));
+            exit($this->l('You do not have permission to edit this.'));
         }
 
         $sModuleName = pSQL(Tools::getValue('module_name'));
@@ -471,7 +471,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 $sUrlActive = method_exists($oModule, 'getContent') ? 'configure' : 'disable';
             break;
             default:
-                die(0);
+                exit(0);
         }
 
         $aModule['id_module'] = $oModule->id;

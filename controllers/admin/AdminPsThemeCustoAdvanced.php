@@ -108,16 +108,16 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $bPrepareChildtheme = self::prepareChildTheme(_THEME_NAME_, _PS_THEME_DIR_);
 
         if (!$bPrepareChildtheme) {
-            die(false);
+            exit(false);
         }
 
         $bCreateChildTheme = self::createChildTheme(_THEME_NAME_);
 
         if (!$bCreateChildTheme) {
-            die(false);
+            exit(false);
         }
 
-        die(self::getChildTheme(_THEME_NAME_, _PS_ROOT_DIR_));
+        exit(self::getChildTheme(_THEME_NAME_, _PS_ROOT_DIR_));
     }
 
     /**
@@ -208,7 +208,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $sZipPath = self::processUploadFileChild($aChildThemeReturned, $this->sandbox_path . $aChildThemeReturned['rename']);
         $bZipFormat = self::processCheckZipFormat($sZipPath);
         if (!$bZipFormat) {
-            die(json_encode([
+            exit(json_encode([
                 'state' => 0,
                 'message' => $this->l('Make sure you zip your edited theme files directly to the root of your child theme\'s folder before uploading it.'),
             ]));
@@ -223,7 +223,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
                 $sMessageUploadNotClean = $this->l('There is some PHP files in your ZIP');
             }
 
-            die(json_encode([
+            exit(json_encode([
                 'state' => 0,
                 'message' => $sMessageUploadNotClean,
             ]));
@@ -234,7 +234,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         if ($sFolderPath === false) {
             @unlink($sZipPath);
-            die(json_encode([
+            exit(json_encode([
                 'state' => 0,
                 'message' => $this->l('The theme already exists or the parent name in the config file is wrong'),
             ]));
@@ -242,13 +242,13 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         if (!self::checkIfIsChildTheme($sFolderPath)) {
             self::recursiveDelete($sFolderPath);
-            die(json_encode([
+            exit(json_encode([
                 'state' => 0,
                 'message' => $this->l('You must enter the parent theme name in the theme.yml file. Furthermore, the parent name must be the current parent theme.'),
             ]));
         }
 
-        die(json_encode([
+        exit(json_encode([
             'state' => 1,
             'message' => $this->l('The child theme has been added successfully.'),
         ]));
