@@ -1,7 +1,7 @@
 <?php
 
 global $_MODULE;
-$_MODULE = array();
+$_MODULE = [];
 $_MODULE['<{ps_themecusto}prestashop>ps_themecusto_95db0d5190e9cdbed521ecf6ea2373ca'] = 'Personalizzazione del template grafico';
 $_MODULE['<{ps_themecusto}prestashop>ps_themecusto_c3db892b3555ae0538402754d0c375d0'] = 'Puoi configurare e personalizzare in modo semplice il template grafico e i principali moduli nativi della tua homepage. Funzione disponibile in Design > pagina Template grafico & Logo.';
 $_MODULE['<{ps_themecusto}prestashop>ps_themecusto_f87b9438e8de65a83e7a3ef56a9d23fb'] = 'Si è verificato un errore durante l\'installazione. Ti preghiamo di contattarci attraverso il sito Addons';

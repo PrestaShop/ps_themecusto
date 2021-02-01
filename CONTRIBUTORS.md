@@ -1,0 +1,18 @@
+GitHub contributors:
+--------------------------------
+ - Adrienaddons
+ - Kamel Boukhateb
+ - PierreRambaud
+ - Progi1984
+ - Quetzacoalt91
+ - Shiryu75
+ - apacios
+ - atomiix
+ - eternoendless
+ - jolelievre
+ - marionf
+ - matks
+ - pierreloicq
+ - toutantic
+ - zalexki
+ - zalexki

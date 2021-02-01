@@ -32,7 +32,7 @@ class ps_themecusto extends Module
     public $author_address;
     public $bootstrap;
     public $controller_name;
-    public $front_controller = array();
+    public $front_controller = [];
     public $template_dir;
     public $js_path;
     public $css_path;
@@ -45,28 +45,28 @@ class ps_themecusto extends Module
     public function __construct()
     {
         $this->name = 'ps_themecusto';
-        $this->version = '1.2.0';
+        $this->version = '1.2.1';
         $this->author = 'PrestaShop';
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
         $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
         $this->bootstrap = true;
 
         parent::__construct();
-        $this->controller_name = array('AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration');
+        $this->controller_name = ['AdminPsThemeCustoAdvanced', 'AdminPsThemeCustoConfiguration'];
         if (!defined('PS_INSTALLATION_IN_PROGRESS')) {
             if (!$this->context instanceof Context) {
                 throw new PrestaShopException('Undefined context');
             }
-            $this->front_controller = array(
+            $this->front_controller = [
                 $this->context->link->getAdminLink($this->controller_name[0]),
                 $this->context->link->getAdminLink($this->controller_name[1]),
-            );
+            ];
         }
 
-        $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
 
         $this->displayName = $this->l('Theme Customization');
-        $this->description = $this->l('Easily configure and customize your homepage’s theme and main native modules. Feature available on Design > Theme & Logo page.');
+        $this->description = $this->l('Easily build your homepage: access the main front office modules and quickly configure them. Feature available on Design > Theme & Logo page.');
         $this->template_dir = '../../../../modules/' . $this->name . '/views/templates/admin/';
         $this->ps_uri = (Tools::usingSecureMode() ? Tools::getShopDomainSsl(true) : Tools::getShopDomain(true)) . __PS_BASE_URI__;
 
@@ -80,34 +80,26 @@ class ps_themecusto extends Module
     }
 
     /**
-     * install()
-     *
-     * @param none
-     *
      * @return bool
      */
     public function install()
     {
-        if (parent::install() &&
-            $this->installTabList()) {
+        if (parent::install() && $this->installTabList()) {
             return true;
-        } else {
-            $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
-
-            return false;
         }
+
+        $this->_errors[] = $this->l('There was an error during the installation. Please contact us through Addons website');
+
+        return false;
     }
 
     /**
-     * uninstall()
-     *
      * @return bool
      */
     public function uninstall()
     {
         // unregister hook
-        if (parent::uninstall() &&
-            $this->uninstallTabList()) {
+        if (parent::uninstall() && $this->uninstallTabList()) {
             return true;
         }
 
@@ -123,22 +115,22 @@ class ps_themecusto extends Module
     {
         $themesTab = Tab::getInstanceFromClassName('AdminThemes');
 
-        return array(
-            array(
+        return [
+            [
                 'class' => $this->controller_name[1],
                 'active' => true,
                 'position' => 2,
                 'id_parent' => $themesTab->id_parent,
                 'module' => $this->name,
-            ),
-            array(
+            ],
+            [
                 'class' => $this->controller_name[0],
                 'active' => true,
                 'position' => 3,
                 'id_parent' => $themesTab->id_parent,
                 'module' => $this->name,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -146,20 +138,20 @@ class ps_themecusto extends Module
      */
     public function getTabNameByLangISO()
     {
-        return array(
-            $this->controller_name[1] => array(
+        return [
+            $this->controller_name[1] => [
                 'fr' => 'Pages Configuration',
                 'en' => 'Pages Configuration',
                 'es' => 'Paginas configuracion',
                 'it' => 'Pagine configurazione',
-            ),
-            $this->controller_name[0] => array(
+            ],
+            $this->controller_name[0] => [
                 'fr' => 'Personnalisation avancée',
                 'en' => 'Advanced Customization',
                 'es' => 'Personalización avanzada',
                 'it' => 'Personalizzazione avanzata',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -190,9 +182,9 @@ class ps_themecusto extends Module
         $result = false;
 
         foreach ($aTabs as $aValue) {
-            $tab->active = 1;
+            $tab->active = true;
             $tab->class_name = $aValue['class'];
-            $tab->name = array();
+            $tab->name = [];
 
             foreach (Language::getLanguages(true) as $lang) {
                 if (isset($aTabsNameByLang[$aValue['class']][$lang['iso_code']])) {
@@ -239,9 +231,6 @@ class ps_themecusto extends Module
         // Duplicate existing Theme tab for sub tree
         $themesTabParent = Tab::getInstanceFromClassName('AdminThemesParent');
         $themesTab = Tab::getInstanceFromClassName('AdminThemes');
-        if (!$themesTabParent || !$themesTab) {
-            return false;
-        }
         $themesTab->id_parent = $themesTabParent->id_parent;
         $themesTabParent->delete();
         $themesTab->save();
@@ -272,10 +261,14 @@ class ps_themecusto extends Module
      */
     public function hasEditRight()
     {
+        /** @var array|bool $result */
         $result = Profile::getProfileAccess(
             (int) Context::getContext()->cookie->profile,
             (int) Tab::getIdFromClassName($this->controller_name[0])
         );
+        if (!is_array($result) || !isset($result['edit'])) {
+            return false;
+        }
 
         return (bool) $result['edit'];
     }
