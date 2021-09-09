@@ -540,7 +540,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                         }
                         $module = Module::getInstanceByName($sModuleName);
                         if (!($module instanceof Module)) {
-                            continue;   
+                            continue;
                         }
 
                         $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($module, Module::isInstalled($sModuleName));
