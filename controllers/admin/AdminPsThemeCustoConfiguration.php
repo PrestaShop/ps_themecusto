@@ -538,8 +538,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                                 continue;
                             }
                         }
+                        $module = Module::getInstanceByName($sModuleName);
+                        if (!($module instanceof Module)) {
+                            continue;
+                        }
 
-                        $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList(Module::getInstanceByName($sModuleName), Module::isInstalled($sModuleName));
+                        $aModuleFinalList[$sSegmentName][$sType][$sModuleName] = $this->setModuleFinalList($module, Module::isInstalled($sModuleName));
                     }
                 }
             }
