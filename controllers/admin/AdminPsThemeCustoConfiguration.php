@@ -398,7 +398,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'themeConfiguratorUrl' => $this->context->link->getAdminLink(
                 'AdminModules',
                 true,
-                false,
+                [],
                 ['configure' => 'ps_themeconfigurator']
             ),
             'isPsReady' => $this->getModule()->ready,
@@ -479,7 +479,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['displayName'] = $oModule->displayName;
         $aModule['url_active'] = $sUrlActive;
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
-        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, ['configure' => $oModule->name]);
+        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, [], ['configure' => $oModule->name]);
         $aModule['can_configure'] = method_exists($oModule, 'getContent') ? true : false;
         $aModule['enable_mobile'] = (int) Db::getInstance()->getValue('SELECT enable_device FROM ' . _DB_PREFIX_ . 'module_shop WHERE id_module = ' . (int) $oModule->id);
 
@@ -595,7 +595,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['description'] = $oModuleInstance->description;
         $aModule['controller_name'] = (isset($oModuleInstance->controller_name) ? $oModuleInstance->controller_name : '');
         $aModule['logo'] = '/modules/' . $oModuleInstance->name . '/logo.png';
-        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, false, ['configure' => $oModuleInstance->name]);
+        $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, [], ['configure' => $oModuleInstance->name]);
 
         return $aModule;
     }
