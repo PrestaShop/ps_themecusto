@@ -46,8 +46,6 @@
                     && !($module.url_active eq 'disable' && $action eq 'configure')
                     && !(!$module.can_configure && $action eq 'configure')
                     && !($action eq 'install')
-                    && !($action eq 'uninstall' && $isPsReady)
-                    && !($action eq 'install' && $isPsReady)
                 }
                 <li>
                     <div data-action="{$action}" data-module_name="{$module.name}" data-module_displayname="{$module.displayName}">

@@ -80,7 +80,6 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'bootstrap' => 1,
             'configure_type' => $this->controller_quick_name,
             'images' => $this->getModule()->img_path . '/controllers/advanced/',
-            'isPsReady' => $this->getModule()->ready,
         ]);
         $aJsDef = [
             'admin_module_controller_psthemecusto' => $this->getModule()->controller_name[0],
@@ -217,15 +216,9 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $bUploadIsClean = self::processCheckFiles($sZipPath, $this->sandbox_path . rand());
 
         if (!$bUploadIsClean) {
-            if ($this->getModule()->ready) {
-                $sMessageUploadNotClean = $this->l('Only CSS, YML and PNG files are accepted in the ZIP');
-            } else {
-                $sMessageUploadNotClean = $this->l('There is some PHP files in your ZIP');
-            }
-
             exit(json_encode([
                 'state' => 0,
-                'message' => $sMessageUploadNotClean,
+                'message' => $this->l('There is some PHP files in your ZIP'),
             ]));
         }
 
@@ -458,58 +451,11 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         Tools::ZipExtract($sZipSource, $sSandboxPath);
 
-        if ($this->getModule()->ready) {
-            $bCleanFiles = self::checkContentsForReady($sZipSource, $sSandboxPath);
-        } else {
-            $bCleanFiles = self::getDirPhpContents($sZipSource, $sSandboxPath);
-        }
+        $bCleanFiles = self::getDirPhpContents($sZipSource, $sSandboxPath);
 
         self::recursiveDelete($sSandboxPath);
 
         return $bCleanFiles;
-    }
-
-    /**
-     * We check if there is unvalid files
-     *
-     * @param string $sZipSource
-     * @param string $sSandboxPath
-     *
-     * @return bool
-     */
-    private function checkContentsForReady($sZipSource, $sSandboxPath)
-    {
-        $sPatternGeneral = '#[.\-\/](css|yml|png)#';
-        $sPatternPHP = '#[.\-\/](php)#';
-        $sIndexPhpFile = Tools::getDefaultIndexContent();
-
-        $zip = new ZipArchive();
-        $it = new RecursiveDirectoryIterator($sSandboxPath, RecursiveDirectoryIterator::SKIP_DOTS);
-        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
-
-        $zip->open($sZipSource);
-
-        foreach ($files as $file) {
-            if (!$file->isDir()) {
-                $sSubject = $file->getFilename() . self::processCheckMimeType($file->getRealPath());
-                $bFileIsValid = (bool) preg_match($sPatternGeneral, $sSubject);
-                if (!$bFileIsValid) {
-                    $bIsPHPfile = (bool) preg_match($sPatternPHP, $sSubject);
-                    if ($bIsPHPfile && $file->getFilename() === 'index.php') {
-                        $sRealPathFile = str_replace($sSandboxPath . '/', '', $file->getRealPath());
-                        $zip->deleteName($sRealPathFile);
-                        $zip->addFromString($sRealPathFile, $sIndexPhpFile);
-                    } else {
-                        $zip->close();
-
-                        return false;
-                    }
-                }
-            }
-        }
-        $zip->close();
-
-        return true;
     }
 
     /**

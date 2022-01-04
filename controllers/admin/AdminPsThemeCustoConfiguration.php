@@ -110,7 +110,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             ],
             'slider' => [
                 'modules' => [
-                    $this->getModule()->ready ? 'pshomeslider' : 'ps_imageslider' => $this->getModule()->ready ? 27562 : 22320,
+                    'ps_imageslider' => 22320,
                 ],
             ],
             'home_products' => [
@@ -401,7 +401,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 [],
                 ['configure' => 'ps_themeconfigurator']
             ),
-            'isPsReady' => $this->getModule()->ready,
             'ps_uri' => $this->getModule()->ps_uri,
         ]);
 
@@ -436,16 +435,10 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         switch ($sModuleAction) {
             case 'uninstall':
-                if ($this->getModule()->ready === true) {
-                    break;
-                }
                 $oModule->uninstall();
                 $sUrlActive = 'install';
             break;
             case 'install':
-                if ($this->getModule()->ready === true) {
-                    break;
-                }
                 $oModule->install();
                 $sUrlActive = method_exists($oModule, 'getContent') ? 'configure' : 'disable';
             break;
@@ -487,7 +480,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'module' => $aModule,
             'moduleActions' => $this->aModuleActions,
             'moduleActionsNames' => $this->moduleActionsNames,
-            'isPsReady' => $this->getModule()->ready,
         ]);
 
         $this->ajaxDie($this->context->smarty->fetch(__DIR__ . '/../../views/templates/admin/controllers/' . $this->controller_quick_name . '/elem/module_actions.tpl'));
@@ -527,9 +519,6 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 } else {
                     foreach ($aElementsList as $sModuleName => $iModuleId) {
                         if (!in_array($sModuleName, $modulesOnDisk)) {
-                            if ($this->getModule()->ready !== false) {
-                                continue;
-                            }
                             /* For a module coming from outside. It will be downloaded and installed */
                             $length = file_put_contents(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip', Tools::addonsRequest('module', ['id_module' => $iModuleId]));
                             if (!empty($length) && Tools::ZipExtract(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip', _PS_MODULE_DIR_)) {

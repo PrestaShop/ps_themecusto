@@ -14,10 +14,6 @@
 *}
 
 <div id="psthemecusto" class="container-fluid clearfix">
-    {if $isPsReady}
-        {include file="./ps_ready.tpl"}
-    {/if}
-
     <div class="panel row">
         <div class="panel-heading text-center">
             <button class="btn btn-primary btn-lg selected" data-id-modal="homepageModal">{l s='Homepage' mod='ps_themecusto'}</button>
