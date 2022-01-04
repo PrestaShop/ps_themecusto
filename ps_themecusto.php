@@ -39,7 +39,6 @@ class ps_themecusto extends Module
     public $img_path;
     public $logo_path;
     public $module_path;
-    public $ready;
     public $ps_uri;
 
     public function __construct()
@@ -76,7 +75,6 @@ class ps_themecusto extends Module
         $this->img_path = $this->_path . 'views/img/';
         $this->logo_path = $this->_path . 'logo.png';
         $this->module_path = $this->local_path;
-        $this->ready = (getenv('PLATEFORM') === 'PSREADY') ? true : false;
     }
 
     /**
