@@ -519,13 +519,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 } else {
                     foreach ($aElementsList as $sModuleName => $iModuleId) {
                         if (!in_array($sModuleName, $modulesOnDisk)) {
-                            /* For a module coming from outside. It will be downloaded and installed */
-                            $length = file_put_contents(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip', Tools::addonsRequest('module', ['id_module' => $iModuleId]));
-                            if (!empty($length) && Tools::ZipExtract(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip', _PS_MODULE_DIR_)) {
-                                unlink(_PS_MODULE_DIR_ . basename($sModuleName) . '.zip');
-                            } else {
-                                continue;
-                            }
+                            continue;
                         }
                         $module = Module::getInstanceByName($sModuleName);
                         if (!($module instanceof Module)) {
