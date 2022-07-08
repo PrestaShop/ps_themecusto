@@ -59,7 +59,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'home_products' => $this->l('Home Products'),
             'block_text' => $this->l('Text block'),
             'banner' => $this->l('Banner'),
-            'social_newsletter' => $this->l('Social &  Newsletter'),
+            'social_newsletter' => $this->l('Social and Newsletter'),
             'footer' => $this->l('Footer'),
             'content' => $this->l('content'),
             'categories' => $this->l('Categories'),
