@@ -10,7 +10,7 @@
                     <div class="row configuration-rectangle">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 js-module-name js-title-{$categoryname}" data-module_name="{$categoryname}">
                             <span class="col-lg-11 col-sm-11 col-xs-11 col-md-11">
-                                {$listCategories[$categoryname]}
+                                {$listCategories[$categoryname]|unescape:"entity"}
                             </span>
                             <span class="col-lg-1 col-sm-1 col-xs-1 col-md-1 configuration-rectangle-caret">
                                 <i class="material-icons down">keyboard_arrow_down</i>

@@ -46,8 +46,6 @@
                     && !($module.url_active eq 'disable' && $action eq 'configure')
                     && !(!$module.can_configure && $action eq 'configure')
                     && !($action eq 'install')
-                    && !($action eq 'uninstall' && $isPsReady)
-                    && !($action eq 'install' && $isPsReady)
                 }
                 <li>
                     <div data-action="{$action}" data-module_name="{$module.name}" data-module_displayname="{$module.displayName}">
@@ -70,11 +68,11 @@
                                 <button type="button" class="dropdown-item module_action_menu_{$action}">
                                     {l s='Enable' mod='ps_themecusto'}
                                 </button>
-                            {elseif ($module.enable_mobile eq 7 || $module.enable_mobile eq 1 || $module.enable_mobile eq 0) && $action eq 'disable_mobile'}
+                            {elseif ($module.enable_mobile eq 7 || $module.enable_mobile eq 1) && $action eq 'disable_mobile'}
                                 <button type="button" class="dropdown-item module_action_menu_{$action}">
                                     {l s='Disable mobile' mod='ps_themecusto'}
                                 </button>
-                            {elseif ($module.enable_mobile eq 3 || $module.enable_mobile eq 0) && $action eq 'enable_mobile'}
+                            {elseif $module.enable_mobile eq 3 && $action eq 'enable_mobile'}
                                 <button type="button" class="dropdown-item module_action_menu_{$action}">
                                     {l s='Enable mobile' mod='ps_themecusto'}
                                 </button>
