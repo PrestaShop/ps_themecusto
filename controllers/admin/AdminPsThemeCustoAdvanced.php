@@ -84,8 +84,8 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         $aJsDef = [
             'admin_module_controller_psthemecusto' => $this->getModule()->controller_name[0],
             'admin_module_ajax_url_psthemecusto' => $this->getModule()->front_controller[0],
-            'default_error_upload' => $this->l('An error occured, please check your zip file'),
-            'file_not_valid' => $this->l('The file is not valid.'),
+            'default_error_upload' => $this->trans('An error occured, please check your zip file'),
+            'file_not_valid' => $this->trans('The file is not valid.'),
         ];
         $aJs = [
             $this->getModule()->js_path . '/controllers/' . $this->controller_quick_name . '/dropzone.js',
@@ -209,7 +209,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         if (!$bZipFormat) {
             exit(json_encode([
                 'state' => 0,
-                'message' => $this->l('Make sure you zip your edited theme files directly to the root of your child theme\'s folder before uploading it.'),
+                'message' => $this->trans('Make sure you zip your edited theme files directly to the root of your child theme\'s folder before uploading it.'),
             ]));
         }
 
@@ -218,7 +218,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
         if (!$bUploadIsClean) {
             exit(json_encode([
                 'state' => 0,
-                'message' => $this->l('There is some PHP files in your ZIP'),
+                'message' => $this->trans('There is some PHP files in your ZIP'),
             ]));
         }
 
@@ -229,7 +229,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             @unlink($sZipPath);
             exit(json_encode([
                 'state' => 0,
-                'message' => $this->l('The theme already exists or the parent name in the config file is wrong'),
+                'message' => $this->trans('The theme already exists or the parent name in the config file is wrong'),
             ]));
         }
 
@@ -237,13 +237,13 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             self::recursiveDelete($sFolderPath);
             exit(json_encode([
                 'state' => 0,
-                'message' => $this->l('You must enter the parent theme name in the theme.yml file. Furthermore, the parent name must be the current parent theme.'),
+                'message' => $this->trans('You must enter the parent theme name in the theme.yml file. Furthermore, the parent name must be the current parent theme.'),
             ]));
         }
 
         exit(json_encode([
             'state' => 1,
-            'message' => $this->l('The child theme has been added successfully.'),
+            'message' => $this->trans('The child theme has been added successfully.'),
         ]));
     }
 
@@ -258,7 +258,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function processUploadFileChild($aChildThemeReturned, $dest)
     {
         if (!$this->getModule()->hasEditRight()) {
-            return $this->l('You do not have permission to edit this.');
+            return $this->trans('You do not have permission to edit this.');
         }
 
         switch ($aChildThemeReturned['error']) {
@@ -446,7 +446,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function processCheckFiles($sZipSource, $sSandboxPath)
     {
         if (!$this->getModule()->hasEditRight()) {
-            return $this->l('You do not have permission to edit this.');
+            return $this->trans('You do not have permission to edit this.');
         }
 
         Tools::ZipExtract($sZipSource, $sSandboxPath);
@@ -506,7 +506,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     public function postProcessInstall($dest)
     {
         if (!$this->getModule()->hasEditRight()) {
-            return $this->l('You do not have permission to edit this.');
+            return $this->trans('You do not have permission to edit this.');
         }
         $aFolder = [];
 
