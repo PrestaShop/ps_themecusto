@@ -24,8 +24,7 @@
     "autoload": {
         "classmap": [
             "ps_themecusto.php",
-            "controllers",
-            "classes"
+            "controllers"
         ]
     },
     "type": "prestashop-module"
