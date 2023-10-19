@@ -5,7 +5,6 @@ parameters:
   paths:
     # From PHPStan 0.12, paths to check are relative to the neon file
     - ../../ps_themecusto.php
-    - ../../classes/
     - ../../controllers/
     - ../../src/
     - ../../translations/
