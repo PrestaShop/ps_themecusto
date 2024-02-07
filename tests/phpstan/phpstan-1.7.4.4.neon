@@ -4,3 +4,4 @@ includes:
 parameters:
   ignoreErrors:
     - '#Access to an undefined property Cookie::\$profile.#'
+    - '#Call to an undefined method AdminPsThemeCustoConfigurationController::ajaxRender\(\).#'
