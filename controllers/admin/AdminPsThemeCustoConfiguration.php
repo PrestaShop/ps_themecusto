@@ -485,6 +485,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $tplPath = $this->context->smarty->fetch(__DIR__ . '/../../views/templates/admin/controllers/' . $this->controller_quick_name . '/elem/module_actions.tpl');
         if (version_compare(_PS_VERSION_, '1.7.5', '>=')) {
             $this->ajaxRender($tplPath);
+            exit;
         } else {
             $this->ajaxDie($tplPath);
         }
