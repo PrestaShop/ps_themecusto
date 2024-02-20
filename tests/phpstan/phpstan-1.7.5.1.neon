@@ -4,3 +4,4 @@ includes:
 parameters:
   ignoreErrors:
     - '#Access to an undefined property Cookie::\$profile.#'
+    - '#Parameter \#1 \$value of method ControllerCore::ajaxRender\(\) expects null, string given.#'
