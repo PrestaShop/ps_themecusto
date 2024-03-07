@@ -43,30 +43,30 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $this->controller_quick_name = 'configuration';
         $this->aModuleActions = ['uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset'];
         $this->moduleActionsNames = [
-            $this->trans('Uninstall'),
-            $this->trans('Install'),
-            $this->trans('Configure'),
-            $this->trans('Enable'),
-            $this->trans('Disable'),
-            $this->trans('Disable Mobile'),
-            $this->trans('Enable Mobile'),
-            $this->trans('Reset'),
+            $this->trans('Uninstall', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Install', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Configure', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Enable', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Disable', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Disable Mobile', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Enable Mobile', [], 'Modules.PsThemeCusto.Admin'),
+            $this->trans('Reset', [], 'Modules.PsThemeCusto.Admin'),
         ];
 
         $this->categoryList = [
-            'menu' => $this->trans('Menu'),
-            'slider' => $this->trans('Slider'),
-            'home_products' => $this->trans('Home Products'),
-            'block_text' => $this->trans('Text block'),
-            'banner' => $this->trans('Banner'),
-            'social_newsletter' => $this->trans('Social & Newsletter'),
-            'footer' => $this->trans('Footer'),
-            'content' => $this->trans('content'),
-            'categories' => $this->trans('Categories'),
-            'navigation_column' => $this->trans('Navigation column'),
-            'product_management' => $this->trans('Product management'),
-            'product_detail' => $this->trans('Product detail'),
-            'product_block' => $this->trans('Product block'),
+            'menu' => $this->trans('Menu', [], 'Modules.PsThemeCusto.Admin'),
+            'slider' => $this->trans('Slider', [], 'Modules.PsThemeCusto.Admin'),
+            'home_products' => $this->trans('Home Products', [], 'Modules.PsThemeCusto.Admin'),
+            'block_text' => $this->trans('Text block', [], 'Modules.PsThemeCusto.Admin'),
+            'banner' => $this->trans('Banner', [], 'Modules.PsThemeCusto.Admin'),
+            'social_newsletter' => $this->trans('Social & Newsletter', [], 'Modules.PsThemeCusto.Admin'),
+            'footer' => $this->trans('Footer', [], 'Modules.PsThemeCusto.Admin'),
+            'content' => $this->trans('content', [], 'Modules.PsThemeCusto.Admin'),
+            'categories' => $this->trans('Categories', [], 'Modules.PsThemeCusto.Admin'),
+            'navigation_column' => $this->trans('Navigation column', [], 'Modules.PsThemeCusto.Admin'),
+            'product_management' => $this->trans('Product management', [], 'Modules.PsThemeCusto.Admin'),
+            'product_detail' => $this->trans('Product detail', [], 'Modules.PsThemeCusto.Admin'),
+            'product_block' => $this->trans('Product block', [], 'Modules.PsThemeCusto.Admin'),
         ];
     }
 
@@ -92,16 +92,16 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'menu' => [
                 'pages' => [
                     'AdminCategories' => [
-                        $this->trans('Categories'),
-                        $this->trans('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.'),
+                        $this->trans('Categories', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminCmsContent' => [
-                        $this->trans('Content pages'),
-                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.'),
+                        $this->trans('Content pages', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminManufacturers' => [
-                        $this->trans('Brands and Suppliers'),
-                        $this->trans('Manage both your brands and suppliers at the same place !'),
+                        $this->trans('Brands and Suppliers', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Manage both your brands and suppliers at the same place !', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'modules' => [
@@ -141,8 +141,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'modules' => $footerModules,
                 'pages' => [
                     'AdminStores' => [
-                        $this->trans('Shop details'),
-                        $this->trans('Display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
+                        $this->trans('Shop details', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Display additional information about your store or how to contact you to make it easy for your customers to reach you.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ],
@@ -160,8 +160,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $category = [
                 'sfRoutePages' => [
                     'admin_product_preferences' => [
-                        $this->trans('Pagination'),
-                        $this->trans('Set the numbers of products you want to display per page and how.'),
+                        $this->trans('Pagination', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Set the numbers of products you want to display per page and how.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ];
@@ -173,12 +173,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $menu = [
                 'pages' => [
                     'AdminCmsContent' => [
-                        $this->trans('Content pages'),
-                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.'),
+                        $this->trans('Content pages', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminManufacturers' => [
-                        $this->trans('Brands and Suppliers'),
-                        $this->trans('Manage both your brands and suppliers at the same place !'),
+                        $this->trans('Brands and Suppliers', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Manage both your brands and suppliers at the same place !', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'modules' => [
@@ -189,8 +189,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $category = [
                 'pages' => [
                     'AdminPPreferences' => [
-                        $this->trans('Pagination'),
-                        $this->trans('Set the numbers of products you want to display per page and how.'),
+                        $this->trans('Pagination', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Set the numbers of products you want to display per page and how.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ];
@@ -201,12 +201,12 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $menu = [
                 'pages' => [
                     'AdminCmsContent' => [
-                        $this->trans('Content pages'),
-                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.'),
+                        $this->trans('Content pages', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminManufacturers' => [
-                        $this->trans('Brands and Suppliers'),
-                        $this->trans('Manage both your brands and suppliers at the same place !'),
+                        $this->trans('Brands and Suppliers', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Manage both your brands and suppliers at the same place !', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'modules' => [
@@ -220,8 +220,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'categories' => [
                 'pages' => [
                     'AdminCategories' => [
-                        $this->trans('Categories'),
-                        $this->trans('Create a full range of Categories and Subcategories to classify your products, add categoryies desciptions and manage your catalog easily.'),
+                        $this->trans('Categories', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Create a full range of Categories and Subcategories to classify your products, add categoryies desciptions and manage your catalog easily.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ],
@@ -242,8 +242,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 'modules' => $footerModules,
                 'pages' => [
                     'AdminStores' => [
-                        $this->trans('Shop details'),
-                        $this->trans('Display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
+                        $this->trans('Shop details', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Display additional information about your store or how to contact you to make it easy for your customers to reach you.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ],
@@ -261,18 +261,18 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $productManagement = [
                 'sfRoutePages' => [
                     'admin_product_catalog' => [
-                        $this->trans('Catalog'),
-                        $this->trans('Access your list of products to manage your catalog efficiently.'),
+                        $this->trans('Catalog', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Access your list of products to manage your catalog efficiently.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'admin_stock_overview' => [
-                        $this->trans('Stock'),
-                        $this->trans('Manage your stock and edit product quantities right here.'),
+                        $this->trans('Stock', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Manage your stock and edit product quantities right here.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'pages' => [
                     'AdminAttributesGroups' => [
-                        $this->trans('Product attributes'),
-                        $this->trans('Create or manage your attributes : colors, sizes, materials, ...'),
+                        $this->trans('Product attributes', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Create or manage your attributes : colors, sizes, materials, ...', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ];
@@ -287,22 +287,22 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             $productManagement = [
                 'sfRoutePages' => [
                     'admin_product_catalog' => [
-                        $this->trans('Catalog'),
-                        $this->trans('Access your list of products to manage your catalog efficiently.'),
+                        $this->trans('Catalog', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Access your list of products to manage your catalog efficiently.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'pages' => [
                     'AdminAttributesGroups' => [
-                        $this->trans('Product attributes'),
-                        $this->trans('Create or manage your attributes : colors, sizes, materials, ...'),
+                        $this->trans('Product attributes', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Create or manage your attributes : colors, sizes, materials, ...', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminPPreferences' => [
-                        $this->trans('Quantities and stock availability'),
-                        $this->trans('Choose the way you display quantities and stock availability on your product page.'),
+                        $this->trans('Quantities and stock availability', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Choose the way you display quantities and stock availability on your product page.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminStockManagement' => [
-                        $this->trans('Stock'),
-                        $this->trans('Manage your stock and edit product quantities right here.'),
+                        $this->trans('Stock', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Manage your stock and edit product quantities right here.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
             ];
@@ -315,16 +315,16 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'menu' => [
                 'pages' => [
                     'AdminCategories' => [
-                        $this->trans('Categories'),
-                        $this->trans('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.'),
+                        $this->trans('Categories', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Create here a full range of categories and subcategories to classify your products and manage your catalog easily.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminCmsContent' => [
-                        $this->trans('Content pages'),
-                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.'),
+                        $this->trans('Content pages', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Add and manage your content pages to make your store interesting and trustworthy.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                     'AdminManufacturers' => [
-                        $this->trans('Brands and Suppliers'),
-                        $this->trans('Manage both your brands and suppliers at the same place !'),
+                        $this->trans('Brands and Suppliers', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Manage both your brands and suppliers at the same place !', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'modules' => [
@@ -351,8 +351,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'footer' => [
                 'pages' => [
                     'AdminStores' => [
-                        $this->trans('Shop details'),
-                        $this->trans('Display additional information about your store or how to contact you to make it easy for your customers to reach you.'),
+                        $this->trans('Shop details', [], 'Modules.PsThemeCusto.Admin'),
+                        $this->trans('Display additional information about your store or how to contact you to make it easy for your customers to reach you.', [], 'Modules.PsThemeCusto.Admin'),
                     ],
                 ],
                 'modules' => [
@@ -407,8 +407,8 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aJsDef = [
             'admin_module_controller_psthemecusto' => $this->getModule()->controller_name[1],
             'admin_module_ajax_url_psthemecusto' => $this->getModule()->front_controller[1],
-            'module_action_sucess' => $this->trans('Action on the module successfully completed'),
-            'module_action_failed' => $this->trans('Action on module failed'),
+            'module_action_sucess' => $this->trans('Action on the module successfully completed', [], 'Modules.PsThemeCusto.Admin'),
+            'module_action_failed' => $this->trans('Action on module failed', [], 'Modules.PsThemeCusto.Admin'),
         ];
         $jsPath = [$this->getModule()->js_path . '/controllers/' . $this->controller_quick_name . '/back.js'];
         $cssPath = [$this->getModule()->css_path . '/controllers/' . $this->controller_quick_name . '/back.css'];
@@ -425,7 +425,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
     public function ajaxProcessUpdateModule()
     {
         if (!$this->getModule()->hasEditRight()) {
-            exit($this->trans('You do not have permission to edit this.'));
+            exit($this->trans('You do not have permission to edit this.', [], 'Modules.PsThemeCusto.Admin'));
         }
 
         $sModuleName = pSQL(Tools::getValue('module_name'));
@@ -482,7 +482,13 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             'moduleActionsNames' => $this->moduleActionsNames,
         ]);
 
-        $this->ajaxDie($this->context->smarty->fetch(__DIR__ . '/../../views/templates/admin/controllers/' . $this->controller_quick_name . '/elem/module_actions.tpl'));
+        $tplPath = $this->context->smarty->fetch(__DIR__ . '/../../views/templates/admin/controllers/' . $this->controller_quick_name . '/elem/module_actions.tpl');
+        if (version_compare(_PS_VERSION_, '1.7.5', '>=')) {
+            $this->ajaxRender($tplPath);
+            exit;
+        } else {
+            $this->ajaxDie($tplPath);
+        }
     }
 
     /**
@@ -502,19 +508,19 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 if ($sType == 'pages') {
                     foreach ($aElementsList as $sController => $aPage) {
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['name'] = $sController;
-                        $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->trans($aPage[0]);
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->trans($aPage[0], [], 'Modules.PsThemeCusto.Admin');
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['url'] = $this->context->link->getAdminLink($sController);
-                        $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->trans($aPage[1]);
-                        $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->trans('Configure');
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->trans($aPage[1], [], 'Modules.PsThemeCusto.Admin');
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->trans('Configure', [], 'Modules.PsThemeCusto.Admin');
                     }
                 } elseif ($sType == 'sfRoutePages') {
                     $container = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
                     foreach ($aElementsList as $sController => $aPage) {
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['name'] = $sController;
-                        $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->trans($aPage[0]);
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['displayName'] = $this->trans($aPage[0], [], 'Modules.PsThemeCusto.Admin');
                         $aModuleFinalList[$sSegmentName][$sType][$sController]['url'] = $container->get('router')->generate($sController);
-                        $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->trans($aPage[1]);
-                        $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->trans('Configure');
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['description'] = $this->trans($aPage[1], [], 'Modules.PsThemeCusto.Admin');
+                        $aModuleFinalList[$sSegmentName][$sType][$sController]['action'] = $this->trans('Configure', [], 'Modules.PsThemeCusto.Admin');
                     }
                 } else {
                     foreach ($aElementsList as $sModuleName => $iModuleId) {
@@ -561,9 +567,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         if ($bIsInstalled === true) {
             $aModule['can_configure'] = (method_exists($oModuleInstance, 'getContent')) ? true : false;
             if (method_exists($oModuleInstance, 'getContent')) {
-                $aModule['url_active'] = $this->trans(($oModuleInstance->active ? 'configure' : 'enable'));
+                $aModule['url_active'] = $this->trans(($oModuleInstance->active ? 'configure' : 'enable'), [], 'Modules.PsThemeCusto.Admin');
             } else {
-                $aModule['url_active'] = $this->trans(($oModuleInstance->active ? 'disable' : 'enable'));
+                $aModule['url_active'] = $this->trans(($oModuleInstance->active ? 'disable' : 'enable'), [], 'Modules.PsThemeCusto.Admin');
             }
             $aModule['installed'] = 1;
         } else {
