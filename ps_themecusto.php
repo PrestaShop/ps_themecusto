@@ -29,7 +29,6 @@ if (!defined('_PS_VERSION_')) {
 
 class ps_themecusto extends Module
 {
-    public $author_address;
     public $bootstrap;
     public $controller_name;
     public $front_controller = [];
@@ -48,7 +47,6 @@ class ps_themecusto extends Module
         $this->version = '1.2.4';
         $this->author = 'PrestaShop';
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
-        $this->author_address = '0x64aa3c1e4034d07015f639b0e171b0d7b27d01aa';
         $this->bootstrap = true;
 
         parent::__construct();
