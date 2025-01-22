@@ -44,7 +44,7 @@ class ps_themecusto extends Module
     {
         $this->name = 'ps_themecusto';
         $this->tab = 'front_office_features';
-        $this->version = '1.2.4';
+        $this->version = '1.2.5';
         $this->author = 'PrestaShop';
         $this->module_key = 'af0983815ad8c8a193b5dc9168e8372e';
         $this->bootstrap = true;
