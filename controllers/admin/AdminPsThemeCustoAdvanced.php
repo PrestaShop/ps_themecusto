@@ -80,6 +80,7 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
             'bootstrap' => 1,
             'configure_type' => $this->controller_quick_name,
             'images' => $this->getModule()->img_path . '/controllers/advanced/',
+            'helpChildThemeUrl' => $this->getChildThemeHelpUrl(),
         ]);
         $aJsDef = [
             'admin_module_controller_psthemecusto' => $this->getModule()->controller_name[0],
@@ -588,5 +589,22 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
     {
         /* @phpstan-ignore-next-line */
         return $this->module;
+    }
+
+    /**
+     * Format help url with version in it in function of the PrestaShop version.
+     *
+     * @return string
+     */
+    private function getChildThemeHelpUrl()
+    {
+        $version = '1.7';
+        if (version_compare('9.0', _PS_VERSION_) <= 0) {
+            $version = '9';
+        } elseif (version_compare('8.0', _PS_VERSION_) <= 0) {
+            $version = '8';
+        }
+
+        return "https://devdocs.prestashop-project.org/$version/themes/reference/template-inheritance/parent-child-feature/";
     }
 }
