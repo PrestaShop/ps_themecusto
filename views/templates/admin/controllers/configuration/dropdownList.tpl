@@ -153,7 +153,7 @@
 
                 <div class="row">
                     <div class="col-lg-4 col-lg-offset-8">
-                        <a class="btn btn-primary btn-lg btn-block" href="{$installedModulePage}#theme_modules">
+                        <a class="btn btn-primary btn-lg btn-block" href="{$installedModulePage}#theme_modules_modules">
                             {l s='See all theme\'s modules' mod='ps_themecusto'}
                         </a>
                     </div>
