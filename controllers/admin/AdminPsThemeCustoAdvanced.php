@@ -419,9 +419,14 @@ class AdminPsThemeCustoAdvancedController extends ModuleAdminController
 
         for ($i = 0; $i < $oZip->numFiles; ++$i) {
             $aZipElement = array_filter(explode('/', $oZip->getNameIndex($i)));
-            if (count($aZipElement) == 1) {
-                $aRootFilesAndFolders[] = $aZipElement[0];
+            if (empty($aZipElement)) {
+                continue;
             }
+            // Collect the first path segment of every entry. The "config" folder may be present
+            // only implicitly (e.g. "config/theme.yml") when the archive carries no explicit
+            // directory entries, so relying on a standalone "config/" entry rejected otherwise
+            // valid zips with "The file is not valid.".
+            $aRootFilesAndFolders[] = reset($aZipElement);
         }
 
         $oZip->close();
