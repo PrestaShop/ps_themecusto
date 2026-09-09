@@ -41,8 +41,9 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
 
         $this->isPsVersion174Plus = (bool) version_compare(_PS_VERSION_, '1.7.4', '>=');
         $this->controller_quick_name = 'configuration';
-        $this->aModuleActions = ['uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset'];
+        $this->aModuleActions = ['upgrade', 'uninstall', 'install', 'configure', 'enable', 'disable', 'disable_mobile', 'enable_mobile', 'reset'];
         $this->moduleActionsNames = [
+            $this->trans('Upgrade', [], 'Modules.PsThemeCusto.Admin'),
             $this->trans('Uninstall', [], 'Modules.PsThemeCusto.Admin'),
             $this->trans('Install', [], 'Modules.PsThemeCusto.Admin'),
             $this->trans('Configure', [], 'Modules.PsThemeCusto.Admin'),
@@ -463,6 +464,14 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
                 $oModule->install();
                 $sUrlActive = method_exists($oModule, 'getContent') ? 'configure' : 'disable';
             break;
+            case 'upgrade':
+                /*
+                 * $sUrlActive is deliberately left at the value computed above: an upgrade does not
+                 * install, uninstall, enable or disable the module, so its main button must keep
+                 * reflecting the enabled state it already had.
+                 */
+                $this->upgradeModule($oModule->name);
+            break;
             default:
                 exit(0);
         }
@@ -474,6 +483,11 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         $aModule['active'] = ThemeCustoRequests::getModuleDeviceStatus($oModule->id);
         $aModule['actions_url']['configure'] = $this->context->link->getAdminLink('AdminModules', true, [], ['configure' => $oModule->name]);
         $aModule['can_configure'] = method_exists($oModule, 'getContent') ? true : false;
+        /*
+         * Re-read after the action rather than assuming it succeeded: a failed upgrade leaves the
+         * entry in place, which is what tells the merchant the module was not upgraded.
+         */
+        $aModule['can_upgrade'] = $this->canModuleBeUpgraded($oModule->name);
         $aModule['enable_mobile'] = (int) Db::getInstance()->getValue('SELECT enable_device FROM ' . _DB_PREFIX_ . 'module_shop WHERE id_module = ' . (int) $oModule->id);
 
         $this->context->smarty->assign([
@@ -488,6 +502,65 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
             exit;
         } else {
             $this->ajaxDie($tplPath);
+        }
+    }
+
+    /**
+     * Whether an upgrade is waiting to be applied for a module.
+     *
+     * Delegates to the same predicate the Module Manager page gates its own Upgrade action on
+     * (AdminModuleDataProvider), so this page offers the action under exactly the same conditions:
+     * a newer version dropped on the disk, or one announced by the marketplace.
+     *
+     * Module::needUpgrade() is deliberately not used here. It only compares against the disk, it
+     * mutates Module::$modules_cache as a side effect, and it reads $module->database_version -
+     * which Module::getInstanceByName(), the way this controller builds its module objects, wipes.
+     *
+     * @param string $sModuleName
+     *
+     * @return bool
+     */
+    protected function canModuleBeUpgraded($sModuleName)
+    {
+        $oContainer = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
+        if (null === $oContainer) {
+            return false;
+        }
+
+        try {
+            return (bool) $oContainer
+                ->get('PrestaShop\\PrestaShop\\Core\\Module\\ModuleRepository')
+                ->getModule($sModuleName)
+                ->canBeUpgraded();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Run a module upgrade through the core module manager.
+     *
+     * ModuleManager::upgrade() is the same entry point the Module Manager page uses, so the
+     * module's own upgrade scripts and the actionBeforeUpgradeModule hook run as they should -
+     * unlike an uninstall/install pair, which would discard the module's stored configuration.
+     *
+     * @param string $sModuleName
+     *
+     * @return bool
+     */
+    protected function upgradeModule($sModuleName)
+    {
+        $oContainer = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
+        if (null === $oContainer) {
+            return false;
+        }
+
+        try {
+            return (bool) $oContainer
+                ->get('PrestaShop\\PrestaShop\\Core\\Module\\ModuleManager')
+                ->upgrade($sModuleName);
+        } catch (Exception $e) {
+            return false;
         }
     }
 
@@ -579,6 +652,7 @@ class AdminPsThemeCustoConfigurationController extends ModuleAdminController
         }
 
         $aModule['enable_mobile'] = (int) Db::getInstance()->getValue('SELECT enable_device FROM ' . _DB_PREFIX_ . 'module_shop WHERE id_module = ' . (int) $oModuleInstance->id);
+        $aModule['can_upgrade'] = $this->canModuleBeUpgraded($oModuleInstance->name);
         $aModule['name'] = $oModuleInstance->name;
         $aModule['displayName'] = $oModuleInstance->displayName;
         $aModule['description'] = $oModuleInstance->description;

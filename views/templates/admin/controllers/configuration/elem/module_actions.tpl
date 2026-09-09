@@ -45,6 +45,7 @@
                     && !($module.url_active eq 'disable' && $action eq 'enable')
                     && !($module.url_active eq 'disable' && $action eq 'configure')
                     && !(!$module.can_configure && $action eq 'configure')
+                    && !(!$module.can_upgrade && $action eq 'upgrade')
                     && !($action eq 'install')
                 }
                 <li>
@@ -75,6 +76,10 @@
                             {elseif $module.enable_mobile eq 3 && $action eq 'enable_mobile'}
                                 <button type="button" class="dropdown-item module_action_menu_{$action}">
                                     {l s='Enable mobile' mod='ps_themecusto'}
+                                </button>
+                            {elseif $action eq 'upgrade'}
+                                <button type="button" class="dropdown-item module_action_menu_{$action}">
+                                    {l s='Upgrade' mod='ps_themecusto'}
                                 </button>
                             {/if}
                         {/if}
